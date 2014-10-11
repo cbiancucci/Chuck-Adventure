@@ -202,8 +202,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -493,16 +491,16 @@
 									<real>0.0</real>
 								</array>
 								<array>
-									<real>0.0</real>
-									<real>38</real>
-								</array>
-								<array>
-									<real>1032</real>
-									<real>38</real>
-								</array>
-								<array>
 									<real>1032</real>
 									<real>0.0</real>
+								</array>
+								<array>
+									<real>1033.984375</real>
+									<real>23.96484375</real>
+								</array>
+								<array>
+									<real>0.7421875</real>
+									<real>23.19140625</real>
 								</array>
 							</array>
 						</dict>
@@ -579,6 +577,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -715,7 +715,7 @@
 						<key>displayName</key>
 						<string>CharacterWalk</string>
 						<key>memberVarAssignmentName</key>
-						<string>_character</string>
+						<string>_characterWalk</string>
 						<key>memberVarAssignmentType</key>
 						<integer>1</integer>
 						<key>physicsBody</key>
@@ -723,7 +723,7 @@
 							<key>affectedByGravity</key>
 							<true/>
 							<key>allowsRotation</key>
-							<true/>
+							<false/>
 							<key>bodyShape</key>
 							<integer>0</integer>
 							<key>cornerRadius</key>
@@ -739,20 +739,24 @@
 							<key>points</key>
 							<array>
 								<array>
-									<real>14.5234375</real>
-									<real>112.9609375</real>
+									<real>16.5625</real>
+									<real>59.869792938232422</real>
 								</array>
 								<array>
-									<real>15.4453125</real>
-									<real>-1.26953125</real>
+									<real>44.328125</real>
+									<real>-1.4010416269302368</real>
 								</array>
 								<array>
-									<real>151.3515625</real>
-									<real>0.08203125</real>
+									<real>113.65625</real>
+									<real>-1.3489583730697632</real>
 								</array>
 								<array>
-									<real>150.96484375</real>
-									<real>113.34765625</real>
+									<real>149.61457824707031</real>
+									<real>62.536457061767578</real>
+								</array>
+								<array>
+									<real>84.052085876464844</real>
+									<real>113.4375</real>
 								</array>
 							</array>
 						</dict>
@@ -787,8 +791,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
+									<real>0.75</real>
+									<real>0.75</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -800,6 +804,110 @@
 								<string>CCBFile</string>
 								<key>value</key>
 								<string>CharacterWalk.ccb</string>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>baseClass</key>
+						<string>CCBFile</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string></string>
+						<key>displayName</key>
+						<string>CharacterJump</string>
+						<key>hidden</key>
+						<true/>
+						<key>memberVarAssignmentName</key>
+						<string>_characterJump</string>
+						<key>memberVarAssignmentType</key>
+						<integer>1</integer>
+						<key>physicsBody</key>
+						<dict>
+							<key>affectedByGravity</key>
+							<true/>
+							<key>allowsRotation</key>
+							<false/>
+							<key>bodyShape</key>
+							<integer>0</integer>
+							<key>cornerRadius</key>
+							<real>0.0</real>
+							<key>density</key>
+							<real>1</real>
+							<key>dynamic</key>
+							<true/>
+							<key>elasticity</key>
+							<real>0.30000001192092896</real>
+							<key>friction</key>
+							<real>0.30000001192092896</real>
+							<key>points</key>
+							<array>
+								<array>
+									<real>18.697916030883789</real>
+									<real>65.057289123535156</real>
+								</array>
+								<array>
+									<real>35.21875</real>
+									<real>0.1875</real>
+								</array>
+								<array>
+									<real>111.78646087646484</real>
+									<real>-0.375</real>
+								</array>
+								<array>
+									<real>164.94792175292969</real>
+									<real>41.859375</real>
+								</array>
+								<array>
+									<real>80.239585876464844</real>
+									<real>123.30728912353516</real>
+								</array>
+							</array>
+						</dict>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>name</string>
+								<key>type</key>
+								<string>StringSimple</string>
+								<key>value</key>
+								<string></string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>114</real>
+									<real>80</real>
+									<integer>0</integer>
+									<integer>0</integer>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>scale</string>
+								<key>type</key>
+								<string>ScaleLock</string>
+								<key>value</key>
+								<array>
+									<real>0.75</real>
+									<real>0.75</real>
+									<false/>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>ccbFile</string>
+								<key>type</key>
+								<string>CCBFile</string>
+								<key>value</key>
+								<string>CharacterJump.ccb</string>
 							</dict>
 						</array>
 					</dict>

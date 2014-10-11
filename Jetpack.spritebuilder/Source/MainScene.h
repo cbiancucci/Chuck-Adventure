@@ -8,6 +8,11 @@
 
 #import "CCNode.h"
 
-@interface MainScene : CCNode
-
+@interface MainScene : CCNode <CCPhysicsCollisionDelegate>
+//@property (nonatomic, strong) CCSprite *character;
+//@property (nonatomic, strong) CCSprite *characterJump;
+{
+	CCSprite *_character;
+	CCSprite *_characterJump;
+}
 @end
