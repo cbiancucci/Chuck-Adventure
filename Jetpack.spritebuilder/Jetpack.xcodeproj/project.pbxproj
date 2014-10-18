@@ -37,6 +37,12 @@
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
 		BB1131BC19E7360000D8603B /* Rock.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1131BB19E7360000D8603B /* Rock.m */; };
 		BB1131C119E7448500D8603B /* uranium.png in Resources */ = {isa = PBXBuildFile; fileRef = BB1131C019E7448500D8603B /* uranium.png */; };
+		BB24493419F050C200975486 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB24493319F050C200975486 /* GLKit.framework */; };
+		BB24493919F06F6A00975486 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493819F06F6A00975486 /* Character.m */; };
+		BB24493C19F0705C00975486 /* CharacterState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493B19F0705C00975486 /* CharacterState.m */; };
+		BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494019F0729400975486 /* CharacterWalkingState.m */; };
+		BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494319F072DD00975486 /* CharacterJumpingState.m */; };
+		BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494619F0730D00975486 /* CharacterRunningState.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +99,17 @@
 		BB1131BA19E7360000D8603B /* Rock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rock.h; path = Source/Rock.h; sourceTree = "<group>"; };
 		BB1131BB19E7360000D8603B /* Rock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rock.m; path = Source/Rock.m; sourceTree = "<group>"; };
 		BB1131C019E7448500D8603B /* uranium.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uranium.png; sourceTree = "<group>"; };
+		BB24493319F050C200975486 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		BB24493719F06F6A00975486 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = Source/Character.h; sourceTree = "<group>"; };
+		BB24493819F06F6A00975486 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Character.m; path = Source/Character.m; sourceTree = "<group>"; };
+		BB24493A19F0705C00975486 /* CharacterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterState.h; path = Source/CharacterState.h; sourceTree = "<group>"; };
+		BB24493B19F0705C00975486 /* CharacterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterState.m; path = Source/CharacterState.m; sourceTree = "<group>"; };
+		BB24493F19F0729400975486 /* CharacterWalkingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterWalkingState.h; path = Source/CharacterWalkingState.h; sourceTree = "<group>"; };
+		BB24494019F0729400975486 /* CharacterWalkingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterWalkingState.m; path = Source/CharacterWalkingState.m; sourceTree = "<group>"; };
+		BB24494219F072DD00975486 /* CharacterJumpingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterJumpingState.h; path = Source/CharacterJumpingState.h; sourceTree = "<group>"; };
+		BB24494319F072DD00975486 /* CharacterJumpingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterJumpingState.m; path = Source/CharacterJumpingState.m; sourceTree = "<group>"; };
+		BB24494519F0730D00975486 /* CharacterRunningState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterRunningState.h; path = Source/CharacterRunningState.h; sourceTree = "<group>"; };
+		BB24494619F0730D00975486 /* CharacterRunningState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterRunningState.m; path = Source/CharacterRunningState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB24493419F050C200975486 /* GLKit.framework in Frameworks */,
 				B737898A1807642B0076A88C /* libcocos2d.a in Frameworks */,
 				B77F1B3217B978D7009739AE /* QuartzCore.framework in Frameworks */,
 				B77F1B3417B978D7009739AE /* OpenGLES.framework in Frameworks */,
@@ -127,6 +145,7 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BB24493D19F0716100975486 /* Character */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
 				B7378992180767190076A88C /* MainScene.h */,
@@ -189,6 +208,7 @@
 		B77F1B3017B978D7009739AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB24493319F050C200975486 /* GLKit.framework */,
 				B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */,
 				B77F1B3117B978D7009739AE /* QuartzCore.framework */,
 				B77F1B3317B978D7009739AE /* OpenGLES.framework */,
@@ -223,6 +243,31 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BB24493D19F0716100975486 /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				BB24493E19F0716D00975486 /* State */,
+				BB24493719F06F6A00975486 /* Character.h */,
+				BB24493819F06F6A00975486 /* Character.m */,
+			);
+			name = Character;
+			sourceTree = "<group>";
+		};
+		BB24493E19F0716D00975486 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				BB24493A19F0705C00975486 /* CharacterState.h */,
+				BB24493B19F0705C00975486 /* CharacterState.m */,
+				BB24493F19F0729400975486 /* CharacterWalkingState.h */,
+				BB24494019F0729400975486 /* CharacterWalkingState.m */,
+				BB24494219F072DD00975486 /* CharacterJumpingState.h */,
+				BB24494319F072DD00975486 /* CharacterJumpingState.m */,
+				BB24494519F0730D00975486 /* CharacterRunningState.h */,
+				BB24494619F0730D00975486 /* CharacterRunningState.m */,
+			);
+			name = State;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -250,7 +295,7 @@
 		B77F1B2617B978D7009739AE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Apportable;
 				TargetAttributes = {
 					B77F1B2D17B978D7009739AE = {
@@ -328,7 +373,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB1131BC19E7360000D8603B /* Rock.m in Sources */,
+				BB24493919F06F6A00975486 /* Character.m in Sources */,
+				BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
+				BB24493C19F0705C00975486 /* CharacterState.m in Sources */,
+				BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */,
+				BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 			);
@@ -353,8 +403,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -384,8 +436,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,

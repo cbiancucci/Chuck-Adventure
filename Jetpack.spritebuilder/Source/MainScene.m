@@ -7,9 +7,11 @@
 //
 
 #import "MainScene.h"
+#import "Character.h"
 #import "Rock.h"
 
-static const CGFloat scrollSpeed = 80.f;
+static const CGFloat cameraScrollSpeed = 80.f;
+static const CGFloat characterScrollSpeed = 280.f;
 static const CGFloat firstRockXPosition = 280.f;
 static const CGFloat firstRockYPosition = 100.f;
 static const CGFloat distanceBetweenRocks = 50.f;
@@ -25,9 +27,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	CCPhysicsNode *_physicsNode;
 
 	// Character
-//	CCSprite *_character;
-	CCSprite *_characterWalk;
-//	CCSprite *_characterJump;
+    Character * character;
 
 	// Background
 	CCNode *_background1;
@@ -45,6 +45,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSArray *_roofs;
 
 	NSTimeInterval _sinceTouch;
+    NSTimeInterval _sinceUranium;
 
 	NSMutableArray *_rocks;
 }
@@ -57,7 +58,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadContextInitialSettings];
 
 	// Uranium Rocks
-	//[self loadRocksInitialSettings];
+	[self loadRocksInitialSettings];
 
 	// Character
 	[self loadCharacterInitialSettings];
@@ -72,13 +73,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)loadCharacterInitialSettings {
-	_character.physicsBody.collisionType = @"character";
-	_character.zOrder = DrawingOrderCharacter;
-	_character = _characterWalk;
-
-	_characterJump.visible = false;
-	[_characterJump removeFromParent];
-	[_character addChild:_characterJump];
+    character = (Character *)[_physicsNode getChildByName:@"Character" recursively:YES];
+    character.zOrder = DrawingOrderCharacter;
+    character.hasAdrenaline = NO;
+    [character startWalking];
 }
 
 - (void)loadRocksInitialSettings {
@@ -89,85 +87,75 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)update:(CCTime)delta {
-	_character.position = ccp(_character.position.x + delta * scrollSpeed, _character.position.y);
-	_physicsNode.position = ccp(_physicsNode.position.x - (scrollSpeed * delta), _physicsNode.position.y);
+
+    if([character hasAdrenaline]){
+        character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
+        _physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
+    } else {
+        character.position = ccp(character.position.x + delta * cameraScrollSpeed, character.position.y);
+        _physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
+    }
+    
+
 
 	_sinceTouch += delta;
-
-	if (_sinceTouch > 0.5f) {
-//		_characterWalk.position = _character.position;
-		_characterJump.visible = NO;
-		_characterWalk.visible = YES;
-		_character = _characterWalk;
-	}
-
-	// loop the background
-	for (CCNode *background in _backgrounds) {
-		// get the world position of the background
-		CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:background.position];
-		// get the screen position of the background
-		CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
-		// if the left corner is one complete width off the screen, move it to the right
-		if (groundScreenPosition.x <= (-1 * background.contentSize.width)) {
-			background.position = ccp(background.position.x + 2 * background.contentSize.width, background.position.y);
-			background.zOrder = DrawingOrderBackground;
-		}
-	}
-
-	for (CCNode *floor in _floors) {
-		CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:floor.position];
-		CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
-		if (groundScreenPosition.x <= (-1 * floor.contentSize.width)) {
-			floor.position = ccp(floor.position.x + 2 * (floor.contentSize.width - 1), floor.position.y);
-			floor.zOrder = DrawingOrderBackground;
-		}
-	}
-
-	for (CCNode *roof in _roofs) {
-		CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:roof.position];
-		CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
-		if (groundScreenPosition.x <= (-1 * roof.contentSize.width)) {
-			roof.position = ccp(roof.position.x + 2 * roof.contentSize.width, roof.position.y);
-			roof.zOrder = DrawingOrderBackground;
-		}
-	}
-
-	NSMutableArray *rocksToBeRemoved = nil;
-	for (CCNode *rock in _rocks) {
-		// Generar una mejor comparación para que detecte si la agarró o no
-		/*if (
-		    ((rock.position.y >= _character.position.y) && (rock.position.y + rock.contentSize.height <= _character.position.y + _character.contentSize.height)) && ((rock.position.x >= _character.position.x + _character.contentSize.width) && (rock.position.x + rock.contentSize.width <= _character.position.x + _character.contentSize.width))
-		    ) {
-		    if (!rocksToBeRemoved) {
-		        rocksToBeRemoved = [NSMutableArray array];
-		    }
-		    [rocksToBeRemoved addObject:rock];
-		   }*/
-
-		if (rock.position.x >= _character.position.x >= rock.position.x) {
-			[[CCDirector sharedDirector] pause];
-			if (!rocksToBeRemoved) {
-				rocksToBeRemoved = [NSMutableArray array];
-			}
-			[rocksToBeRemoved addObject:rock];
-		}
-	}
-
-	for (CCNode *rockToBeRemoved in rocksToBeRemoved) {
-		[rockToBeRemoved removeFromParent];
-		[_rocks removeObject:rocksToBeRemoved];
-		//[self spawnNewRock];
-	}
+    _sinceUranium += delta;
+    
+    if(_sinceUranium > 2.0f){
+        character.hasAdrenaline = NO;
+    }
+    
+    if([character isJumping] && _sinceTouch > 1.0f){
+        [character startWalking];
+    }
+    
+    if([character isRunning] && _sinceUranium > 1.0f) {
+        [character startWalking];
+    }
+    
+    [self loopBackground];
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-//	_characterJump.position = _character.position;
-	_characterWalk.visible = NO;
-	_characterJump.visible = YES;
-	_character = _characterJump;
 
-	[_character.physicsBody applyImpulse:ccp(0, 4000.f)];
-	_sinceTouch = 0.f;
+    if (_sinceTouch > 1.0f){
+        [character startJumping];
+        _sinceTouch = 0.f;
+    }
+}
+
+- (void) loopBackground
+{
+    // loop the background
+    for (CCNode *background in _backgrounds) {
+        // get the world position of the background
+        CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:background.position];
+        // get the screen position of the background
+        CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
+        // if the left corner is one complete width off the screen, move it to the right
+        if (groundScreenPosition.x <= (-1 * background.contentSize.width)) {
+            background.position = ccp(background.position.x + 2 * background.contentSize.width, background.position.y);
+            background.zOrder = DrawingOrderBackground;
+        }
+    }
+    
+    for (CCNode *floor in _floors) {
+        CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:floor.position];
+        CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
+        if (groundScreenPosition.x <= (-1 * floor.contentSize.width)) {
+            floor.position = ccp(floor.position.x + 2 * (floor.contentSize.width - 1), floor.position.y);
+            floor.zOrder = DrawingOrderBackground;
+        }
+    }
+    
+    for (CCNode *roof in _roofs) {
+        CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:roof.position];
+        CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
+        if (groundScreenPosition.x <= (-1 * roof.contentSize.width)) {
+            roof.position = ccp(roof.position.x + 2 * roof.contentSize.width, roof.position.y);
+            roof.zOrder = DrawingOrderBackground;
+        }
+    }
 }
 
 - (void)spawnNewRock {
@@ -184,15 +172,27 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	Rock *rock = (Rock *)[CCBReader load:@"Uranium"];
 //	[rock setupPositionX:(previousRockYPosition + distanceBetweenRocks) positionY:previousRockYPosition];
 	rock.position = ccp(previousRockXPosition + distanceBetweenRocks, previousRockYPosition);
-	rock.zOrder = DrawingOrderRock;
+	rock.zOrder = DrawingOrderCharacter;
 
 	[_physicsNode addChild:rock];
 	[_rocks addObject:rock];
 }
 
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(CCSprite *)character rock:(CCNode *)rock {
-	NSLog(@"Uranium");
-	return TRUE;
+
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rock:(Rock *)rock {
+    NSLog(@"Character and rock collision");
+    rock.visible = NO;
+    [rock removeFromParent];
+    [_rocks removeObject:rock];
+    
+    _sinceUranium = 0.f;
+    character.hasAdrenaline = YES;
+    return YES;
+}
+
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision spike:(CCNode *)spike {
+    NSLog(@"Character and spike collision");
+    return YES;
 }
 
 @end

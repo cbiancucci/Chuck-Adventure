@@ -10,29 +10,29 @@
 	<string>Jetpack</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>2F0639D8-93FF-458A-AB77-EFF47971A210</key>
+		<key>59D3BB057B70098B4AB29520146592330CF85DDC</key>
 		<string>https://github.com/cbiancucci/Jetpack.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Jetpack.spritebuilder/Jetpack.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>2F0639D8-93FF-458A-AB77-EFF47971A210</key>
+		<key>59D3BB057B70098B4AB29520146592330CF85DDC</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/cbiancucci/Jetpack.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>2F0639D8-93FF-458A-AB77-EFF47971A210</string>
+	<string>59D3BB057B70098B4AB29520146592330CF85DDC</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>2F0639D8-93FF-458A-AB77-EFF47971A210</string>
+			<string>59D3BB057B70098B4AB29520146592330CF85DDC</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Jetpack</string>
 		</dict>
