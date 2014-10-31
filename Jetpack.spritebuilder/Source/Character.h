@@ -11,16 +11,18 @@
 
 @interface Character : CCNode
 
-@property (nonatomic, strong) CharacterState * state;
-@property (nonatomic, assign) Boolean * hasAdrenaline;
+@property (nonatomic, strong) CharacterState *state;
+@property (nonatomic, assign) BOOL hasAdrenaline;
 
--(BOOL) isWalking;
--(BOOL) isJumping;
--(BOOL) isRunning;
+- (BOOL)isWalking;
+- (BOOL)isJumping;
+- (BOOL)isRunning;
+- (BOOL)isShooting;
 
--(void) startWalking;
--(void) startJumping;
--(void) startRunning;
+- (void)startWalking;
+- (void)startJumping;
+- (void)startRunning;
+- (void)startShooting;
 
--(BOOL) hasAdrenaline;
+- (BOOL)hasAdrenaline;
 @end

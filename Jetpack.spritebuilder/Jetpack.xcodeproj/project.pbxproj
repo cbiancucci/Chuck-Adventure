@@ -43,6 +43,7 @@
 		BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494019F0729400975486 /* CharacterWalkingState.m */; };
 		BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494319F072DD00975486 /* CharacterJumpingState.m */; };
 		BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494619F0730D00975486 /* CharacterRunningState.m */; };
+		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,8 @@
 		BB24494319F072DD00975486 /* CharacterJumpingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterJumpingState.m; path = Source/CharacterJumpingState.m; sourceTree = "<group>"; };
 		BB24494519F0730D00975486 /* CharacterRunningState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterRunningState.h; path = Source/CharacterRunningState.h; sourceTree = "<group>"; };
 		BB24494619F0730D00975486 /* CharacterRunningState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterRunningState.m; path = Source/CharacterRunningState.m; sourceTree = "<group>"; };
+		BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterShootingState.h; path = Source/CharacterShootingState.h; sourceTree = "<group>"; };
+		BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterShootingState.m; path = Source/CharacterShootingState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +267,8 @@
 				BB24494319F072DD00975486 /* CharacterJumpingState.m */,
 				BB24494519F0730D00975486 /* CharacterRunningState.h */,
 				BB24494619F0730D00975486 /* CharacterRunningState.m */,
+				BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */,
+				BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */,
 			);
 			name = State;
 			sourceTree = "<group>";
@@ -372,6 +377,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */,
 				BB1131BC19E7360000D8603B /* Rock.m in Sources */,
 				BB24493919F06F6A00975486 /* Character.m in Sources */,
 				BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */,
@@ -463,8 +469,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -496,8 +502,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/Prefix.pch;
