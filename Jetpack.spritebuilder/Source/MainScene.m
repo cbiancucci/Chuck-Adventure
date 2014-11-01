@@ -138,25 +138,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 	}
 
-
-
 	for (CCNode *floor in _floors.children) {
 		CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:floor.position];
 		CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
 		if (groundScreenPosition.x <= (-1 * floor.contentSize.width)) {
-			floor.position = ccp(floor.position.x + 2 * (floor.contentSize.width - 1), floor.position.y);
+			floor.position = ccp(floor.position.x + 2 * (floor.contentSize.width - 2), floor.position.y);
 			floor.zOrder = DrawingOrderBackground;
 		}
 	}
-
-/*	for (CCNode *floor in _floors) {
-        CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:floor.position];
-        CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
-        if (groundScreenPosition.x <= (-1 * floor.contentSize.width)) {
-            floor.position = ccp(floor.position.x + 2 * (floor.contentSize.width - 1), floor.position.y);
-            floor.zOrder = DrawingOrderBackground;
-        }
-    }*/
 
 	for (CCNode *roof in _roofs) {
 		CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:roof.position];
