@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>27</integer>
+	<integer>28</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -719,8 +719,6 @@
 								<string>Enemy.ccb</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>UUID</key>
@@ -734,7 +732,7 @@
 						<key>displayName</key>
 						<string>Spike</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>_spike</string>
 						<key>memberVarAssignmentType</key>
 						<integer>1</integer>
 						<key>properties</key>

@@ -179,11 +179,11 @@
 		<key>physicsBody</key>
 		<dict>
 			<key>affectedByGravity</key>
-			<true/>
+			<false/>
 			<key>allowsRotation</key>
-			<true/>
+			<false/>
 			<key>bodyShape</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>collisionCategories</key>
 			<array/>
 			<key>collisionMask</key>
@@ -191,11 +191,11 @@
 			<key>collisionType</key>
 			<string>spike</string>
 			<key>cornerRadius</key>
-			<real>0.0</real>
+			<real>69.03515625</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
-			<false/>
+			<true/>
 			<key>elasticity</key>
 			<real>0.30000001192092896</real>
 			<key>friction</key>
@@ -203,77 +203,12 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>-65.199249267578125</real>
-					<real>-65.375015258789062</real>
-				</array>
-				<array>
-					<real>-43.992218017578125</real>
-					<real>-12.261734008789062</real>
-				</array>
-				<array>
-					<real>-69.585968017578125</real>
-					<real>47.85546875</real>
-				</array>
-				<array>
-					<real>-20.507843017578125</real>
-					<real>63.402313232421875</real>
-				</array>
-				<array>
-					<real>69.89056396484375</real>
-					<real>44.73828125</real>
-				</array>
-				<array>
-					<real>31.36322021484375</real>
-					<real>-13.914077758789062</real>
-				</array>
-				<array>
-					<real>53.61322021484375</real>
-					<real>-65.109390258789062</real>
+					<real>0.0</real>
+					<real>0.0</real>
 				</array>
 			</array>
 			<key>polygons</key>
-			<array>
-				<array>
-					<array>
-						<real>-43.992218017578125</real>
-						<real>-12.261734008789062</real>
-					</array>
-					<array>
-						<real>-65.199249267578125</real>
-						<real>-65.375015258789062</real>
-					</array>
-					<array>
-						<real>53.61322021484375</real>
-						<real>-65.109390258789062</real>
-					</array>
-					<array>
-						<real>31.36322021484375</real>
-						<real>-13.914077758789062</real>
-					</array>
-				</array>
-				<array>
-					<array>
-						<real>31.36322021484375</real>
-						<real>-13.914077758789062</real>
-					</array>
-					<array>
-						<real>69.89056396484375</real>
-						<real>44.73828125</real>
-					</array>
-					<array>
-						<real>-20.507843017578125</real>
-						<real>63.402313232421875</real>
-					</array>
-					<array>
-						<real>-69.585968017578125</real>
-						<real>47.85546875</real>
-					</array>
-					<array>
-						<real>-43.992218017578125</real>
-						<real>-12.261734008789062</real>
-					</array>
-				</array>
-			</array>
+			<array/>
 		</dict>
 		<key>properties</key>
 		<array>
@@ -283,7 +218,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string></string>
+				<string>Spike</string>
 			</dict>
 			<dict>
 				<key>name</key>

@@ -19,10 +19,12 @@
 - (BOOL)isRunning;
 - (BOOL)isShooting;
 
+- (void)stop;
 - (void)startWalking;
 - (void)startJumping;
 - (void)startRunning;
 - (void)startShooting;
+- (void)stopShooting;
 
 - (BOOL)hasAdrenaline;
 @end

@@ -14,7 +14,7 @@
 		<string>https://github.com/cbiancucci/Jetpack.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Jetpack.spritebuilder/Jetpack.xcodeproj/project.xcworkspace</string>
+	<string>Jetpack.spritebuilder/Jetpack.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>59D3BB057B70098B4AB29520146592330CF85DDC</key>

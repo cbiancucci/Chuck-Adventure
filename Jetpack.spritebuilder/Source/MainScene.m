@@ -19,7 +19,8 @@ static const CGFloat distanceBetweenRocks = 50.f;
 typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderBackground,
 	DrawingOrderRock,
-	DrawingOrderCharacter
+	DrawingOrderCharacter,
+	DrawingOrderParticles
 };
 
 @implementation MainScene {
@@ -32,6 +33,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// Background
 	CCNode *_background1;
 	CCNode *_background2;
+	CCNode *_spike;
 	NSArray *_backgrounds;
 
 	// Floor
@@ -57,23 +59,25 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadContextInitialSettings];
 
 	// Uranium Rocks
-	[self loadRocksInitialSettings];
+	//[self loadRocksInitialSettings];
 
 	// Character
 	[self loadCharacterInitialSettings];
 
-	self.userInteractionEnabled = TRUE;
+	self.userInteractionEnabled = YES;
 }
 
 - (void)loadContextInitialSettings {
 	_backgrounds = @[_background1, _background2];
 	_roofs = @[_roof1, _roof2];
+	_spike.physicsBody.sensor = YES;
 }
 
 - (void)loadCharacterInitialSettings {
 	character = (Character *)[_physicsNode getChildByName:@"Character" recursively:YES];
 	character.zOrder = DrawingOrderCharacter;
 	character.hasAdrenaline = NO;
+	[character stop];
 	[character startWalking];
 }
 
@@ -106,7 +110,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 
 	if ([character isShooting] && _sinceShoot > 1.0f) {
-		[character startWalking];
+		[character stopShooting];
 	}
 
 	[self loopBackground];
@@ -192,6 +196,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision spike:(CCNode *)spike {
 	NSLog(@"Character and spike collision");
+	CCParticleSystem *blood = (CCParticleSystem *)[CCBReader load:@"Blood"];
+	blood.autoRemoveOnFinish = YES;
+	blood.position = character.position;
+	blood.zOrder = DrawingOrderParticles;
+	[character.parent addChild:blood];
+
+//    explosion.position = seal.position;
+	// add the particle effect to the same node the seal is on [seal.parent addChild:explosion]; // finally, remove the destroyed seal [seal removeFromParent];
 	return YES;
 }
 

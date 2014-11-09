@@ -15,24 +15,35 @@
 @implementation Character
 
 - (BOOL)isWalking {
-	return [self getChildByName:@"Walk" recursively:YES].visible;
+	return [self getChildByName:@"Walk" recursively:YES].visible || [self getChildByName:@"ShootWalking" recursively:YES].visible;
 }
 
 - (BOOL)isJumping {
-	return [self getChildByName:@"Jump" recursively:YES].visible;
+	return [self getChildByName:@"Jump" recursively:YES].visible  || [self getChildByName:@"ShootJumping" recursively:YES].visible;
 }
 
 - (BOOL)isRunning {
-	return [self getChildByName:@"Run" recursively:YES].visible;
+	return [self getChildByName:@"Run" recursively:YES].visible  || [self getChildByName:@"ShootRunning" recursively:YES].visible;
 }
 
 - (BOOL)isShooting {
 	return [self getChildByName:@"ShootWalking" recursively:YES].visible || [self getChildByName:@"ShootJumping" recursively:YES].visible || [self getChildByName:@"ShootRunning" recursively:YES].visible;
 }
 
+- (void)stop {
+	for (CCNode *child in self.children) {
+		child.visible = NO;
+	}
+}
+
 - (void)startWalking {
 	self.state = [CharacterWalkingState walkingState];
-	[self setVisibleState:@"Walk"];
+	if ([self isShooting]) {
+		[self setVisibleState:@"ShootWalking"];
+	}
+	else {
+		[self setVisibleState:@"Walk"];
+	}
 }
 
 - (void)startJumping {
@@ -43,7 +54,7 @@
 	else {
 		[self setVisibleState:@"ShootJumping"];
 	}
-	[self.physicsBody applyImpulse:ccp(0, 3000.f)];
+	[self.physicsBody applyImpulse:ccp(200.f, 2500.f)];
 }
 
 - (void)startRunning {
@@ -55,16 +66,25 @@
 	self.state = [CharacterShootingState shootingState];
 
 	if ([self isWalking]) {
-		[self getChildByName:@"Walk" recursively:YES];
 		[self setVisibleState:@"ShootWalking"];
 	}
 	else if ([self isJumping]) {
-		[self getChildByName:@"Jump" recursively:YES];
 		[self setVisibleState:@"ShootJumping"];
 	}
 	else if ([self isRunning]) {
-		[self getChildByName:@"Run" recursively:YES];
 		[self setVisibleState:@"ShootRunning"];
+	}
+}
+
+- (void)stopShooting {
+	if ([self isWalking]) {
+		[self setVisibleState:@"Walk"];
+	}
+	else if ([self isJumping]) {
+		[self setVisibleState:@"Jump"];
+	}
+	else if ([self isRunning]) {
+		[self setVisibleState:@"Run"];
 	}
 }
 
