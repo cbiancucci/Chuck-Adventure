@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>34</integer>
+	<integer>35</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -799,7 +799,7 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string></string>
+						<string>PhysicsNode</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -905,7 +905,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>550</real>
+							<real>530</real>
 							<real>285</real>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -934,8 +934,6 @@
 						<string>Pause.ccb</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -954,7 +952,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string></string>
+				<string>MainNode</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -1008,6 +1006,8 @@
 				</array>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

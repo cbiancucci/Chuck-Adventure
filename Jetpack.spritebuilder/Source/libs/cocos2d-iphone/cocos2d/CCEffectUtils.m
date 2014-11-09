@@ -7,28 +7,103 @@
 //
 
 #import "CCEffectUtils.h"
-
+#import "CCRenderTexture_Private.h"
 
 
 static const float CCEffectUtilsMinRefract = -0.25;
 static const float CCEffectUtilsMaxRefract = 0.043;
 
+static CCNode* CCEffectUtilsGetNodeParent(CCNode *node);
 
-CGAffineTransform CCEffectUtilsWorldToEnvironmentTransform(CCSprite *environment)
+
+
+CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second)
 {
-    CGAffineTransform worldToEnvNode = environment.worldToNodeTransform;
-    CGAffineTransform envNodeToEnvTexture = environment.nodeToTextureTransform;
-    CGAffineTransform worldToEnvTexture = CGAffineTransformConcat(worldToEnvNode, envNodeToEnvTexture);
-    return worldToEnvTexture;
+    NSCAssert(first, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
+    NSCAssert(second, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
+
+    // First find the common ancestor of the two nodes. If there isn't
+    // one then don't do anything else.
+    NSMutableSet *visited1 = [[NSMutableSet alloc] init];
+    for (CCNode *n1 = first; n1 != nil; n1 = CCEffectUtilsGetNodeParent(n1))
+    {
+        NSCAssert(![visited1 containsObject:n1], @"n1's node hierarchy contains a cycle!");
+        [visited1 addObject:n1];
+    }
+
+    CCNode *commonAncestor = nil;
+    NSMutableSet *visited2 = [[NSMutableSet alloc] init];
+    for (CCNode *n2 = second; n2 != nil; n2 = CCEffectUtilsGetNodeParent(n2))
+    {
+        NSCAssert(![visited2 containsObject:n2], @"n2's node hierarchy contains a cycle!");
+        [visited2 addObject:n2];
+
+        if ([visited1 containsObject:n2])
+        {
+            commonAncestor = n2;
+            break;
+        }
+    }
+
+    return commonAncestor;
 }
 
-GLKVector4 CCEffectUtilsTangentInEnvironmentSpace(GLKMatrix4 effectToWorldMat, GLKMatrix4 worldToEnvMat)
+GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor, BOOL *success)
 {
-    GLKMatrix4 effectToEnvTextureMat = GLKMatrix4Multiply(effectToWorldMat, worldToEnvMat);
+    // Compute the transform from this node to the common ancestor
+    CGAffineTransform t = [descendant nodeToParentTransform];
+    CCNode *p = nil;;
+    for (p = CCEffectUtilsGetNodeParent(descendant); (p != nil) && (p != CCEffectUtilsGetNodeParent(ancestor)); p = CCEffectUtilsGetNodeParent(p))
+    {
+        t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+    }
     
-    GLKVector4 refractTangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
-    refractTangent = GLKMatrix4MultiplyVector4(effectToEnvTextureMat, refractTangent);
-    return GLKVector4Normalize(refractTangent);
+    if (success)
+    {
+        *success = (p != nil);
+    }
+    return CCEffectUtilsMat4FromAffineTransform(t);
+}
+
+GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *success)
+{
+    // Find the common ancestor if there is one.
+    CCNode *commonAncestor = CCEffectUtilsFindCommonAncestor(first, second);
+    if (success)
+    {
+        *success = (commonAncestor != nil);
+    }
+    if (commonAncestor == nil)
+    {
+        return GLKMatrix4Identity;
+    }
+
+    BOOL gotTransform;
+    
+    // Find the transforms to the common ancestor.
+    GLKMatrix4 t1 = CCEffectUtilsTransformFromNodeToAncestor(first, commonAncestor, &gotTransform);
+    NSCAssert(gotTransform, @"Could not find the transform to a known ancestor");
+    
+    GLKMatrix4 t2 = CCEffectUtilsTransformFromNodeToAncestor(second, commonAncestor, &gotTransform);
+    NSCAssert(gotTransform, @"Could not find the transform to a known ancestor");
+    
+
+    // Concatenate t1 and the inverse of t2 to give us the transform from the first node
+    // to the second.
+    return GLKMatrix4Multiply(GLKMatrix4Invert(t2, nil), t1);
+}
+
+CCNode* CCEffectUtilsGetNodeParent(CCNode *node)
+{
+    if ([node isKindOfClass:[CCRenderTextureSprite class]])
+    {
+        CCRenderTextureSprite *rtSprite = (CCRenderTextureSprite *)node;
+        return rtSprite.renderTexture;
+    }
+    else
+    {
+        return node.parent;
+    }
 }
 
 GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
@@ -37,6 +112,41 @@ GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
                           at.c,  at.d,  0.0f,  0.0f,
                           0.0f,  0.0f,  1.0f,  0.0f,
                           at.tx, at.ty, 0.0f,  1.0f);
+}
+
+GLKMatrix2 CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix2 matrix, bool *isInvertible)
+{
+    GLKMatrix2 result;
+
+    float det = matrix.m00 * matrix.m11 - matrix.m01 * matrix.m10;
+    if (fabsf(det) < FLT_EPSILON)
+    {
+        if (isInvertible)
+        {
+            *isInvertible = NO;
+        }
+        result.m00 = result.m11 = 1.0f;
+        result.m01 = result.m10 = 0.0f;
+    }
+    else
+    {
+        if (isInvertible)
+        {
+            *isInvertible = YES;
+        }
+        float invDet = 1.0f / det;
+        result.m00 =  matrix.m11 * invDet; result.m01 = -matrix.m01 * invDet;
+        result.m10 = -matrix.m10 * invDet; result.m11 =  matrix.m00 * invDet;
+    }
+    
+    return result;
+}
+
+GLKVector2 CCEffectUtilsMatrix2MultiplyVector2(GLKMatrix2 m, GLKVector2 v)
+{
+    GLKVector2 result = { m.m[0] * v.v[0] + m.m[2] * v.v[1],
+                          m.m[1] * v.v[0] + m.m[3] * v.v[1] };
+    return result;
 }
 
 float CCEffectUtilsConditionRefraction(float refraction)
@@ -71,5 +181,15 @@ float CCEffectUtilsConditionFresnelPower(float power)
     NSCAssert(power >= 0.0f, @"Supplied power out of range [0..inf].");
     return (power < 0.0f) ? 0.0f : power;
 }
+
+void CCEffectUtilsPrintMatrix(NSString *label, GLKMatrix4 matrix)
+{
+    NSLog(@"%@", label);
+    NSLog(@"%f %f %f %f", matrix.m00, matrix.m01, matrix.m02, matrix.m03);
+    NSLog(@"%f %f %f %f", matrix.m10, matrix.m11, matrix.m12, matrix.m13);
+    NSLog(@"%f %f %f %f", matrix.m20, matrix.m21, matrix.m22, matrix.m23);
+    NSLog(@"%f %f %f %f", matrix.m30, matrix.m31, matrix.m32, matrix.m33);
+}
+
 
 

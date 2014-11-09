@@ -20,15 +20,21 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderBackground,
 	DrawingOrderRock,
 	DrawingOrderCharacter,
-	DrawingOrderParticles
+	DrawingOrderParticles,
+	DrawingOrderText
 };
 
 @implementation MainScene {
+	double distance;
+
 	//PhysicsNode
 	CCPhysicsNode *_physicsNode;
 
 	// Character
 	Character *character;
+
+	// Texts
+	CCLabelTTF *distanceText;
 
 	// Background
 	CCNode *_background1;
@@ -55,6 +61,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// set this class as delegate
 	_physicsNode.collisionDelegate = self;
 
+	// Texts
+	[self loadTextSettings];
+
 	// Context
 	[self loadContextInitialSettings];
 
@@ -67,7 +76,16 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	self.userInteractionEnabled = YES;
 }
 
+- (void)loadTextSettings {
+	//hei(TO LENOVO LE Phone)
+	distanceText = [CCLabelTTF labelWithString:@"000" fontName:@"heiTOLENOVOLEPhone" fontSize:20];
+	distanceText.zOrder = DrawingOrderText;
+	[distanceText setPosition:ccp(30.f, 300.f)];
+	[self addChild:distanceText];
+}
+
 - (void)loadContextInitialSettings {
+	distance = 0;
 	_backgrounds = @[_background1, _background2];
 	_roofs = @[_roof1, _roof2];
 	_spike.physicsBody.sensor = YES;
@@ -92,11 +110,16 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	if ([character hasAdrenaline]) {
 		character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
 		_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
+
+		distance += 0.5f;
 	}
 	else {
 		character.position = ccp(character.position.x + delta * cameraScrollSpeed, character.position.y);
 		_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
+
+		distance += 0.1f;
 	}
+	[distanceText setString:[NSString stringWithFormat:@"%i", (int)distance]];
 
 	_sinceUranium += delta;
 	_sinceShoot += delta;
@@ -117,8 +140,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-	if (touch.locationInWorld.x > 540 && touch.locationInWorld.x < 580) {
-		if (touch.locationInWorld.y > 285 && touch.locationInWorld.y < 320) {
+	CGPoint touchLocation = [touch locationInView:[touch view]];
+
+	if (touchLocation.x > 525 && touchLocation.x < 560) {
+		if (touchLocation.y > 10 && touchLocation.y < 40) {
 			if ([CCDirector sharedDirector].isPaused) {
 				[[CCDirector sharedDirector] resume];
 			}
@@ -128,7 +153,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 	}
 
-	if (touch.locationInWorld.x < 300) {
+	if (touchLocation.x < 300) {
 		if (![character isJumping]) {
 			[character startJumping];
 		}
@@ -205,6 +230,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	return YES;
 }
 
+// Play blood particle.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision spike:(CCNode *)spike {
 	NSLog(@"Character and spike collision");
 	CCParticleSystem *blood = (CCParticleSystem *)[CCBReader load:@"Blood"];
@@ -215,11 +241,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	blood.zOrder = DrawingOrderParticles;
 	[character.parent addChild:blood];
 
-//    explosion.position = seal.position;
-	// add the particle effect to the same node the seal is on [seal.parent addChild:explosion]; // finally, remove the destroyed seal [seal removeFromParent];
 	return YES;
 }
 
+// Stop jumping.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision floor:(CCNode *)floor {
 	NSLog(@"Character and floor collision");
 	if ([character isJumping]) {

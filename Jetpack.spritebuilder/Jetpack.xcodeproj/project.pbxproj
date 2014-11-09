@@ -36,7 +36,6 @@
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
 		BB1131BC19E7360000D8603B /* Rock.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1131BB19E7360000D8603B /* Rock.m */; };
-		BB1131C119E7448500D8603B /* uranium.png in Resources */ = {isa = PBXBuildFile; fileRef = BB1131C019E7448500D8603B /* uranium.png */; };
 		BB24493419F050C200975486 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB24493319F050C200975486 /* GLKit.framework */; };
 		BB24493919F06F6A00975486 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493819F06F6A00975486 /* Character.m */; };
 		BB24493C19F0705C00975486 /* CharacterState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493B19F0705C00975486 /* CharacterState.m */; };
@@ -44,6 +43,7 @@
 		BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494319F072DD00975486 /* CharacterJumpingState.m */; };
 		BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494619F0730D00975486 /* CharacterRunningState.m */; };
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
+		BBD8439A1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBD8439C1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,7 +99,6 @@
 		B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = "../libs/cocos2d-iphone/external/Chipmunk/xcode/build/Debug-iphoneos/libObjectiveChipmunk.a"; sourceTree = "<group>"; };
 		BB1131BA19E7360000D8603B /* Rock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rock.h; path = Source/Rock.h; sourceTree = "<group>"; };
 		BB1131BB19E7360000D8603B /* Rock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rock.m; path = Source/Rock.m; sourceTree = "<group>"; };
-		BB1131C019E7448500D8603B /* uranium.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uranium.png; sourceTree = "<group>"; };
 		BB24493319F050C200975486 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		BB24493719F06F6A00975486 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = Source/Character.h; sourceTree = "<group>"; };
 		BB24493819F06F6A00975486 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Character.m; path = Source/Character.m; sourceTree = "<group>"; };
@@ -113,6 +112,7 @@
 		BB24494619F0730D00975486 /* CharacterRunningState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterRunningState.m; path = Source/CharacterRunningState.m; sourceTree = "<group>"; };
 		BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterShootingState.h; path = Source/CharacterShootingState.h; sourceTree = "<group>"; };
 		BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterShootingState.m; path = Source/CharacterShootingState.m; sourceTree = "<group>"; };
+		BBD8439B1A0FD23C00EC61B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/heiTOLENOVOLEPhone.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,7 +229,7 @@
 		B77F1B4617B978D7009739AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BB1131C019E7448500D8603B /* uranium.png */,
+				BBD843951A0FC7FD00EC61B1 /* Fonts */,
 				B73789911807667A0076A88C /* Icons */,
 				B737893A180761570076A88C /* Published-iOS */,
 			);
@@ -271,6 +271,14 @@
 				BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */,
 			);
 			name = State;
+			sourceTree = "<group>";
+		};
+		BBD843951A0FC7FD00EC61B1 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				BBD8439C1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,13 +368,13 @@
 				B737893B180761570076A88C /* Published-iOS in Resources */,
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
+				BBD8439A1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf in Resources */,
 				B71F5915188484E7003F4D28 /* iPhone-old.png in Resources */,
 				B71F5917188484E7003F4D28 /* iPhone.png in Resources */,
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
 				B71F5911188484E7003F4D28 /* iPad-old.png in Resources */,
-				BB1131C119E7448500D8603B /* uranium.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +407,17 @@
 			targetProxy = B7378988180764180076A88C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BBD8439C1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BBD8439B1A0FD23C00EC61B1 /* en */,
+			);
+			name = heiTOLENOVOLEPhone.ttf;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B77F1CDC17B978D8009739AE /* Debug */ = {
