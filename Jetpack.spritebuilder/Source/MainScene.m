@@ -59,7 +59,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadContextInitialSettings];
 
 	// Uranium Rocks
-	//[self loadRocksInitialSettings];
+	[self loadRocksInitialSettings];
 
 	// Character
 	[self loadCharacterInitialSettings];
@@ -117,6 +117,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+	if (touch.locationInWorld.x > 540 && touch.locationInWorld.x < 580) {
+		if (touch.locationInWorld.y > 285 && touch.locationInWorld.y < 320) {
+			if ([CCDirector sharedDirector].isPaused) {
+				[[CCDirector sharedDirector] resume];
+			}
+			else {
+				[[CCDirector sharedDirector] pause];
+			}
+		}
+	}
+
 	if (touch.locationInWorld.x < 300) {
 		if (![character isJumping]) {
 			[character startJumping];
