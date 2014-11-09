@@ -42,6 +42,8 @@
 		BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494019F0729400975486 /* CharacterWalkingState.m */; };
 		BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494319F072DD00975486 /* CharacterJumpingState.m */; };
 		BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494619F0730D00975486 /* CharacterRunningState.m */; };
+		BB28B7341A0FE06F00247126 /* Level.ogg in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7331A0FE06F00247126 /* Level.ogg */; };
+		BB28B7421A0FE4C200247126 /* Level.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7411A0FE4C200247126 /* Level.mp3 */; };
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
 		BBD8439A1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBD8439C1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf */; };
 /* End PBXBuildFile section */
@@ -60,6 +62,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		BB28B7391A0FE06F00247126 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2FEB74F194F6C9E00FC0574;
+			remoteInfo = cocos2dAndroid;
+		};
+		BB28B73B1A0FE06F00247126 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5BF3267A195F8D8800D9A51A;
+			remoteInfo = cocos2dJava;
+		};
+		BB28B73D1A0FE06F00247126 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7A4037A819E37038007B6E8F;
+			remoteInfo = "cocos2d-mac";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -110,6 +133,8 @@
 		BB24494319F072DD00975486 /* CharacterJumpingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterJumpingState.m; path = Source/CharacterJumpingState.m; sourceTree = "<group>"; };
 		BB24494519F0730D00975486 /* CharacterRunningState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterRunningState.h; path = Source/CharacterRunningState.h; sourceTree = "<group>"; };
 		BB24494619F0730D00975486 /* CharacterRunningState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterRunningState.m; path = Source/CharacterRunningState.m; sourceTree = "<group>"; };
+		BB28B7331A0FE06F00247126 /* Level.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = Level.ogg; sourceTree = "<group>"; };
+		BB28B7411A0FE4C200247126 /* Level.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level.mp3; sourceTree = "<group>"; };
 		BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterShootingState.h; path = Source/CharacterShootingState.h; sourceTree = "<group>"; };
 		BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterShootingState.m; path = Source/CharacterShootingState.m; sourceTree = "<group>"; };
 		BBD8439B1A0FD23C00EC61B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/heiTOLENOVOLEPhone.ttf; sourceTree = "<group>"; };
@@ -163,6 +188,9 @@
 			isa = PBXGroup;
 			children = (
 				B737894B180761A90076A88C /* libcocos2d.a */,
+				BB28B73A1A0FE06F00247126 /* libcocos2dAndroid.a */,
+				BB28B73C1A0FE06F00247126 /* cocos2dJava.jar */,
+				BB28B73E1A0FE06F00247126 /* libcocos2d-mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -229,6 +257,7 @@
 		B77F1B4617B978D7009739AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BB28B7401A0FE1F800247126 /* Audio */,
 				BBD843951A0FC7FD00EC61B1 /* Fonts */,
 				B73789911807667A0076A88C /* Icons */,
 				B737893A180761570076A88C /* Published-iOS */,
@@ -271,6 +300,15 @@
 				BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */,
 			);
 			name = State;
+			sourceTree = "<group>";
+		};
+		BB28B7401A0FE1F800247126 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				BB28B7411A0FE4C200247126 /* Level.mp3 */,
+				BB28B7331A0FE06F00247126 /* Level.ogg */,
+			);
+			name = Audio;
 			sourceTree = "<group>";
 		};
 		BBD843951A0FC7FD00EC61B1 /* Fonts */ = {
@@ -352,6 +390,27 @@
 			remoteRef = B737894A180761A90076A88C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BB28B73A1A0FE06F00247126 /* libcocos2dAndroid.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcocos2dAndroid.a;
+			remoteRef = BB28B7391A0FE06F00247126 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BB28B73C1A0FE06F00247126 /* cocos2dJava.jar */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.jar;
+			path = cocos2dJava.jar;
+			remoteRef = BB28B73B1A0FE06F00247126 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BB28B73E1A0FE06F00247126 /* libcocos2d-mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2d-mac.a";
+			remoteRef = BB28B73D1A0FE06F00247126 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -359,6 +418,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB28B7341A0FE06F00247126 /* Level.ogg in Resources */,
 				B71F5919188484E7003F4D28 /* Settings.png in Resources */,
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
@@ -367,6 +427,7 @@
 				B71F5916188484E7003F4D28 /* iPhone-old@2x.png in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,
+				BB28B7421A0FE4C200247126 /* Level.mp3 in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
 				BBD8439A1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf in Resources */,
 				B71F5915188484E7003F4D28 /* iPhone-old.png in Resources */,

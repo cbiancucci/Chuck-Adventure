@@ -11,6 +11,7 @@
 #import "Rock.h"
 
 static const CGFloat cameraScrollSpeed = 80.f;
+static const CGFloat rocketScrollSpeed = 10.f;
 static const CGFloat characterScrollSpeed = 280.f;
 static const CGFloat firstRockXPosition = 280.f;
 static const CGFloat firstRockYPosition = 100.f;
@@ -54,7 +55,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSTimeInterval _sinceUranium;
 	NSTimeInterval _sinceShoot;
 
+	// Rocks
 	NSMutableArray *_rocks;
+
+	// Difficulties
+	CCNode *rocket;
 }
 
 - (void)didLoadFromCCB {
@@ -73,12 +78,20 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// Character
 	[self loadCharacterInitialSettings];
 
+	// Difficulties
+	[self loadDifficultiesSettings];
+
+	// Music
+	[self loadMusicSettings];
+
 	self.userInteractionEnabled = YES;
 }
 
 - (void)loadTextSettings {
 	//hei(TO LENOVO LE Phone)
 	distanceText = [CCLabelTTF labelWithString:@"000" fontName:@"heiTOLENOVOLEPhone" fontSize:20];
+	distanceText.outlineColor = [CCColor blackColor];
+	distanceText.outlineWidth = 2.0f;
 	distanceText.zOrder = DrawingOrderText;
 	[distanceText setPosition:ccp(30.f, 300.f)];
 	[self addChild:distanceText];
@@ -106,6 +119,22 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self spawnNewRock];
 }
 
+- (void)loadDifficultiesSettings {
+	rocket = (CCNode *)[CCBReader load:@"Rocket"];
+	[rocket setPosition:ccp(1000.f, 70.f)];
+	rocket.physicsBody.sensor = YES;
+	rocket.scaleX = 0.25;
+	rocket.scaleY = 0.25;
+	[self addChild:rocket];
+}
+
+- (void)loadMusicSettings {
+	//[[OALSimpleAudio sharedInstance] playBg:@"Level.ogg" loop:YES];
+
+	OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+	[audio playEffect:@"Level.mp3"];
+}
+
 - (void)update:(CCTime)delta {
 	if ([character hasAdrenaline]) {
 		character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
@@ -119,8 +148,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		distance += 0.1f;
 	}
-	[distanceText setString:[NSString stringWithFormat:@"%i", (int)distance]];
+	[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
 
+	rocket.position = ccp(rocket.position.x - rocketScrollSpeed, rocket.position.y);
 	_sinceUranium += delta;
 	_sinceShoot += delta;
 
@@ -142,25 +172,24 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
 	CGPoint touchLocation = [touch locationInView:[touch view]];
 
-	if (touchLocation.x > 525 && touchLocation.x < 560) {
-		if (touchLocation.y > 10 && touchLocation.y < 40) {
-			if ([CCDirector sharedDirector].isPaused) {
-				[[CCDirector sharedDirector] resume];
-			}
-			else {
-				[[CCDirector sharedDirector] pause];
-			}
+	if ((touchLocation.x > 525 && touchLocation.x < 560) && (touchLocation.y > 10 && touchLocation.y < 40)) {
+		if ([CCDirector sharedDirector].isPaused) {
+			[[CCDirector sharedDirector] resume];
+		}
+		else {
+			[[CCDirector sharedDirector] pause];
 		}
 	}
-
-	if (touchLocation.x < 300) {
-		if (![character isJumping]) {
-			[character startJumping];
+	else if (![CCDirector sharedDirector].isPaused) {
+		if (touchLocation.x < 300) {
+			if (![character isJumping]) {
+				[character startJumping];
+			}
 		}
-	}
-	else {
-		[character startShooting];
-		_sinceShoot = 0.f;
+		else {
+			[character startShooting];
+			_sinceShoot = 0.f;
+		}
 	}
 }
 
@@ -219,6 +248,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 // >>> Collisions
 
+// Uranium rocks
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rock:(Rock *)rock {
 	NSLog(@"Character and rock collision");
 	rock.visible = NO;
@@ -250,6 +280,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	if ([character isJumping]) {
 		[character startWalking];
 	}
+	return YES;
+}
+
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rocket:(CCNode *)rocket {
+	NSLog(@"Character and rocket collision");
 	return YES;
 }
 
