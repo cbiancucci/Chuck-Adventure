@@ -199,6 +199,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	CCParticleSystem *blood = (CCParticleSystem *)[CCBReader load:@"Blood"];
 	blood.autoRemoveOnFinish = YES;
 	blood.position = character.position;
+	blood.scaleX = 0.75f;
+	blood.scaleY = 0.75f;
 	blood.zOrder = DrawingOrderParticles;
 	[character.parent addChild:blood];
 
