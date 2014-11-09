@@ -121,11 +121,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)loadDifficultiesSettings {
 	rocket = (CCNode *)[CCBReader load:@"Rocket"];
+	[_physicsNode addChild:rocket];
 	[rocket setPosition:ccp(1000.f, 70.f)];
 	rocket.physicsBody.sensor = YES;
 	rocket.scaleX = 0.25;
 	rocket.scaleY = 0.25;
-	[self addChild:rocket];
 }
 
 - (void)loadMusicSettings {
@@ -283,6 +283,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	return YES;
 }
 
+// Explode and die.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rocket:(CCNode *)rocket {
 	NSLog(@"Character and rocket collision");
 	return YES;
