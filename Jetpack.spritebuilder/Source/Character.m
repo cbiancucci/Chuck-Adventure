@@ -88,6 +88,10 @@
 	}
 }
 
+- (void)die {
+	[self setVisibleState:@"Defeated"];
+}
+
 - (void)setVisibleState:(NSString *)name {
 	for (CCSprite *sprite in[self children]) {
 		if (![sprite.name isEqualToString:name]) {

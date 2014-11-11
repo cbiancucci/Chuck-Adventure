@@ -25,6 +25,7 @@
 - (void)startRunning;
 - (void)startShooting;
 - (void)stopShooting;
+- (void)die;
 
 - (BOOL)hasAdrenaline;
 @end

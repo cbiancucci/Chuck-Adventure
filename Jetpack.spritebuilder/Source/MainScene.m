@@ -9,6 +9,8 @@
 #import "MainScene.h"
 #import "Character.h"
 #import "Rock.h"
+#import "Rocket.h"
+#import "Bullet.h"
 
 static const CGFloat cameraScrollSpeed = 80.f;
 static const CGFloat rocketScrollSpeed = 10.f;
@@ -21,6 +23,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderBackground,
 	DrawingOrderRock,
 	DrawingOrderCharacter,
+	DrawingOrderBullet,
 	DrawingOrderParticles,
 	DrawingOrderText
 };
@@ -58,8 +61,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// Rocks
 	NSMutableArray *_rocks;
 
+	// Weapons
+	NSMutableArray *bullets;
+
 	// Difficulties
-	CCNode *rocket;
+	Rocket *rocket;
 }
 
 - (void)didLoadFromCCB {
@@ -73,7 +79,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadContextInitialSettings];
 
 	// Uranium Rocks
-	[self loadRocksInitialSettings];
+	//[self loadRocksInitialSettings];
 
 	// Character
 	[self loadCharacterInitialSettings];
@@ -120,22 +126,27 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)loadDifficultiesSettings {
-	rocket = (CCNode *)[CCBReader load:@"Rocket"];
+	rocket = (Rocket *)[CCBReader load:@"RocketExplosion"];
 	[_physicsNode addChild:rocket];
 	[rocket setPosition:ccp(1000.f, 70.f)];
-	rocket.physicsBody.sensor = YES;
-	rocket.scaleX = 0.25;
-	rocket.scaleY = 0.25;
 }
 
 - (void)loadMusicSettings {
-	//[[OALSimpleAudio sharedInstance] playBg:@"Level.ogg" loop:YES];
-
 	OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
 	[audio playEffect:@"Level.mp3"];
 }
 
 - (void)update:(CCTime)delta {
+	if (!rocket) {
+		rocket.position = ccp(rocket.position.x - rocketScrollSpeed, rocket.position.y);
+	}
+
+	if (bullets) {
+		for (Bullet *bullet in bullets) {
+			bullet.position = ccp(bullet.position.x + (delta * 10 * cameraScrollSpeed), bullet.position.y);
+		}
+	}
+
 	if ([character hasAdrenaline]) {
 		character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
 		_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
@@ -150,7 +161,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 	[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
 
-	rocket.position = ccp(rocket.position.x - rocketScrollSpeed, rocket.position.y);
 	_sinceUranium += delta;
 	_sinceShoot += delta;
 
@@ -188,6 +198,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 		else {
 			[character startShooting];
+			[self createBullet];
 			_sinceShoot = 0.f;
 		}
 	}
@@ -246,6 +257,18 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[_rocks addObject:rock];
 }
 
+- (void)createBullet {
+	if (!bullets) {
+		bullets = [[NSMutableArray alloc] init];
+	}
+
+	Bullet *bullet = (Bullet *)[CCBReader load:@"Bullet"];
+	[bullet setPosition:ccp(character.position.x + 30, character.position.y - 8)];
+	bullet.zOrder = DrawingOrderBullet;
+	[_physicsNode addChild:bullet];
+	[bullets addObject:bullet];
+}
+
 // >>> Collisions
 
 // Uranium rocks
@@ -269,7 +292,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	blood.scaleX = 0.75f;
 	blood.scaleY = 0.75f;
 	blood.zOrder = DrawingOrderParticles;
-	[character.parent addChild:blood];
+	[_physicsNode addChild:blood];
+	//[character die];
 
 	return YES;
 }
@@ -284,8 +308,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 // Explode and die.
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rocket:(CCNode *)rocket {
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Character and rocket collision");
+	[rocket explode];
+	//[character die];
+
 	return YES;
 }
 
