@@ -44,7 +44,9 @@
 		BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494619F0730D00975486 /* CharacterRunningState.m */; };
 		BB28B7341A0FE06F00247126 /* Level.ogg in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7331A0FE06F00247126 /* Level.ogg */; };
 		BB28B7421A0FE4C200247126 /* Level.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7411A0FE4C200247126 /* Level.mp3 */; };
+		BB53AB081A0FFC3600A03765 /* Rocket.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53AB071A0FFC3600A03765 /* Rocket.m */; };
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
+		BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD1C8F51A119934002AAE33 /* Bullet.m */; };
 		BBD8439A1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBD8439C1A0FD23C00EC61B1 /* heiTOLENOVOLEPhone.ttf */; };
 /* End PBXBuildFile section */
 
@@ -135,8 +137,12 @@
 		BB24494619F0730D00975486 /* CharacterRunningState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterRunningState.m; path = Source/CharacterRunningState.m; sourceTree = "<group>"; };
 		BB28B7331A0FE06F00247126 /* Level.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = Level.ogg; sourceTree = "<group>"; };
 		BB28B7411A0FE4C200247126 /* Level.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level.mp3; sourceTree = "<group>"; };
+		BB53AB061A0FFC3600A03765 /* Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rocket.h; path = Source/Rocket.h; sourceTree = "<group>"; };
+		BB53AB071A0FFC3600A03765 /* Rocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rocket.m; path = Source/Rocket.m; sourceTree = "<group>"; };
 		BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterShootingState.h; path = Source/CharacterShootingState.h; sourceTree = "<group>"; };
 		BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterShootingState.m; path = Source/CharacterShootingState.m; sourceTree = "<group>"; };
+		BBD1C8F41A119934002AAE33 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
+		BBD1C8F51A119934002AAE33 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
 		BBD8439B1A0FD23C00EC61B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/heiTOLENOVOLEPhone.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,13 +179,17 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BB24493D19F0716100975486 /* Character */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
+				BBD1C8F41A119934002AAE33 /* Bullet.h */,
+				BBD1C8F51A119934002AAE33 /* Bullet.m */,
+				BB24493D19F0716100975486 /* Character */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				BB1131BA19E7360000D8603B /* Rock.h */,
 				BB1131BB19E7360000D8603B /* Rock.m */,
+				BB53AB061A0FFC3600A03765 /* Rocket.h */,
+				BB53AB071A0FFC3600A03765 /* Rocket.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -278,9 +288,9 @@
 		BB24493D19F0716100975486 /* Character */ = {
 			isa = PBXGroup;
 			children = (
-				BB24493E19F0716D00975486 /* State */,
 				BB24493719F06F6A00975486 /* Character.h */,
 				BB24493819F06F6A00975486 /* Character.m */,
+				BB24493E19F0716D00975486 /* State */,
 			);
 			name = Character;
 			sourceTree = "<group>";
@@ -450,12 +460,14 @@
 				BB1131BC19E7360000D8603B /* Rock.m in Sources */,
 				BB24493919F06F6A00975486 /* Character.m in Sources */,
 				BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */,
+				BB53AB081A0FFC3600A03765 /* Rocket.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				BB24493C19F0705C00975486 /* CharacterState.m in Sources */,
 				BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */,
 				BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
+				BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +503,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -524,6 +537,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
