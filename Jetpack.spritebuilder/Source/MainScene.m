@@ -57,6 +57,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSTimeInterval _sinceTouch;
 	NSTimeInterval _sinceUranium;
 	NSTimeInterval _sinceShoot;
+	NSTimeInterval _sinceBullet;
 
 	// Rocks
 	NSMutableArray *_rocks;
@@ -88,7 +89,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	[self loadMusicSettings];
+	//[self loadMusicSettings];
 
 	self.userInteractionEnabled = YES;
 }
@@ -161,8 +162,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 	[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
 
+	_sinceShoot  += delta;
+	_sinceBullet += delta;
 	_sinceUranium += delta;
-	_sinceShoot += delta;
+
+	if ([character isShooting] && _sinceBullet > 0.4f) {
+		_sinceBullet = 0;
+		[self createBullet];
+	}
 
 	if (_sinceUranium > 2.0f) {
 		character.hasAdrenaline = NO;
@@ -198,8 +205,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 		else {
 			[character startShooting];
-			[self createBullet];
 			_sinceShoot = 0.f;
+			_sinceBullet = 0.f;
+			[self createBullet];
 		}
 	}
 }
