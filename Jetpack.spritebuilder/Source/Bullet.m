@@ -25,7 +25,9 @@
 	dart = (CCSprite *)[self getChildByName:@"Dart" recursively:YES];
 	dart.visible = YES;
 
-	self.physicsBody.sensor = YES;
+	self.physicsBody.collisionGroup = @"character";
+//	self.physicsBody.collisionType = @"bullet";
+//	self.physicsBody.sensor = YES;
 }
 
 @end

@@ -316,8 +316,6 @@
 						<string>ccbResources/ccbParticleStars.png</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -470,6 +468,17 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>normalMapSpriteFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string></string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>color</string>
 						<key>type</key>
 						<string>Color3</string>
@@ -480,6 +489,14 @@
 							<real>1</real>
 							<real>1</real>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>effects</string>
+						<key>type</key>
+						<string>EffectControl</string>
+						<key>value</key>
+						<array/>
 					</dict>
 				</array>
 			</dict>
@@ -499,7 +516,7 @@
 			<key>allowsRotation</key>
 			<false/>
 			<key>bodyShape</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>collisionCategories</key>
 			<array/>
 			<key>collisionMask</key>
@@ -507,7 +524,7 @@
 			<key>collisionType</key>
 			<string>rock</string>
 			<key>cornerRadius</key>
-			<real>0.0</real>
+			<real>16</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -519,59 +536,12 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>-19.26953125</real>
-					<real>-12.92578125</real>
-				</array>
-				<array>
-					<real>0.5078125</real>
-					<real>-24.09375</real>
-				</array>
-				<array>
-					<real>21.7109375</real>
-					<real>-10.97265625</real>
-				</array>
-				<array>
-					<real>19.8359375</real>
-					<real>12.3203125</real>
-				</array>
-				<array>
-					<real>0.73828125</real>
-					<real>21.203125</real>
-				</array>
-				<array>
-					<real>-17.6953125</real>
-					<real>10.0078125</real>
+					<real>0.0</real>
+					<real>0.0</real>
 				</array>
 			</array>
 			<key>polygons</key>
-			<array>
-				<array>
-					<array>
-						<real>-19.26953125</real>
-						<real>-12.92578125</real>
-					</array>
-					<array>
-						<real>0.5078125</real>
-						<real>-24.09375</real>
-					</array>
-					<array>
-						<real>21.7109375</real>
-						<real>-10.97265625</real>
-					</array>
-					<array>
-						<real>19.8359375</real>
-						<real>12.3203125</real>
-					</array>
-					<array>
-						<real>0.73828125</real>
-						<real>21.203125</real>
-					</array>
-					<array>
-						<real>-17.6953125</real>
-						<real>10.0078125</real>
-					</array>
-				</array>
-			</array>
+			<array/>
 		</dict>
 		<key>properties</key>
 		<array>

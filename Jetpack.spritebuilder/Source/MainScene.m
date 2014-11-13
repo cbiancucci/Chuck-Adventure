@@ -11,9 +11,9 @@
 #import "Rock.h"
 #import "Rocket.h"
 #import "Bullet.h"
+#import "Explosion.h"
 
 static const CGFloat cameraScrollSpeed = 80.f;
-static const CGFloat rocketScrollSpeed = 10.f;
 static const CGFloat characterScrollSpeed = 280.f;
 static const CGFloat firstRockXPosition = 280.f;
 static const CGFloat firstRockYPosition = 100.f;
@@ -30,6 +30,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 @implementation MainScene {
 	double distance;
+
+	CGSize size;
 
 	//PhysicsNode
 	CCPhysicsNode *_physicsNode;
@@ -70,6 +72,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)didLoadFromCCB {
+	size  = [CCDirector sharedDirector].viewSize;
+
 	// set this class as delegate
 	_physicsNode.collisionDelegate = self;
 
@@ -80,7 +84,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadContextInitialSettings];
 
 	// Uranium Rocks
-	//[self loadRocksInitialSettings];
+	[self loadRocksInitialSettings];
 
 	// Character
 	[self loadCharacterInitialSettings];
@@ -89,14 +93,16 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	//[self loadMusicSettings];
+	[self loadMusicSettings];
 
 	self.userInteractionEnabled = YES;
+
+	_physicsNode.debugDraw = YES;
 }
 
 - (void)loadTextSettings {
 	//hei(TO LENOVO LE Phone)
-	distanceText = [CCLabelTTF labelWithString:@"000" fontName:@"heiTOLENOVOLEPhone" fontSize:20];
+	distanceText = [CCLabelTTF labelWithString:@"000" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
 	distanceText.outlineColor = [CCColor blackColor];
 	distanceText.outlineWidth = 2.0f;
 	distanceText.zOrder = DrawingOrderText;
@@ -128,8 +134,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)loadDifficultiesSettings {
 	rocket = (Rocket *)[CCBReader load:@"RocketExplosion"];
-	[_physicsNode addChild:rocket];
+	rocket.zOrder = DrawingOrderParticles;
 	[rocket setPosition:ccp(1000.f, 70.f)];
+	[_physicsNode addChild:rocket];
 }
 
 - (void)loadMusicSettings {
@@ -138,16 +145,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)update:(CCTime)delta {
-	if (!rocket) {
-		rocket.position = ccp(rocket.position.x - rocketScrollSpeed, rocket.position.y);
+	// Update rocket position.
+	if (rocket) {
+		rocket.physicsBody.velocity = CGPointMake(-50, 0);
 	}
 
-	if (bullets) {
-		for (Bullet *bullet in bullets) {
-			bullet.position = ccp(bullet.position.x + (delta * 10 * cameraScrollSpeed), bullet.position.y);
-		}
+	// Update and destroy off screen bullets.
+	if (bullets && [bullets count] > 0) {
+		[self updateBullets:delta];
 	}
 
+	// Update character position.
 	if ([character hasAdrenaline]) {
 		character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
 		_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
@@ -160,30 +168,54 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		distance += 0.1f;
 	}
-	[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
 
-	_sinceShoot  += delta;
+	// Update character state.
 	_sinceBullet += delta;
-	_sinceUranium += delta;
-
 	if ([character isShooting] && _sinceBullet > 0.4f) {
 		_sinceBullet = 0;
 		[self createBullet];
 	}
-
+	_sinceUranium += delta;
 	if (_sinceUranium > 2.0f) {
 		character.hasAdrenaline = NO;
 	}
 
-	if ([character isRunning] && _sinceUranium > 1.0f) {
+	if ([character isRunning] && ![character hasAdrenaline]) {
 		[character startWalking];
 	}
 
+	_sinceShoot  += delta;
 	if ([character isShooting] && _sinceShoot > 1.0f) {
 		[character stopShooting];
 	}
 
+	// Update distance text.
+	[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
+
 	[self loopBackground];
+}
+
+- (void)updateBullets:(CCTime)delta {
+	NSMutableArray *removeBullets = [[NSMutableArray alloc] init];
+	for (Bullet *bullet in bullets) {
+		bullet.position = ccp(bullet.position.x + (delta * 10 * cameraScrollSpeed), bullet.position.y);
+
+		CGPoint bulletWorldPosition = [_physicsNode convertToWorldSpace:bullet.position];
+		if (bulletWorldPosition.x > size.width) {
+			[removeBullets addObject:bullet];
+		}
+	}
+
+	if ([removeBullets count] > 0) {
+		[self destroyBullets:removeBullets];
+	}
+}
+
+- (void)destroyBullets:(NSMutableArray *)removeBullets {
+	for (Bullet *bullet in removeBullets) {
+		[bullet removeFromParentAndCleanup:YES];
+		[bullets removeObject:bullet];
+	}
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
@@ -257,7 +289,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 
 	Rock *rock = (Rock *)[CCBReader load:@"Uranium"];
-//	[rock setupPositionX:(previousRockYPosition + distanceBetweenRocks) positionY:previousRockYPosition];
 	rock.position = ccp(previousRockXPosition + distanceBetweenRocks, previousRockYPosition);
 	rock.zOrder = DrawingOrderCharacter;
 
@@ -283,11 +314,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rock:(Rock *)rock {
 	NSLog(@"Character and rock collision");
 	rock.visible = NO;
-	[rock removeFromParent];
+	[rock removeFromParentAndCleanup:YES];
 	[_rocks removeObject:rock];
 
 	_sinceUranium = 0.f;
 	character.hasAdrenaline = YES;
+	[character startRunning];
 	return YES;
 }
 
@@ -318,6 +350,19 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Explode and die.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Character and rocket collision");
+	Explosion *explosion = (Explosion *)[CCBReader load:@"Explosion"];
+	[rocket addChild:explosion];
+	[rocket explode];
+	explosion.position = ccp(0, 0);
+
+	[character die];
+
+	return YES;
+}
+
+// Explode and die.
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision rocket:(Rocket *)rocketCollision {
+	NSLog(@"Bullet and rocket collision");
 	[rocket explode];
 	//[character die];
 

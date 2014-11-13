@@ -13,7 +13,7 @@
 }
 
 - (void)didLoadFromCCB {
-	rock.physicsBody.collisionType = @"rock";
+//	rock.physicsBody.collisionType = @"rock";
 	rock.physicsBody.sensor = TRUE;
 }
 

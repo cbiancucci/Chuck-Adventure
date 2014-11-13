@@ -9,31 +9,23 @@
 #import "Rocket.h"
 
 @implementation Rocket {
-	CCSprite *rocket;
-	CCSprite *explosion;
+	CCSprite *rocketSprite;
 }
 
 - (void)didLoadFromCCB {
-	rocket = (CCSprite *)[self getChildByName:@"Rocket" recursively:YES];
-	rocket.scaleX = 0.25;
-	rocket.scaleY = 0.25;
-	rocket.physicsBody.sensor = TRUE;
-	rocket.physicsBody.collisionType = @"rocket";
+	rocketSprite = (CCSprite *)[self getChildByName:@"Rocket" recursively:YES];
+	rocketSprite.scaleX = 0.25;
+	rocketSprite.scaleY = 0.25;
 
-	explosion = (CCSprite *)[self getChildByName:@"Explosion" recursively:YES];
-}
-
-- (void)setupPositionX:(CGFloat *)positionX positionY:(CGFloat *)positionY {
-	//	rock.position = ccp(previousRockXPosition + distanceBetweenRocks, previousRockYPosition);
+	self.physicsBody.sensor = YES;
 }
 
 - (void)explode {
-	rocket.visible = NO;
-	explosion.visible = YES;
+	rocketSprite.visible = NO;
 }
 
 - (CCSprite *)rocket {
-	return rocket;
+	return rocketSprite;
 }
 
 @end

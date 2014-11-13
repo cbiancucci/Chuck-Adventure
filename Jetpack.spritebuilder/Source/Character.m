@@ -14,6 +14,10 @@
 
 @implementation Character
 
+- (void)didLoadFromCCB {
+	self.physicsBody.collisionGroup = @"character";
+}
+
 - (BOOL)isWalking {
 	return [self getChildByName:@"Walk" recursively:YES].visible || [self getChildByName:@"ShootWalking" recursively:YES].visible;
 }
