@@ -42,7 +42,6 @@
 		BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494019F0729400975486 /* CharacterWalkingState.m */; };
 		BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494319F072DD00975486 /* CharacterJumpingState.m */; };
 		BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494619F0730D00975486 /* CharacterRunningState.m */; };
-		BB28B7341A0FE06F00247126 /* Level.ogg in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7331A0FE06F00247126 /* Level.ogg */; };
 		BB28B7421A0FE4C200247126 /* Level.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7411A0FE4C200247126 /* Level.mp3 */; };
 		BB53AB081A0FFC3600A03765 /* Rocket.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53AB071A0FFC3600A03765 /* Rocket.m */; };
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
@@ -136,7 +135,6 @@
 		BB24494319F072DD00975486 /* CharacterJumpingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterJumpingState.m; path = Source/CharacterJumpingState.m; sourceTree = "<group>"; };
 		BB24494519F0730D00975486 /* CharacterRunningState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterRunningState.h; path = Source/CharacterRunningState.h; sourceTree = "<group>"; };
 		BB24494619F0730D00975486 /* CharacterRunningState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterRunningState.m; path = Source/CharacterRunningState.m; sourceTree = "<group>"; };
-		BB28B7331A0FE06F00247126 /* Level.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = Level.ogg; sourceTree = "<group>"; };
 		BB28B7411A0FE4C200247126 /* Level.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level.mp3; sourceTree = "<group>"; };
 		BB53AB061A0FFC3600A03765 /* Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rocket.h; path = Source/Rocket.h; sourceTree = "<group>"; };
 		BB53AB071A0FFC3600A03765 /* Rocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rocket.m; path = Source/Rocket.m; sourceTree = "<group>"; };
@@ -321,7 +319,6 @@
 			isa = PBXGroup;
 			children = (
 				BB28B7411A0FE4C200247126 /* Level.mp3 */,
-				BB28B7331A0FE06F00247126 /* Level.ogg */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -433,7 +430,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB28B7341A0FE06F00247126 /* Level.ogg in Resources */,
 				B71F5919188484E7003F4D28 /* Settings.png in Resources */,
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,

@@ -358,7 +358,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[rocket explode];
 	explosion.position = ccp(0, 0);
 
-	[character bleed];
 	[self defeat];
 
 	return YES;
