@@ -14,8 +14,11 @@
 
 @implementation Character
 
+BOOL defeated;
+
 - (void)didLoadFromCCB {
 	self.physicsBody.collisionGroup = @"character";
+	defeated = NO;
 }
 
 - (BOOL)isWalking {
@@ -32,6 +35,10 @@
 
 - (BOOL)isShooting {
 	return [self getChildByName:@"ShootWalking" recursively:YES].visible || [self getChildByName:@"ShootJumping" recursively:YES].visible || [self getChildByName:@"ShootRunning" recursively:YES].visible;
+}
+
+- (BOOL)isDead {
+	return defeated;
 }
 
 - (void)stop {
@@ -92,11 +99,24 @@
 	}
 }
 
+- (void)bleed {
+	CCParticleSystem *blood = (CCParticleSystem *)[CCBReader load:@"Blood"];
+	blood.autoRemoveOnFinish = YES;
+	blood.scaleX = 0.75f;
+	blood.scaleY = 0.75f;
+	[self addChild:blood];
+	blood.position = ccp(0, 0);
+	blood.zOrder = self.zOrder + 1;
+}
+
 - (void)die {
-	[self setVisibleState:@"Defeated"];
+	[self setVisibleState:@""];
+	defeated = YES;
 }
 
 - (void)setVisibleState:(NSString *)name {
+	[self getChildByName:name recursively:YES].visible = YES;
+
 	for (CCSprite *sprite in[self children]) {
 		if (![sprite.name isEqualToString:name]) {
 			sprite.visible = NO;

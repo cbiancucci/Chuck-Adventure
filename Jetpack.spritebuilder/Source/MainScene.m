@@ -97,7 +97,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	self.userInteractionEnabled = YES;
 
-	_physicsNode.debugDraw = YES;
+	//_physicsNode.debugDraw = YES;
 }
 
 - (void)loadTextSettings {
@@ -145,54 +145,56 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)update:(CCTime)delta {
-	// Update rocket position.
-	if (rocket) {
-		rocket.physicsBody.velocity = CGPointMake(-50, 0);
+	if (![character isDead]) {
+		// Update rocket position.
+		if (rocket) {
+			rocket.physicsBody.velocity = CGPointMake(-50, 0);
+		}
+
+		// Update and destroy off screen bullets.
+		if (bullets && [bullets count] > 0) {
+			[self updateBullets:delta];
+		}
+
+		// Update character position.
+		if ([character hasAdrenaline]) {
+			character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
+			_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
+
+			distance += 0.5f;
+		}
+		else {
+			character.position = ccp(character.position.x + delta * cameraScrollSpeed, character.position.y);
+			_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
+
+			distance += 0.1f;
+		}
+
+		// Update character state.
+		_sinceBullet += delta;
+		if ([character isShooting] && _sinceBullet > 0.4f) {
+			_sinceBullet = 0;
+			[self createBullet];
+		}
+		_sinceUranium += delta;
+		if (_sinceUranium > 2.0f) {
+			character.hasAdrenaline = NO;
+		}
+
+		if ([character isRunning] && ![character hasAdrenaline]) {
+			[character startWalking];
+		}
+
+		_sinceShoot  += delta;
+		if ([character isShooting] && _sinceShoot > 1.0f) {
+			[character stopShooting];
+		}
+
+		// Update distance text.
+		[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
+
+		[self loopBackground];
 	}
-
-	// Update and destroy off screen bullets.
-	if (bullets && [bullets count] > 0) {
-		[self updateBullets:delta];
-	}
-
-	// Update character position.
-	if ([character hasAdrenaline]) {
-		character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
-		_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
-
-		distance += 0.5f;
-	}
-	else {
-		character.position = ccp(character.position.x + delta * cameraScrollSpeed, character.position.y);
-		_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
-
-		distance += 0.1f;
-	}
-
-	// Update character state.
-	_sinceBullet += delta;
-	if ([character isShooting] && _sinceBullet > 0.4f) {
-		_sinceBullet = 0;
-		[self createBullet];
-	}
-	_sinceUranium += delta;
-	if (_sinceUranium > 2.0f) {
-		character.hasAdrenaline = NO;
-	}
-
-	if ([character isRunning] && ![character hasAdrenaline]) {
-		[character startWalking];
-	}
-
-	_sinceShoot  += delta;
-	if ([character isShooting] && _sinceShoot > 1.0f) {
-		[character stopShooting];
-	}
-
-	// Update distance text.
-	[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
-
-	[self loopBackground];
 }
 
 - (void)updateBullets:(CCTime)delta {
@@ -308,6 +310,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[bullets addObject:bullet];
 }
 
+- (void)defeat {
+	[character die];
+	CCSprite *defeatedSprite = (CCSprite *)[CCBReader load:@"CharacterDefeated"];
+	[character addChild:defeatedSprite];
+	defeatedSprite.position = ccp(0, 0);
+	defeatedSprite.visible = YES;
+}
+
 // >>> Collisions
 
 // Uranium rocks
@@ -326,14 +336,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Play blood particle.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision spike:(CCNode *)spike {
 	NSLog(@"Character and spike collision");
-	CCParticleSystem *blood = (CCParticleSystem *)[CCBReader load:@"Blood"];
-	blood.autoRemoveOnFinish = YES;
-	blood.position = character.position;
-	blood.scaleX = 0.75f;
-	blood.scaleY = 0.75f;
-	blood.zOrder = DrawingOrderParticles;
-	[_physicsNode addChild:blood];
-	//[character die];
+	[character bleed];
 
 	return YES;
 }
@@ -355,7 +358,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[rocket explode];
 	explosion.position = ccp(0, 0);
 
-	[character die];
+	[character bleed];
+	[self defeat];
 
 	return YES;
 }

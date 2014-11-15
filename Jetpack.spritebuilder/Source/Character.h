@@ -18,6 +18,7 @@
 - (BOOL)isJumping;
 - (BOOL)isRunning;
 - (BOOL)isShooting;
+- (BOOL)isDead;
 
 - (void)stop;
 - (void)startWalking;
@@ -26,6 +27,7 @@
 - (void)startShooting;
 - (void)stopShooting;
 - (void)die;
+- (void)bleed;
 
 - (BOOL)hasAdrenaline;
 @end
