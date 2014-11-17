@@ -41,6 +41,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	// Texts
 	CCLabelTTF *distanceText;
+	CCLabelTTF *gameOverText;
+	CCLabelTTF *retryText;
 
 	// Background
 	CCNode *_background1;
@@ -101,13 +103,28 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)loadTextSettings {
-	//hei(TO LENOVO LE Phone)
 	distanceText = [CCLabelTTF labelWithString:@"000" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
 	distanceText.outlineColor = [CCColor blackColor];
 	distanceText.outlineWidth = 2.0f;
 	distanceText.zOrder = DrawingOrderText;
 	[distanceText setPosition:ccp(30.f, 300.f)];
 	[self addChild:distanceText];
+
+	gameOverText = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:40];
+	gameOverText.outlineColor = [CCColor blackColor];
+	gameOverText.outlineWidth = 2.0f;
+	gameOverText.zOrder = DrawingOrderText;
+	[gameOverText setPosition:ccp(280.f, 150.f)];
+	[self addChild:gameOverText];
+	gameOverText.visible = NO;
+
+	retryText = [CCLabelTTF labelWithString:@"Retry" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
+	retryText.outlineColor = [CCColor blackColor];
+	retryText.outlineWidth = 2.0f;
+	retryText.zOrder = DrawingOrderText;
+	[retryText setPosition:ccp(280.f, 100.f)];
+	[self addChild:retryText];
+	retryText.visible = NO;
 }
 
 - (void)loadContextInitialSettings {
@@ -195,6 +212,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		[self loopBackground];
 	}
+	else {
+		gameOverText.visible = YES;
+		retryText.visible = YES;
+	}
 }
 
 - (void)updateBullets:(CCTime)delta {
@@ -222,27 +243,33 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
 	CGPoint touchLocation = [touch locationInView:[touch view]];
-
-	if ((touchLocation.x > 525 && touchLocation.x < 560) && (touchLocation.y > 10 && touchLocation.y < 40)) {
-		if ([CCDirector sharedDirector].isPaused) {
-			[[CCDirector sharedDirector] resume];
-		}
-		else {
-			[[CCDirector sharedDirector] pause];
-		}
-	}
-	else if (![CCDirector sharedDirector].isPaused) {
-		if (touchLocation.x < 300) {
-			if (![character isJumping]) {
-				[character startJumping];
+	if (![character isDead]) {
+		if ((touchLocation.x > 525 && touchLocation.x < 560) && (touchLocation.y > 10 && touchLocation.y < 40)) {
+			if ([CCDirector sharedDirector].isPaused) {
+				[[CCDirector sharedDirector] resume];
+			}
+			else {
+				[[CCDirector sharedDirector] pause];
 			}
 		}
-		else {
-			[character startShooting];
-			_sinceShoot = 0.f;
-			_sinceBullet = 0.f;
-			[self createBullet];
+		else if (![CCDirector sharedDirector].isPaused) {
+			if (touchLocation.x < 300) {
+				if (![character isJumping]) {
+					[character startJumping];
+				}
+			}
+			else {
+				[character startShooting];
+				_sinceShoot = 0.f;
+				_sinceBullet = 0.f;
+				[self createBullet];
+			}
 		}
+	}
+	else {
+//		if ((touchLocation.x > 280 && touchLocation.x < 500) && (touchLocation.y > 50 && touchLocation.y < 100)) {
+//
+//		}
 	}
 }
 

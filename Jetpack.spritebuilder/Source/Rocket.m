@@ -22,6 +22,7 @@
 
 - (void)explode {
 	rocketSprite.visible = NO;
+	rocketSprite.physicsBody.sensor = NO;
 }
 
 - (CCSprite *)rocket {
