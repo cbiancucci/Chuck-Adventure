@@ -10,6 +10,4 @@
 
 @interface Rocket : CCNode
 
-- (void)explode;
-- (CCSprite *)rocket;
 @end

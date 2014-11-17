@@ -20,13 +20,4 @@
 	self.physicsBody.sensor = YES;
 }
 
-- (void)explode {
-	rocketSprite.visible = NO;
-	rocketSprite.physicsBody.sensor = NO;
-}
-
-- (CCSprite *)rocket {
-	return rocketSprite;
-}
-
 @end

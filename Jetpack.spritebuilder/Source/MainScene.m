@@ -343,6 +343,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[bullets addObject:bullet];
 }
 
+- (void)explodeRocket {
+	Explosion *explosion = (Explosion *)[CCBReader load:@"Explosion"];
+	[_physicsNode addChild:explosion];
+	explosion.position = rocket.position;
+	[rocket removeFromParentAndCleanup:YES];
+}
+
 - (void)defeat {
 	[character die];
 	CCSprite *defeatedSprite = (CCSprite *)[CCBReader load:@"CharacterDefeated"];
@@ -386,11 +393,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Explode and die.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Character and rocket collision");
-	Explosion *explosion = (Explosion *)[CCBReader load:@"Explosion"];
-	[rocket addChild:explosion];
-	[rocket explode];
-	explosion.position = ccp(0, 0);
-
+	[self explodeRocket];
 	[self defeat];
 
 	return YES;
@@ -399,8 +402,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Explode and die.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Bullet and rocket collision");
-	[rocket explode];
-	//[character die];
+	[self explodeRocket];
+	[bullets removeObject:bulletCollision];
+	[bulletCollision removeFromParentAndCleanup:YES];
 
 	return YES;
 }
