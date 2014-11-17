@@ -24,6 +24,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderRock,
 	DrawingOrderCharacter,
 	DrawingOrderBullet,
+	DrawingOrderRocket,
 	DrawingOrderParticles,
 	DrawingOrderText
 };
@@ -126,7 +127,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self addChild:gameOverText];
 	gameOverText.visible = NO;
 
-	retryText = [CCLabelTTF labelWithString:@"Retry" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
+	retryText = [CCLabelTTF labelWithString:@"Tap the screen to play again" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
 	retryText.outlineColor = [CCColor blackColor];
 	retryText.outlineWidth = 2.0f;
 	retryText.zOrder = DrawingOrderText;
@@ -349,7 +350,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)createRocket {
 	rocket = (Rocket *)[CCBReader load:@"RocketExplosion"];
-	rocket.zOrder = DrawingOrderParticles;
+	rocket.zOrder = DrawingOrderRocket;
 	[rocket setPosition:ccp(character.position.x + 1000.f, 50.f)];
 	[_physicsNode addChild:rocket];
 }
