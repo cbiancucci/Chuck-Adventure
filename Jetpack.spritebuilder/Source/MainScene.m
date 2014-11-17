@@ -267,6 +267,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 	}
 	else {
+		[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 //		if ((touchLocation.x > 280 && touchLocation.x < 500) && (touchLocation.y > 50 && touchLocation.y < 100)) {
 //
 //		}
