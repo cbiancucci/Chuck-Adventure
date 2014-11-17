@@ -41,6 +41,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	// Texts
 	CCLabelTTF *distanceText;
+	CCLabelTTF *pauseText;
 	CCLabelTTF *gameOverText;
 	CCLabelTTF *retryText;
 
@@ -95,7 +96,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	[self loadMusicSettings];
+	//[self loadMusicSettings];
 
 	self.userInteractionEnabled = YES;
 
@@ -109,6 +110,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	distanceText.zOrder = DrawingOrderText;
 	[distanceText setPosition:ccp(30.f, 300.f)];
 	[self addChild:distanceText];
+
+	pauseText = [CCLabelTTF labelWithString:@"I I" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
+	pauseText.outlineColor = [CCColor blackColor];
+	pauseText.outlineWidth = 2.0f;
+	pauseText.zOrder = DrawingOrderText;
+	[pauseText setPosition:ccp(535.f, 300.f)];
+	[self addChild:pauseText];
 
 	gameOverText = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:40];
 	gameOverText.outlineColor = [CCColor blackColor];
@@ -152,7 +160,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)loadDifficultiesSettings {
 	rocket = (Rocket *)[CCBReader load:@"RocketExplosion"];
 	rocket.zOrder = DrawingOrderParticles;
-	[rocket setPosition:ccp(1000.f, 70.f)];
+	[rocket setPosition:ccp(1000.f, 50.f)];
 	[_physicsNode addChild:rocket];
 }
 
@@ -244,7 +252,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
 	CGPoint touchLocation = [touch locationInView:[touch view]];
 	if (![character isDead]) {
-		if ((touchLocation.x > 525 && touchLocation.x < 560) && (touchLocation.y > 10 && touchLocation.y < 40)) {
+		if ((touchLocation.x > 520 && touchLocation.x < 550) && (touchLocation.y > 5 && touchLocation.y < 35)) {
 			if ([CCDirector sharedDirector].isPaused) {
 				[[CCDirector sharedDirector] resume];
 			}
@@ -268,9 +276,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 	else {
 		[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
-//		if ((touchLocation.x > 280 && touchLocation.x < 500) && (touchLocation.y > 50 && touchLocation.y < 100)) {
-//
-//		}
 	}
 }
 
