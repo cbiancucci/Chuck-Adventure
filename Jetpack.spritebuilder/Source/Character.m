@@ -65,7 +65,7 @@ BOOL defeated;
 	else {
 		[self setVisibleState:@"ShootJumping"];
 	}
-	[self.physicsBody applyImpulse:ccp(200.f, 2500.f)];
+	[self.physicsBody applyImpulse:ccp(0.f, 2500.f)];
 }
 
 - (void)startRunning {

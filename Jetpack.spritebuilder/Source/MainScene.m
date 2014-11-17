@@ -87,7 +87,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadContextInitialSettings];
 
 	// Uranium Rocks
-	[self loadRocksInitialSettings];
+//	[self loadRocksInitialSettings];
 
 	// Character
 	[self loadCharacterInitialSettings];
@@ -158,10 +158,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)loadDifficultiesSettings {
-	rocket = (Rocket *)[CCBReader load:@"RocketExplosion"];
-	rocket.zOrder = DrawingOrderParticles;
-	[rocket setPosition:ccp(1000.f, 50.f)];
-	[_physicsNode addChild:rocket];
+	[self createRocket];
 }
 
 - (void)loadMusicSettings {
@@ -173,7 +170,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	if (![character isDead]) {
 		// Update rocket position.
 		if (rocket) {
-			rocket.physicsBody.velocity = CGPointMake(-50, 0);
+			rocket.physicsBody.velocity = CGPointMake(-200, 0);
+
+			CGPoint rocketWorldPosition = [_physicsNode convertToWorldSpace:rocket.position];
+
+			if (rocketWorldPosition.x < -200) {
+				[rocket removeFromParentAndCleanup:YES];
+				[self createRocket];
+			}
 		}
 
 		// Update and destroy off screen bullets.
@@ -343,6 +347,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[bullets addObject:bullet];
 }
 
+- (void)createRocket {
+	rocket = (Rocket *)[CCBReader load:@"RocketExplosion"];
+	rocket.zOrder = DrawingOrderParticles;
+	[rocket setPosition:ccp(character.position.x + 1000.f, 50.f)];
+	[_physicsNode addChild:rocket];
+}
+
 - (void)explodeRocket {
 	Explosion *explosion = (Explosion *)[CCBReader load:@"Explosion"];
 	[_physicsNode addChild:explosion];
@@ -403,6 +414,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Bullet and rocket collision");
 	[self explodeRocket];
+	[self createRocket];
 	[bullets removeObject:bulletCollision];
 	[bulletCollision removeFromParentAndCleanup:YES];
 
