@@ -257,7 +257,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
 	CGPoint touchLocation = [touch locationInView:[touch view]];
 	if (![character isDead]) {
-		if ((touchLocation.x > 520 && touchLocation.x < 550) && (touchLocation.y > 5 && touchLocation.y < 35)) {
+		if ([self pauseIsTouched:touchLocation]) {
 			if ([CCDirector sharedDirector].isPaused) {
 				[[CCDirector sharedDirector] resume];
 			}
@@ -279,9 +279,18 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			}
 		}
 	}
-	else {
+	else { // Retry
 		[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 	}
+}
+
+- (bool)pauseIsTouched:(CGPoint)touchLocation {
+	NSLog(@"x: %f, y:%f", touchLocation.x, touchLocation.y);
+	if ((touchLocation.x > size.width - 45) && (touchLocation.x < size.width - 10) && (touchLocation.y > 5 && touchLocation.y < 35)) {
+		return YES;
+	}
+
+	return NO;
 }
 
 - (void)loopBackground {
