@@ -76,7 +76,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)didLoadFromCCB {
-	size  = [CCDirector sharedDirector].viewSize;
+	size  = [[CCDirector sharedDirector] viewSize];
 
 	// set this class as delegate
 	_physicsNode.collisionDelegate = self;
@@ -109,21 +109,21 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	distanceText.outlineColor = [CCColor blackColor];
 	distanceText.outlineWidth = 2.0f;
 	distanceText.zOrder = DrawingOrderText;
-	[distanceText setPosition:ccp(30.f, 300.f)];
+	[distanceText setPosition:ccp(40.f, 300.f)];
 	[self addChild:distanceText];
 
 	pauseText = [CCLabelTTF labelWithString:@"I I" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
 	pauseText.outlineColor = [CCColor blackColor];
 	pauseText.outlineWidth = 2.0f;
 	pauseText.zOrder = DrawingOrderText;
-	[pauseText setPosition:ccp(535.f, 300.f)];
+	[pauseText setPosition:ccp(size.width - 30, 300.f)];
 	[self addChild:pauseText];
 
 	gameOverText = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:40];
 	gameOverText.outlineColor = [CCColor blackColor];
 	gameOverText.outlineWidth = 2.0f;
 	gameOverText.zOrder = DrawingOrderText;
-	[gameOverText setPosition:ccp(280.f, 150.f)];
+	[gameOverText setPosition:ccp(size.width / 2, size.height / 2)];
 	[self addChild:gameOverText];
 	gameOverText.visible = NO;
 
@@ -131,7 +131,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	retryText.outlineColor = [CCColor blackColor];
 	retryText.outlineWidth = 2.0f;
 	retryText.zOrder = DrawingOrderText;
-	[retryText setPosition:ccp(280.f, 100.f)];
+	[retryText setPosition:ccp(size.width / 2, (size.height / 2) - 50)];
 	[self addChild:retryText];
 	retryText.visible = NO;
 }
@@ -221,7 +221,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update distance text.
-		[distanceText setString:[NSString stringWithFormat:@"%i%@", (int)distance, @"M"]];
+		[distanceText setString:[NSString stringWithFormat:@"%03d%@", (int)distance, @"M"]];
 
 		[self loopBackground];
 	}
