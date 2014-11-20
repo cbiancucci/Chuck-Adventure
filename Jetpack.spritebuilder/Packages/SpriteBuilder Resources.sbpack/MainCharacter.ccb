@@ -2285,7 +2285,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>Character</string>
+		<string>MainCharacter</string>
 		<key>displayName</key>
 		<string>CCNode</string>
 		<key>memberVarAssignmentName</key>
@@ -2407,7 +2407,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string>Character</string>
+				<string>MainCharacter</string>
 			</dict>
 			<dict>
 				<key>name</key>

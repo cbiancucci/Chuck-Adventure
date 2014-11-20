@@ -1,5 +1,5 @@
 //
-//  Character.h
+//  Enemy.h
 //  Jetpack
 //
 //  Created by Christian Perez Biancucci on 11/20/14.
@@ -8,6 +8,9 @@
 
 #import "CCNode.h"
 
-@interface Character : CCNode
+@interface Enemy : CCNode
+
+- (void)die;
+- (void)stop;
 
 @end

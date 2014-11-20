@@ -7,11 +7,12 @@
 //
 
 #import "MainScene.h"
-#import "Character.h"
+#import "MainCharacter.h"
 #import "Rock.h"
 #import "Rocket.h"
 #import "Bullet.h"
 #import "Explosion.h"
+#import "Enemy.h"
 
 static const CGFloat cameraScrollSpeed = 80.f;
 static const CGFloat characterScrollSpeed = 280.f;
@@ -24,7 +25,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderRock,
 	DrawingOrderCharacter,
 	DrawingOrderBullet,
-	DrawingOrderRocket,
+	DrawingOrderDifficulties,
 	DrawingOrderParticles,
 	DrawingOrderText
 };
@@ -38,11 +39,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	CCPhysicsNode *_physicsNode;
 
 	// Character
-	Character *character;
+	MainCharacter *mainCharacter;
 
 	// Texts
 	CCLabelTTF *distanceText;
 	CCLabelTTF *pauseText;
+	CCLabelTTF *gamePausedText;
 	CCLabelTTF *gameOverText;
 	CCLabelTTF *retryText;
 
@@ -73,6 +75,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	// Difficulties
 	Rocket *rocket;
+	Enemy *enemy;
 }
 
 - (void)didLoadFromCCB {
@@ -119,6 +122,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[pauseText setPosition:ccp(size.width - 30, 300.f)];
 	[self addChild:pauseText];
 
+	gamePausedText = [CCLabelTTF labelWithString:@"PAUSE" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:40];
+	gamePausedText.outlineColor = [CCColor blackColor];
+	gamePausedText.outlineWidth = 2.0f;
+	gamePausedText.zOrder = DrawingOrderText;
+	[gamePausedText setPosition:ccp(size.width / 2, size.height / 2)];
+	[self addChild:gamePausedText];
+	gamePausedText.visible = NO;
+
 	gameOverText = [CCLabelTTF labelWithString:@"GAME OVER" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:40];
 	gameOverText.outlineColor = [CCColor blackColor];
 	gameOverText.outlineWidth = 2.0f;
@@ -144,11 +155,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)loadCharacterInitialSettings {
-	character = (Character *)[_physicsNode getChildByName:@"Character" recursively:YES];
-	character.zOrder = DrawingOrderCharacter;
-	character.hasAdrenaline = NO;
-	[character stop];
-	[character startWalking];
+	mainCharacter = (MainCharacter *)[_physicsNode getChildByName:@"MainCharacter" recursively:YES];
+	mainCharacter.zOrder = DrawingOrderCharacter;
+	mainCharacter.hasAdrenaline = NO;
+	[mainCharacter stop];
+	[mainCharacter startWalking];
 }
 
 - (void)loadRocksInitialSettings {
@@ -160,6 +171,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)loadDifficultiesSettings {
 	[self createRocket];
+	[self createEnemy];
 }
 
 - (void)loadMusicSettings {
@@ -168,7 +180,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)update:(CCTime)delta {
-	if (![character isDead]) {
+	if (![mainCharacter isDead]) {
 		// Update rocket position.
 		if (rocket) {
 			rocket.physicsBody.velocity = CGPointMake(-200, 0);
@@ -187,14 +199,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update character position.
-		if ([character hasAdrenaline]) {
-			character.position = ccp(character.position.x + delta * characterScrollSpeed, character.position.y);
+		if ([mainCharacter hasAdrenaline]) {
+			mainCharacter.position = ccp(mainCharacter.position.x + delta * characterScrollSpeed, mainCharacter.position.y);
 			_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
 
 			distance += 0.5f;
 		}
 		else {
-			character.position = ccp(character.position.x + delta * cameraScrollSpeed, character.position.y);
+			mainCharacter.position = ccp(mainCharacter.position.x + delta * cameraScrollSpeed, mainCharacter.position.y);
 			_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
 
 			distance += 0.1f;
@@ -202,22 +214,22 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		// Update character state.
 		_sinceBullet += delta;
-		if ([character isShooting] && _sinceBullet > 0.4f) {
+		if ([mainCharacter isShooting] && _sinceBullet > 0.4f) {
 			_sinceBullet = 0;
 			[self createBullet];
 		}
 		_sinceUranium += delta;
 		if (_sinceUranium > 2.0f) {
-			character.hasAdrenaline = NO;
+			mainCharacter.hasAdrenaline = NO;
 		}
 
-		if ([character isRunning] && ![character hasAdrenaline]) {
-			[character startWalking];
+		if ([mainCharacter isRunning] && ![mainCharacter hasAdrenaline]) {
+			[mainCharacter startWalking];
 		}
 
 		_sinceShoot  += delta;
-		if ([character isShooting] && _sinceShoot > 1.0f) {
-			[character stopShooting];
+		if ([mainCharacter isShooting] && _sinceShoot > 1.0f) {
+			[mainCharacter stopShooting];
 		}
 
 		// Update distance text.
@@ -256,23 +268,25 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
 	CGPoint touchLocation = [touch locationInView:[touch view]];
-	if (![character isDead]) {
+	if (![mainCharacter isDead]) {
 		if ([self pauseIsTouched:touchLocation]) {
 			if ([CCDirector sharedDirector].isPaused) {
+				gamePausedText.visible = NO;
 				[[CCDirector sharedDirector] resume];
 			}
 			else {
 				[[CCDirector sharedDirector] pause];
+				gamePausedText.visible = YES;
 			}
 		}
 		else if (![CCDirector sharedDirector].isPaused) {
 			if (touchLocation.x < 300) {
-				if (![character isJumping]) {
-					[character startJumping];
+				if (![mainCharacter isJumping]) {
+					[mainCharacter startJumping];
 				}
 			}
 			else {
-				[character startShooting];
+				[mainCharacter startShooting];
 				_sinceShoot = 0.f;
 				_sinceBullet = 0.f;
 				[self createBullet];
@@ -351,16 +365,31 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 
 	Bullet *bullet = (Bullet *)[CCBReader load:@"Bullet"];
-	[bullet setPosition:ccp(character.position.x + 30, character.position.y - 8)];
+	[bullet setPosition:ccp(mainCharacter.position.x + 30, mainCharacter.position.y - 8)];
 	bullet.zOrder = DrawingOrderBullet;
 	[_physicsNode addChild:bullet];
 	[bullets addObject:bullet];
 }
 
+- (void)createEnemy {
+	enemy = (Enemy *)[CCBReader load:@"Enemy"];
+	enemy.zOrder = DrawingOrderDifficulties;
+	[enemy setPosition:ccp(mainCharacter.position.x + 500.f, 50.f)];
+	[_physicsNode addChild:enemy];
+}
+
+- (void)killEnemy {
+	[enemy die];
+	CCSprite *defeatedEnemy = (CCSprite *)[CCBReader load:@"EnemyDefeated"];
+	[enemy addChild:defeatedEnemy];
+	defeatedEnemy.position = ccp(0, 0);
+	defeatedEnemy.visible = YES;
+}
+
 - (void)createRocket {
 	rocket = (Rocket *)[CCBReader load:@"RocketExplosion"];
-	rocket.zOrder = DrawingOrderRocket;
-	[rocket setPosition:ccp(character.position.x + 1000.f, 50.f)];
+	rocket.zOrder = DrawingOrderDifficulties;
+	[rocket setPosition:ccp(mainCharacter.position.x + 1000.f, 50.f)];
 	[_physicsNode addChild:rocket];
 }
 
@@ -372,9 +401,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)defeat {
-	[character die];
-	CCSprite *defeatedSprite = (CCSprite *)[CCBReader load:@"CharacterDefeated"];
-	[character addChild:defeatedSprite];
+	[mainCharacter die];
+	CCSprite *defeatedSprite = (CCSprite *)[CCBReader load:@"MainCharacterDefeated"];
+	[mainCharacter addChild:defeatedSprite];
 	defeatedSprite.position = ccp(0, 0);
 	defeatedSprite.visible = YES;
 }
@@ -382,37 +411,37 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // >>> Collisions
 
 // Uranium rocks
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rock:(Rock *)rock {
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision rock:(Rock *)rock {
 	NSLog(@"Character and rock collision");
 	rock.visible = NO;
 	[rock removeFromParentAndCleanup:YES];
 	[_rocks removeObject:rock];
 
 	_sinceUranium = 0.f;
-	character.hasAdrenaline = YES;
-	[character startRunning];
+	mainCharacter.hasAdrenaline = YES;
+	[mainCharacter startRunning];
 	return YES;
 }
 
 // Play blood particle.
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision spike:(CCNode *)spike {
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision spike:(CCNode *)spike {
 	NSLog(@"Character and spike collision");
-	[character bleed];
+	[mainCharacter bleed];
 
 	return YES;
 }
 
 // Stop jumping.
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision floor:(CCNode *)floor {
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision floor:(CCNode *)floor {
 	NSLog(@"Character and floor collision");
-	if ([character isJumping]) {
-		[character startWalking];
+	if ([mainCharacter isJumping]) {
+		[mainCharacter startWalking];
 	}
 	return YES;
 }
 
 // Explode and die.
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(Character *)characterCollision rocket:(Rocket *)rocketCollision {
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Character and rocket collision");
 	[self explodeRocket];
 	[self defeat];

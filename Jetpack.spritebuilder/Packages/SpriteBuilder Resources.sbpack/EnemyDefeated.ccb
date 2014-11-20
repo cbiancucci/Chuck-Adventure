@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -35,6 +35,8 @@
 	<false/>
 	<key>nodeGraph</key>
 	<dict>
+		<key>UUID</key>
+		<integer>1</integer>
 		<key>animatedProperties</key>
 		<dict>
 			<key>0</key>
@@ -57,7 +59,7 @@
 							<integer>7</integer>
 							<key>value</key>
 							<array>
-								<string>ccbResources/defeated0001.png</string>
+								<string>ccbResources/jughead_dead0001.png</string>
 								<string>Use regular file</string>
 							</array>
 						</dict>
@@ -75,7 +77,7 @@
 							<integer>7</integer>
 							<key>value</key>
 							<array>
-								<string>ccbResources/defeated0002.png</string>
+								<string>ccbResources/jughead_dead0002.png</string>
 								<string>Use regular file</string>
 							</array>
 						</dict>
@@ -93,7 +95,7 @@
 							<integer>7</integer>
 							<key>value</key>
 							<array>
-								<string>ccbResources/defeated0003.png</string>
+								<string>ccbResources/jughead_dead0003.png</string>
 								<string>Use regular file</string>
 							</array>
 						</dict>
@@ -111,7 +113,7 @@
 							<integer>7</integer>
 							<key>value</key>
 							<array>
-								<string>ccbResources/defeated0004.png</string>
+								<string>ccbResources/jughead_dead0004.png</string>
 								<string>Use regular file</string>
 							</array>
 						</dict>
@@ -129,7 +131,7 @@
 							<integer>7</integer>
 							<key>value</key>
 							<array>
-								<string>ccbResources/defeated0005.png</string>
+								<string>ccbResources/jughead_dead0005.png</string>
 								<string>Use regular file</string>
 							</array>
 						</dict>
@@ -147,25 +149,7 @@
 							<integer>7</integer>
 							<key>value</key>
 							<array>
-								<string>ccbResources/defeated0006.png</string>
-								<string>Use regular file</string>
-							</array>
-						</dict>
-						<dict>
-							<key>easing</key>
-							<dict>
-								<key>type</key>
-								<integer>0</integer>
-							</dict>
-							<key>name</key>
-							<string>spriteFrame</string>
-							<key>time</key>
-							<real>0.20000000298023224</real>
-							<key>type</key>
-							<integer>7</integer>
-							<key>value</key>
-							<array>
-								<string>ccbResources/defeated0007.png</string>
+								<string>ccbResources/jughead_dead0006.png</string>
 								<string>Use regular file</string>
 							</array>
 						</dict>
@@ -197,7 +181,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string></string>
+				<string>EnemyDefeated</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -279,6 +263,17 @@
 			</dict>
 			<dict>
 				<key>name</key>
+				<string>flip</string>
+				<key>type</key>
+				<string>Flip</string>
+				<key>value</key>
+				<array>
+					<true/>
+					<false/>
+				</array>
+			</dict>
+			<dict>
+				<key>name</key>
 				<string>effects</string>
 				<key>type</key>
 				<string>EffectControl</string>
@@ -286,6 +281,8 @@
 				<array/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
@@ -341,11 +338,11 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.20000000298023224</real>
+			<real>0.066666670143604279</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
-			<real>512</real>
+			<real>128</real>
 			<key>sequenceId</key>
 			<integer>0</integer>
 			<key>soundChannel</key>
@@ -362,6 +359,6 @@
 	<key>stageBorder</key>
 	<integer>3</integer>
 	<key>stageColor</key>
-	<integer>0</integer>
+	<integer>2</integer>
 </dict>
 </plist>

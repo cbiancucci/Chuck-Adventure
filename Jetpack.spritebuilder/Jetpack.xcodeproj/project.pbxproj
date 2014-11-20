@@ -37,7 +37,7 @@
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
 		BB1131BC19E7360000D8603B /* Rock.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1131BB19E7360000D8603B /* Rock.m */; };
 		BB24493419F050C200975486 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB24493319F050C200975486 /* GLKit.framework */; };
-		BB24493919F06F6A00975486 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493819F06F6A00975486 /* Character.m */; };
+		BB24493919F06F6A00975486 /* MainCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493819F06F6A00975486 /* MainCharacter.m */; };
 		BB24493C19F0705C00975486 /* CharacterState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493B19F0705C00975486 /* CharacterState.m */; };
 		BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494019F0729400975486 /* CharacterWalkingState.m */; };
 		BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494319F072DD00975486 /* CharacterJumpingState.m */; };
@@ -47,6 +47,8 @@
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
 		BB9CFF831A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9CFF821A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf */; };
 		BB9CFF891A1574E500A0E3B8 /* Explosion.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9CFF881A1574E500A0E3B8 /* Explosion.m */; };
+		BBCBE2CB1A1E16A60013C4EB /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCBE2CA1A1E16A60013C4EB /* Enemy.m */; };
+		BBCBE2D21A1E19780013C4EB /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCBE2D11A1E19780013C4EB /* Character.m */; };
 		BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD1C8F51A119934002AAE33 /* Bullet.m */; };
 /* End PBXBuildFile section */
 
@@ -125,8 +127,8 @@
 		BB1131BA19E7360000D8603B /* Rock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rock.h; path = Source/Rock.h; sourceTree = "<group>"; };
 		BB1131BB19E7360000D8603B /* Rock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rock.m; path = Source/Rock.m; sourceTree = "<group>"; };
 		BB24493319F050C200975486 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		BB24493719F06F6A00975486 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = Source/Character.h; sourceTree = "<group>"; };
-		BB24493819F06F6A00975486 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Character.m; path = Source/Character.m; sourceTree = "<group>"; };
+		BB24493719F06F6A00975486 /* MainCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainCharacter.h; path = Source/MainCharacter.h; sourceTree = "<group>"; };
+		BB24493819F06F6A00975486 /* MainCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainCharacter.m; path = Source/MainCharacter.m; sourceTree = "<group>"; };
 		BB24493A19F0705C00975486 /* CharacterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterState.h; path = Source/CharacterState.h; sourceTree = "<group>"; };
 		BB24493B19F0705C00975486 /* CharacterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterState.m; path = Source/CharacterState.m; sourceTree = "<group>"; };
 		BB24493F19F0729400975486 /* CharacterWalkingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterWalkingState.h; path = Source/CharacterWalkingState.h; sourceTree = "<group>"; };
@@ -143,6 +145,10 @@
 		BB9CFF821A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = heiTOLENOVOLEPhone.ttf; sourceTree = "<group>"; };
 		BB9CFF871A1574E500A0E3B8 /* Explosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Explosion.h; path = Source/Explosion.h; sourceTree = "<group>"; };
 		BB9CFF881A1574E500A0E3B8 /* Explosion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Explosion.m; path = Source/Explosion.m; sourceTree = "<group>"; };
+		BBCBE2C91A1E16A60013C4EB /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy.h; path = Source/Enemy.h; sourceTree = "<group>"; };
+		BBCBE2CA1A1E16A60013C4EB /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enemy.m; path = Source/Enemy.m; sourceTree = "<group>"; };
+		BBCBE2D01A1E19780013C4EB /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = Source/Character.h; sourceTree = "<group>"; };
+		BBCBE2D11A1E19780013C4EB /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Character.m; path = Source/Character.m; sourceTree = "<group>"; };
 		BBD1C8F41A119934002AAE33 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
 		BBD1C8F51A119934002AAE33 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -193,6 +199,8 @@
 				BB53AB071A0FFC3600A03765 /* Rocket.m */,
 				BB9CFF871A1574E500A0E3B8 /* Explosion.h */,
 				BB9CFF881A1574E500A0E3B8 /* Explosion.m */,
+				BBCBE2C91A1E16A60013C4EB /* Enemy.h */,
+				BBCBE2CA1A1E16A60013C4EB /* Enemy.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -291,9 +299,11 @@
 		BB24493D19F0716100975486 /* Character */ = {
 			isa = PBXGroup;
 			children = (
-				BB24493719F06F6A00975486 /* Character.h */,
-				BB24493819F06F6A00975486 /* Character.m */,
+				BB24493719F06F6A00975486 /* MainCharacter.h */,
+				BB24493819F06F6A00975486 /* MainCharacter.m */,
 				BB24493E19F0716D00975486 /* State */,
+				BBCBE2D01A1E19780013C4EB /* Character.h */,
+				BBCBE2D11A1E19780013C4EB /* Character.m */,
 			);
 			name = Character;
 			sourceTree = "<group>";
@@ -459,14 +469,16 @@
 			files = (
 				BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */,
 				BB1131BC19E7360000D8603B /* Rock.m in Sources */,
-				BB24493919F06F6A00975486 /* Character.m in Sources */,
+				BB24493919F06F6A00975486 /* MainCharacter.m in Sources */,
 				BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */,
+				BBCBE2CB1A1E16A60013C4EB /* Enemy.m in Sources */,
 				BB53AB081A0FFC3600A03765 /* Rocket.m in Sources */,
 				BB9CFF891A1574E500A0E3B8 /* Explosion.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				BB24493C19F0705C00975486 /* CharacterState.m in Sources */,
 				BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */,
 				BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */,
+				BBCBE2D21A1E19780013C4EB /* Character.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */,
