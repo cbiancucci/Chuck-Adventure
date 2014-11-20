@@ -10,6 +10,8 @@
 
 @interface Enemy : CCNode
 
+- (BOOL)isDead;
+
 - (void)die;
 - (void)stop;
 

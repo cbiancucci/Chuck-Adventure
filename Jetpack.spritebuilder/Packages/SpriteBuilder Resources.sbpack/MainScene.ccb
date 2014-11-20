@@ -767,7 +767,7 @@
 								<key>value</key>
 								<array>
 									<real>69</real>
-									<real>65</real>
+									<real>70</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -795,6 +795,8 @@
 								<string>Enemy.ccb</string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>UUID</key>

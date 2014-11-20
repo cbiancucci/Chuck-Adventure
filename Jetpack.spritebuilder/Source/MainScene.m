@@ -23,6 +23,7 @@ static const CGFloat distanceBetweenRocks = 50.f;
 typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderBackground,
 	DrawingOrderRock,
+	DrawingOrderEnemy,
 	DrawingOrderCharacter,
 	DrawingOrderBullet,
 	DrawingOrderDifficulties,
@@ -190,6 +191,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			if (rocketWorldPosition.x < -200) {
 				[rocket removeFromParentAndCleanup:YES];
 				[self createRocket];
+			}
+		}
+
+		if (enemy) {
+			enemy.physicsBody.velocity = CGPointMake(-50, 0);
+
+			CGPoint enemyWorldPosition = [_physicsNode convertToWorldSpace:enemy.position];
+
+			if (enemyWorldPosition.x < -200) {
+				[enemy removeFromParentAndCleanup:YES];
+				[self createEnemy];
 			}
 		}
 
@@ -373,8 +385,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)createEnemy {
 	enemy = (Enemy *)[CCBReader load:@"Enemy"];
-	enemy.zOrder = DrawingOrderDifficulties;
-	[enemy setPosition:ccp(mainCharacter.position.x + 500.f, 50.f)];
+	enemy.zOrder = DrawingOrderEnemy;
+	[enemy setPosition:ccp(mainCharacter.position.x + 500.f, 65.f)];
 	[_physicsNode addChild:enemy];
 }
 
@@ -449,7 +461,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	return YES;
 }
 
-// Explode and die.
+// Explode and remove bullet.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Bullet and rocket collision");
 	[self explodeRocket];
@@ -457,6 +469,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[bullets removeObject:bulletCollision];
 	[bulletCollision removeFromParentAndCleanup:YES];
 
+	return YES;
+}
+
+// Kill enemy and disable collision with body.
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision enemy:(Enemy *)enemyCollision {
+	NSLog(@"Bullet and rocket collision");
+	if (![enemyCollision isDead]) {
+		[self killEnemy];
+		[bullets removeObject:bulletCollision];
+		[bulletCollision removeFromParentAndCleanup:YES];
+	}
 	return YES;
 }
 
