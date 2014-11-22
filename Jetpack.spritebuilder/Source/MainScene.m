@@ -271,6 +271,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		[self loopBackground];
 	}
 	else {
+		enemy.physicsBody.velocity = CGPointMake(0, 0);
 		gameOverText.visible = YES;
 		retryText.visible = YES;
 	}
@@ -291,23 +292,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		[self destroyBullets:removeBullets];
 	}
 }
-
-/*
-   - (void)updateLasers {
-    NSMutableArray *removeLasers = [[NSMutableArray alloc] init];
-    for (Laser *laser in lasers) {
-        laser.physicsBody.velocity = CGPointMake(-250, 0);
-
-        CGPoint laserWorldPosition = [_physicsNode convertToWorldSpace:laser.position];
-        if (laserWorldPosition.x < -200) {
-            [removeLasers addObject:laser];
-        }
-    }
-
-    if ([removeLasers count] > 0) {
-        [self destroyBullets:removeLasers];
-    }
-   }*/
 
 - (void)destroyBullets:(NSMutableArray *)removeBullets {
 	for (Bullet *bullet in removeBullets) {
