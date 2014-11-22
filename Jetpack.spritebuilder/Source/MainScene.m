@@ -56,6 +56,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	CCNode *_spike;
 	NSArray *_backgrounds;
 
+	// UI
+	CCNode *_lifeBar;
+	float lifeScale;
+
 	// Floor
 	CCNode *_floors;
 
@@ -160,6 +164,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	_backgrounds = @[_background1, _background2];
 	_roofs = @[_roof1, _roof2];
 	_spike.physicsBody.sensor = YES;
+
+	lifeScale = 1.f;
 }
 
 - (void)loadCharacterInitialSettings {
@@ -537,6 +543,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSLog(@"Main character and laser collision");
 	if (![characterCollision isDead]) {
 		[characterCollision bleed];
+		lifeScale -= 0.05f;
+		[_lifeBar setScaleX:lifeScale];
+
+		if (lifeScale <= 0) {
+			[self defeat];
+		}
 	}
 	return YES;
 }
