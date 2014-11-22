@@ -441,6 +441,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[enemy addChild:defeatedEnemy];
 	defeatedEnemy.position = ccp(0, 0);
 	defeatedEnemy.visible = YES;
+	defeatedEnemy.zOrder = DrawingOrderEnemy;
 }
 
 - (void)createRocket {
@@ -549,6 +550,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		if (lifeScale <= 0) {
 			[self defeat];
 		}
+		[lasers removeObject:laserCollision];
+		[laserCollision removeFromParentAndCleanup:YES];
 	}
 	return YES;
 }
