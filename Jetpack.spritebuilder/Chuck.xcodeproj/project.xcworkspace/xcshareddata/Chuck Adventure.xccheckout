@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>119414FB-2A6A-4FBA-A36F-31D4E2E8A776</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Chuck Adventure</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>59D3BB057B70098B4AB29520146592330CF85DDC</key>
+		<string>https://github.com/cbiancucci/Chuck-Adventure.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Jetpack.spritebuilder/Chuck Adventure.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>59D3BB057B70098B4AB29520146592330CF85DDC</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/cbiancucci/Chuck-Adventure.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>59D3BB057B70098B4AB29520146592330CF85DDC</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>59D3BB057B70098B4AB29520146592330CF85DDC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Jetpack</string>
+		</dict>
+	</array>
+</dict>
+</plist>
