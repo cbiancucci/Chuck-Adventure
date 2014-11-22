@@ -68,6 +68,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSTimeInterval _sinceUranium;
 	NSTimeInterval _sinceShoot;
 	NSTimeInterval _sinceBullet;
+	NSTimeInterval _sinceLaser;
 
 	// Rocks
 	NSMutableArray *_rocks;
@@ -210,7 +211,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 				[self createEnemy];
 			}
 
-			if (![enemy isDead] && enemy.position.x - mainCharacter.position.x < 400 && laser == nil) {
+			if (![enemy isDead] && enemy.position.x - mainCharacter.position.x < 400 && [lasers count] == 0) {
+				_sinceLaser = 0.f;
 				[self createLaser];
 				[enemy startShooting];
 			}
@@ -222,10 +224,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update and destroy off screen lasers.
-/*		if (lasers && [lasers count] > 0) {
-            [self updateLasers];
-        }
- */
+		_sinceLaser += delta;
+		if (![enemy isDead] && [lasers count] > 0 && _sinceLaser > 2.f) {
+			_sinceLaser = 0.f;
+			[self createLaser];
+		}
 
 		// Update character position.
 		if ([mainCharacter hasAdrenaline]) {
@@ -420,15 +423,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)createLaser {
-/*	if (!lasers) {
-        lasers = [[NSMutableArray alloc] init];
-    }
- */
+	if (!lasers) {
+		lasers = [[NSMutableArray alloc] init];
+	}
+
 	laser = (Laser *)[CCBReader load:@"Laser"];
 	laser.zOrder = DrawingOrderDifficulties;
 	[_physicsNode addChild:laser];
 	laser.position = ccp(enemy.position.x - 15, enemy.position.y + 10);
 	laser.physicsBody.velocity = CGPointMake(-200, 0);
+
+	[lasers addObject:laser];
 }
 
 - (void)createEnemy {
@@ -546,7 +551,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSLog(@"Main character and laser collision");
 	if (![characterCollision isDead]) {
 		[characterCollision bleed];
-//		[self defeat];
 	}
 	return YES;
 }
