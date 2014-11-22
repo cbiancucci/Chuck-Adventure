@@ -13,6 +13,7 @@
 #import "Bullet.h"
 #import "Explosion.h"
 #import "Enemy.h"
+#import "Laser.h"
 
 static const CGFloat cameraScrollSpeed = 80.f;
 static const CGFloat characterScrollSpeed = 280.f;
@@ -77,6 +78,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// Difficulties
 	Rocket *rocket;
 	Enemy *enemy;
+	NSMutableArray *lasers;
+	Laser *laser;
+
+	// Audio
+	OALSimpleAudio *audio;
 }
 
 - (void)didLoadFromCCB {
@@ -101,7 +107,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	//[self loadMusicSettings];
+	[self loadMusicSettings];
 
 	self.userInteractionEnabled = YES;
 
@@ -176,7 +182,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)loadMusicSettings {
-	OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+	audio = [OALSimpleAudio sharedInstance];
 	[audio playEffect:@"Level.mp3"];
 }
 
@@ -203,12 +209,23 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 				[enemy removeFromParentAndCleanup:YES];
 				[self createEnemy];
 			}
+
+			if (![enemy isDead] && enemy.position.x - mainCharacter.position.x < 400 && laser == nil) {
+				[self createLaser];
+				[enemy startShooting];
+			}
 		}
 
 		// Update and destroy off screen bullets.
 		if (bullets && [bullets count] > 0) {
-			[self updateBullets:delta];
+			[self updateBullets];
 		}
+
+		// Update and destroy off screen lasers.
+/*		if (lasers && [lasers count] > 0) {
+            [self updateLasers];
+        }
+ */
 
 		// Update character position.
 		if ([mainCharacter hasAdrenaline]) {
@@ -230,6 +247,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			_sinceBullet = 0;
 			[self createBullet];
 		}
+
 		_sinceUranium += delta;
 		if (_sinceUranium > 2.0f) {
 			mainCharacter.hasAdrenaline = NO;
@@ -255,10 +273,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 }
 
-- (void)updateBullets:(CCTime)delta {
+- (void)updateBullets {
 	NSMutableArray *removeBullets = [[NSMutableArray alloc] init];
 	for (Bullet *bullet in bullets) {
-		bullet.position = ccp(bullet.position.x + (delta * 10 * cameraScrollSpeed), bullet.position.y);
+		bullet.physicsBody.velocity = CGPointMake(800, 0);
 
 		CGPoint bulletWorldPosition = [_physicsNode convertToWorldSpace:bullet.position];
 		if (bulletWorldPosition.x > size.width) {
@@ -270,6 +288,23 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		[self destroyBullets:removeBullets];
 	}
 }
+
+/*
+   - (void)updateLasers {
+    NSMutableArray *removeLasers = [[NSMutableArray alloc] init];
+    for (Laser *laser in lasers) {
+        laser.physicsBody.velocity = CGPointMake(-250, 0);
+
+        CGPoint laserWorldPosition = [_physicsNode convertToWorldSpace:laser.position];
+        if (laserWorldPosition.x < -200) {
+            [removeLasers addObject:laser];
+        }
+    }
+
+    if ([removeLasers count] > 0) {
+        [self destroyBullets:removeLasers];
+    }
+   }*/
 
 - (void)destroyBullets:(NSMutableArray *)removeBullets {
 	for (Bullet *bullet in removeBullets) {
@@ -306,6 +341,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 	}
 	else { // Retry
+		[audio stopAllEffects];
 		[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 	}
 }
@@ -383,6 +419,18 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[bullets addObject:bullet];
 }
 
+- (void)createLaser {
+/*	if (!lasers) {
+        lasers = [[NSMutableArray alloc] init];
+    }
+ */
+	laser = (Laser *)[CCBReader load:@"Laser"];
+	laser.zOrder = DrawingOrderDifficulties;
+	[_physicsNode addChild:laser];
+	laser.position = ccp(enemy.position.x - 15, enemy.position.y + 10);
+	laser.physicsBody.velocity = CGPointMake(-200, 0);
+}
+
 - (void)createEnemy {
 	enemy = (Enemy *)[CCBReader load:@"Enemy"];
 	enemy.zOrder = DrawingOrderEnemy;
@@ -455,9 +503,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Explode and die.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Character and rocket collision");
-	[self explodeRocket];
-	[self defeat];
-
+	if (![characterCollision isDead]) {
+		[self defeat];
+		[self explodeRocket];
+	}
 	return YES;
 }
 
@@ -474,11 +523,30 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 // Kill enemy and disable collision with body.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision enemy:(Enemy *)enemyCollision {
-	NSLog(@"Bullet and rocket collision");
+	NSLog(@"Bullet and enemy collision");
 	if (![enemyCollision isDead]) {
 		[self killEnemy];
 		[bullets removeObject:bulletCollision];
 		[bulletCollision removeFromParentAndCleanup:YES];
+	}
+	return YES;
+}
+
+// Kill enemy and disable collision with body.
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision enemy:(Enemy *)enemyCollision {
+	NSLog(@"Main character and enemy collision");
+	if (![enemyCollision isDead] && ![characterCollision isDead]) {
+		[self defeat];
+	}
+	return YES;
+}
+
+// Kill enemy and disable collision with body.
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision laser:(Laser *)laserCollision {
+	NSLog(@"Main character and laser collision");
+	if (![characterCollision isDead]) {
+		[characterCollision bleed];
+//		[self defeat];
 	}
 	return YES;
 }

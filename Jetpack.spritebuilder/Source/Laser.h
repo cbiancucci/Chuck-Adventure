@@ -1,5 +1,5 @@
 //
-//  Enemy.h
+//  Laser.h
 //  Jetpack
 //
 //  Created by Christian Perez Biancucci on 11/20/14.
@@ -8,13 +8,6 @@
 
 #import "CCNode.h"
 
-@interface Enemy : CCNode
-
-- (BOOL)isDead;
-
-- (void)die;
-- (void)stop;
-- (void)startShooting;
-- (BOOL)isShooting;
+@interface Laser : CCNode
 
 @end

@@ -18,6 +18,7 @@
 	rocketSprite.scaleY = 0.25;
 
 	self.physicsBody.sensor = YES;
+	self.physicsBody.collisionGroup = @"enemy";
 }
 
 @end

@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>3</integer>
+	<integer>2</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -41,49 +41,15 @@
 		<array>
 			<dict>
 				<key>UUID</key>
-				<integer>2</integer>
-				<key>animatedProperties</key>
-				<dict>
-					<key>0</key>
-					<dict>
-						<key>spriteFrame</key>
-						<dict>
-							<key>keyframes</key>
-							<array>
-								<dict>
-									<key>easing</key>
-									<dict>
-										<key>type</key>
-										<integer>0</integer>
-									</dict>
-									<key>name</key>
-									<string>spriteFrame</string>
-									<key>time</key>
-									<real>0.0</real>
-									<key>type</key>
-									<integer>7</integer>
-									<key>value</key>
-									<array>
-										<string>ccbResources/spike3@3x.png</string>
-										<string>Use regular file</string>
-									</array>
-								</dict>
-							</array>
-							<key>name</key>
-							<string>spriteFrame</string>
-							<key>type</key>
-							<integer>7</integer>
-						</dict>
-					</dict>
-				</dict>
+				<integer>1</integer>
 				<key>baseClass</key>
-				<string>CCSprite</string>
+				<string>CCParticleSystem</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCSprite</string>
+				<string>LaserParticle</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -96,7 +62,7 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string></string>
+						<string>LaserParticle</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -119,8 +85,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -137,58 +103,234 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<string></string>
-							<string>Use regular file</string>
-						</array>
 						<key>name</key>
-						<string>spriteFrame</string>
+						<string>emitterMode</string>
 						<key>type</key>
-						<string>SpriteFrame</string>
+						<string>IntegerLabeled</string>
+						<key>value</key>
+						<integer>0</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>posVar</string>
+						<key>type</key>
+						<string>Point</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string></string>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>normalMapSpriteFrame</string>
+						<string>emissionRate</string>
 						<key>type</key>
-						<string>SpriteFrame</string>
+						<string>Float</string>
+						<key>value</key>
+						<real>80</real>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>duration</string>
+						<key>type</key>
+						<string>Float</string>
+						<key>value</key>
+						<real>-1</real>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>totalParticles</string>
+						<key>type</key>
+						<string>Integer</string>
+						<key>value</key>
+						<integer>100</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>life</string>
+						<key>type</key>
+						<string>FloatVar</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string></string>
+							<real>1</real>
+							<real>0.25</real>
 						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>color</string>
+						<string>startSize</string>
 						<key>type</key>
-						<string>Color3</string>
+						<string>FloatVar</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
-							<real>1</real>
-							<real>1</real>
+							<real>40</real>
+							<real>5</real>
 						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>effects</string>
+						<string>endSize</string>
 						<key>type</key>
-						<string>EffectControl</string>
+						<string>FloatVar</string>
 						<key>value</key>
-						<array/>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>startSpin</string>
+						<key>type</key>
+						<string>FloatVar</string>
+						<key>value</key>
+						<array>
+							<real>100</real>
+							<real>5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>endSpin</string>
+						<key>type</key>
+						<string>FloatVar</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>angle</string>
+						<key>type</key>
+						<string>FloatVar</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>10</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>startColor</string>
+						<key>type</key>
+						<string>Color4FVar</string>
+						<key>value</key>
+						<array>
+							<array>
+								<real>0.75999999046325684</real>
+								<real>0.39071360230445862</real>
+								<real>0.72974413633346558</real>
+								<real>1</real>
+							</array>
+							<array>
+								<real>0.0</real>
+								<real>0.0</real>
+								<real>0.0</real>
+								<real>0.0</real>
+							</array>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>endColor</string>
+						<key>type</key>
+						<string>Color4FVar</string>
+						<key>value</key>
+						<array>
+							<array>
+								<real>0.0</real>
+								<real>0.0</real>
+								<real>0.0</real>
+								<real>255</real>
+							</array>
+							<array>
+								<real>0.0</real>
+								<real>0.0</real>
+								<real>0.0</real>
+								<real>0.0</real>
+							</array>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>blendFunc</string>
+						<key>type</key>
+						<string>Blendmode</string>
+						<key>value</key>
+						<array>
+							<integer>1</integer>
+							<integer>1</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>resetOnVisibilityToggle</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>gravity</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>speed</string>
+						<key>type</key>
+						<string>FloatVar</string>
+						<key>value</key>
+						<array>
+							<real>100</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>tangentialAccel</string>
+						<key>type</key>
+						<string>FloatVar</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>radialAccel</string>
+						<key>type</key>
+						<string>FloatVar</string>
+						<key>value</key>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>texture</string>
+						<key>type</key>
+						<string>Texture</string>
+						<key>value</key>
+						<string>ccbResources/ccbParticleFire.png</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>Spike</string>
+		<string>Laser</string>
 		<key>displayName</key>
 		<string>CCNode</string>
 		<key>memberVarAssignmentName</key>
@@ -208,9 +350,9 @@
 			<key>collisionMask</key>
 			<array/>
 			<key>collisionType</key>
-			<string>spike</string>
+			<string>laser</string>
 			<key>cornerRadius</key>
-			<real>69.03515625</real>
+			<real>19.16015625</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -222,8 +364,8 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>0.0</real>
-					<real>0.0</real>
+					<real>7.703094482421875</real>
+					<real>0.1132965087890625</real>
 				</array>
 			</array>
 			<key>polygons</key>
@@ -237,7 +379,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string>Spike</string>
+				<string>Laser</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -291,8 +433,6 @@
 				</array>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
@@ -340,9 +480,9 @@
 				<integer>12</integer>
 			</dict>
 			<key>chainedSequenceId</key>
-			<integer>0</integer>
+			<integer>-1</integer>
 			<key>length</key>
-			<real>0.033333335071802139</real>
+			<real>10</real>
 			<key>name</key>
 			<string>Default Timeline</string>
 			<key>offset</key>

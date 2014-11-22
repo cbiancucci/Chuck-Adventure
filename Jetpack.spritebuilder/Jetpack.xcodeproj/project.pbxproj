@@ -47,6 +47,7 @@
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
 		BB9CFF831A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9CFF821A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf */; };
 		BB9CFF891A1574E500A0E3B8 /* Explosion.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9CFF881A1574E500A0E3B8 /* Explosion.m */; };
+		BBA98AFB1A1E9DD700DD373A /* Laser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA98AFA1A1E9DD700DD373A /* Laser.m */; };
 		BBCBE2CB1A1E16A60013C4EB /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCBE2CA1A1E16A60013C4EB /* Enemy.m */; };
 		BBCBE2D21A1E19780013C4EB /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCBE2D11A1E19780013C4EB /* Character.m */; };
 		BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD1C8F51A119934002AAE33 /* Bullet.m */; };
@@ -145,6 +146,8 @@
 		BB9CFF821A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = heiTOLENOVOLEPhone.ttf; sourceTree = "<group>"; };
 		BB9CFF871A1574E500A0E3B8 /* Explosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Explosion.h; path = Source/Explosion.h; sourceTree = "<group>"; };
 		BB9CFF881A1574E500A0E3B8 /* Explosion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Explosion.m; path = Source/Explosion.m; sourceTree = "<group>"; };
+		BBA98AF91A1E9DD700DD373A /* Laser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Laser.h; path = Source/Laser.h; sourceTree = "<group>"; };
+		BBA98AFA1A1E9DD700DD373A /* Laser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Laser.m; path = Source/Laser.m; sourceTree = "<group>"; };
 		BBCBE2C91A1E16A60013C4EB /* Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy.h; path = Source/Enemy.h; sourceTree = "<group>"; };
 		BBCBE2CA1A1E16A60013C4EB /* Enemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Enemy.m; path = Source/Enemy.m; sourceTree = "<group>"; };
 		BBCBE2D01A1E19780013C4EB /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = Source/Character.h; sourceTree = "<group>"; };
@@ -188,19 +191,12 @@
 			children = (
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
-				BBD1C8F41A119934002AAE33 /* Bullet.h */,
-				BBD1C8F51A119934002AAE33 /* Bullet.m */,
 				BB24493D19F0716100975486 /* Character */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				BB1131BA19E7360000D8603B /* Rock.h */,
 				BB1131BB19E7360000D8603B /* Rock.m */,
-				BB53AB061A0FFC3600A03765 /* Rocket.h */,
-				BB53AB071A0FFC3600A03765 /* Rocket.m */,
-				BB9CFF871A1574E500A0E3B8 /* Explosion.h */,
-				BB9CFF881A1574E500A0E3B8 /* Explosion.m */,
-				BBCBE2C91A1E16A60013C4EB /* Enemy.h */,
-				BBCBE2CA1A1E16A60013C4EB /* Enemy.m */,
+				BBA98AF41A1E9D6B00DD373A /* Weapons */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -299,11 +295,13 @@
 		BB24493D19F0716100975486 /* Character */ = {
 			isa = PBXGroup;
 			children = (
+				BBCBE2D01A1E19780013C4EB /* Character.h */,
+				BBCBE2D11A1E19780013C4EB /* Character.m */,
+				BBCBE2C91A1E16A60013C4EB /* Enemy.h */,
+				BBCBE2CA1A1E16A60013C4EB /* Enemy.m */,
 				BB24493719F06F6A00975486 /* MainCharacter.h */,
 				BB24493819F06F6A00975486 /* MainCharacter.m */,
 				BB24493E19F0716D00975486 /* State */,
-				BBCBE2D01A1E19780013C4EB /* Character.h */,
-				BBCBE2D11A1E19780013C4EB /* Character.m */,
 			);
 			name = Character;
 			sourceTree = "<group>";
@@ -331,6 +329,21 @@
 				BB28B7411A0FE4C200247126 /* Level.mp3 */,
 			);
 			name = Audio;
+			sourceTree = "<group>";
+		};
+		BBA98AF41A1E9D6B00DD373A /* Weapons */ = {
+			isa = PBXGroup;
+			children = (
+				BBD1C8F41A119934002AAE33 /* Bullet.h */,
+				BBD1C8F51A119934002AAE33 /* Bullet.m */,
+				BB9CFF871A1574E500A0E3B8 /* Explosion.h */,
+				BB9CFF881A1574E500A0E3B8 /* Explosion.m */,
+				BB53AB061A0FFC3600A03765 /* Rocket.h */,
+				BB53AB071A0FFC3600A03765 /* Rocket.m */,
+				BBA98AF91A1E9DD700DD373A /* Laser.h */,
+				BBA98AFA1A1E9DD700DD373A /* Laser.m */,
+			);
+			name = Weapons;
 			sourceTree = "<group>";
 		};
 		BBD843951A0FC7FD00EC61B1 /* Fonts */ = {
@@ -476,6 +489,7 @@
 				BB9CFF891A1574E500A0E3B8 /* Explosion.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				BB24493C19F0705C00975486 /* CharacterState.m in Sources */,
+				BBA98AFB1A1E9DD700DD373A /* Laser.m in Sources */,
 				BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */,
 				BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */,
 				BBCBE2D21A1E19780013C4EB /* Character.m in Sources */,

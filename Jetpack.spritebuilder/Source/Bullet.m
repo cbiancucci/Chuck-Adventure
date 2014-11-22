@@ -26,8 +26,6 @@
 	dart.visible = YES;
 
 	self.physicsBody.collisionGroup = @"character";
-//	self.physicsBody.collisionType = @"bullet";
-//	self.physicsBody.sensor = YES;
 }
 
 @end

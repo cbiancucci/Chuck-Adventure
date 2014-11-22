@@ -13,7 +13,7 @@
 }
 
 - (void)didLoadFromCCB {
-	self.physicsBody.collisionGroup = @"difficulties";
+	self.physicsBody.collisionGroup = @"enemy";
 	self.scaleX = 0.75;
 	self.scaleY = 0.75;
 	self.physicsBody.sensor = YES;
@@ -24,6 +24,14 @@
 
 - (BOOL)isDead {
 	return defeated;
+}
+
+- (void)startShooting {
+	[self setVisibleState:@"ShootWalking"];
+}
+
+- (BOOL)isShooting {
+	return [self getChildByName:@"ShootWalking" recursively:YES].visible;
 }
 
 - (void)stop {
