@@ -325,8 +325,6 @@
 						<string>ccbResources/ccbParticleFire.png</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -352,7 +350,7 @@
 			<key>collisionType</key>
 			<string>laser</string>
 			<key>cornerRadius</key>
-			<real>19.16015625</real>
+			<real>5</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -364,8 +362,8 @@
 			<key>points</key>
 			<array>
 				<array>
-					<real>7.703094482421875</real>
-					<real>0.1132965087890625</real>
+					<real>4.742156982421875</real>
+					<real>-0.0898284912109375</real>
 				</array>
 			</array>
 			<key>polygons</key>
@@ -433,6 +431,8 @@
 				</array>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
