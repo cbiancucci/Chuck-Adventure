@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>48</integer>
+	<integer>51</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -935,7 +935,7 @@
 			</dict>
 			<dict>
 				<key>UUID</key>
-				<integer>47</integer>
+				<integer>50</integer>
 				<key>baseClass</key>
 				<string>CCSprite</string>
 				<key>children</key>
@@ -943,7 +943,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>LifeBar</string>
+				<string>Life-bar</string>
 				<key>memberVarAssignmentName</key>
 				<string>_lifeBar</string>
 				<key>memberVarAssignmentType</key>
@@ -965,7 +965,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>92</real>
+							<real>91</real>
 							<real>295</real>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -990,7 +990,7 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
+							<real>1.0299999713897705</real>
 							<real>1</real>
 							<false/>
 							<integer>0</integer>
