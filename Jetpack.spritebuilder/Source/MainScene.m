@@ -271,7 +271,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		[self loopBackground];
 	}
 	else {
-		enemy.physicsBody.velocity = CGPointMake(0, 0);
+		if ([enemy isDead]) {
+			enemy.physicsBody.velocity = CGPointMake(0, 0);
+		}
 		gameOverText.visible = YES;
 		retryText.visible = YES;
 	}
