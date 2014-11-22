@@ -45,6 +45,7 @@
 		BB28B7421A0FE4C200247126 /* Level.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7411A0FE4C200247126 /* Level.mp3 */; };
 		BB53AB081A0FFC3600A03765 /* Rocket.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53AB071A0FFC3600A03765 /* Rocket.m */; };
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
+		BB6F11A31A2129F10045CE97 /* Pause.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6F11A21A2129F10045CE97 /* Pause.m */; };
 		BB9CFF831A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB9CFF821A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf */; };
 		BB9CFF891A1574E500A0E3B8 /* Explosion.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9CFF881A1574E500A0E3B8 /* Explosion.m */; };
 		BBA98AFB1A1E9DD700DD373A /* Laser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA98AFA1A1E9DD700DD373A /* Laser.m */; };
@@ -143,6 +144,8 @@
 		BB53AB071A0FFC3600A03765 /* Rocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rocket.m; path = Source/Rocket.m; sourceTree = "<group>"; };
 		BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterShootingState.h; path = Source/CharacterShootingState.h; sourceTree = "<group>"; };
 		BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterShootingState.m; path = Source/CharacterShootingState.m; sourceTree = "<group>"; };
+		BB6F11A11A2129F10045CE97 /* Pause.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pause.h; path = Source/Pause.h; sourceTree = "<group>"; };
+		BB6F11A21A2129F10045CE97 /* Pause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pause.m; path = Source/Pause.m; sourceTree = "<group>"; };
 		BB9CFF821A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = heiTOLENOVOLEPhone.ttf; sourceTree = "<group>"; };
 		BB9CFF871A1574E500A0E3B8 /* Explosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Explosion.h; path = Source/Explosion.h; sourceTree = "<group>"; };
 		BB9CFF881A1574E500A0E3B8 /* Explosion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Explosion.m; path = Source/Explosion.m; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				BB1131BA19E7360000D8603B /* Rock.h */,
 				BB1131BB19E7360000D8603B /* Rock.m */,
 				BBA98AF41A1E9D6B00DD373A /* Weapons */,
+				BB6F11A11A2129F10045CE97 /* Pause.h */,
+				BB6F11A21A2129F10045CE97 /* Pause.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -480,6 +485,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB6F11A31A2129F10045CE97 /* Pause.m in Sources */,
 				BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */,
 				BB1131BC19E7360000D8603B /* Rock.m in Sources */,
 				BB24493919F06F6A00975486 /* MainCharacter.m in Sources */,

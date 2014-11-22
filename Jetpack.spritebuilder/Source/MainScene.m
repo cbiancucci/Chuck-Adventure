@@ -14,6 +14,7 @@
 #import "Explosion.h"
 #import "Enemy.h"
 #import "Laser.h"
+#import "Pause.h"
 
 static const CGFloat cameraScrollSpeed = 80.f;
 static const CGFloat characterScrollSpeed = 280.f;
@@ -59,6 +60,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// UI
 	CCNode *_lifeBar;
 	float lifeScale;
+
+	CCNode *pauseDialog;
 
 	// Floor
 	CCNode *_floors;
@@ -112,7 +115,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	[self loadMusicSettings];
+	//[self loadMusicSettings];
+
+	// UI
+	[self loadPauseDialog];
 
 	self.userInteractionEnabled = YES;
 
@@ -191,6 +197,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)loadMusicSettings {
 	audio = [OALSimpleAudio sharedInstance];
 	[audio playEffect:@"Level.mp3"];
+}
+
+- (void)loadPauseDialog {
+	pauseDialog = (Pause *)[CCBReader load:@"Pause"];
+	[pauseDialog setPosition:ccp(size.width / 2, size.height / 2)];
+	[self addChild:pauseDialog];
+	pauseDialog.visible = NO;
 }
 
 - (void)update:(CCTime)delta {
@@ -313,12 +326,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	if (![mainCharacter isDead]) {
 		if ([self pauseIsTouched:touchLocation]) {
 			if ([CCDirector sharedDirector].isPaused) {
-				gamePausedText.visible = NO;
+				//gamePausedText.visible = NO;
+				pauseDialog.visible = NO;
 				[[CCDirector sharedDirector] resume];
 			}
 			else {
 				[[CCDirector sharedDirector] pause];
-				gamePausedText.visible = YES;
+				//gamePausedText.visible = YES;
+				pauseDialog.visible = YES;
 			}
 		}
 		else if (![CCDirector sharedDirector].isPaused) {
