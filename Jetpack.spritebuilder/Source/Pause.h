@@ -10,4 +10,13 @@
 
 @interface Pause : CCNode
 
+@property BOOL music;
+@property BOOL soundEffects;
+
+- (void)touchMusic;
+- (void)touchSoundEffect;
+
+- (BOOL)isMusicOn;
+- (BOOL)isSoundEffectsOn;
+
 @end

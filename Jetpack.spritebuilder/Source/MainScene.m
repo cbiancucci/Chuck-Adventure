@@ -61,7 +61,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	CCNode *_lifeBar;
 	float lifeScale;
 
-	CCNode *pauseDialog;
+	Pause *pauseDialog;
 
 	// Floor
 	CCNode *_floors;
@@ -115,7 +115,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	//[self loadMusicSettings];
+	[self loadMusicSettings];
 
 	// UI
 	[self loadPauseDialog];
@@ -324,7 +324,25 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
 	CGPoint touchLocation = [touch locationInView:[touch view]];
 	if (![mainCharacter isDead]) {
-		if ([self pauseIsTouched:touchLocation]) {
+		// Pause Dialog
+		if ([self pauseDialogIsTouched:touchLocation]) {
+			//Music button
+			if ([self musicIsTouched:touchLocation]) {
+				[pauseDialog touchMusic];
+				if (![pauseDialog isMusicOn]) {
+					[audio stopAllEffects];
+				}
+				else {
+					[audio playEffect:@"Level.mp3"];
+				}
+			}
+
+			// Sound effects button
+			else if ([self soundEffectIsTouched:touchLocation]) {
+				[pauseDialog touchSoundEffect];
+			}
+		}
+		else if ([self pauseIsTouched:touchLocation]) {
 			if ([CCDirector sharedDirector].isPaused) {
 				//gamePausedText.visible = NO;
 				pauseDialog.visible = NO;
@@ -350,10 +368,32 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			}
 		}
 	}
+
 	else { // Retry
 		[audio stopAllEffects];
 		[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 	}
+}
+
+- (bool)pauseDialogIsTouched:(CGPoint)touchLocation {
+	if ((touchLocation.x > 164 && touchLocation.x < 405) && (touchLocation.y > 84 && touchLocation.y < 242)) {
+		return YES;
+	}
+	return NO;
+}
+
+- (bool)musicIsTouched:(CGPoint)touchLocation {
+	if ((touchLocation.x >= 355 && touchLocation.x <= 383) && (touchLocation.y >= 128 && touchLocation.y <= 144)) {
+		return YES;
+	}
+	return NO;
+}
+
+- (bool)soundEffectIsTouched:(CGPoint)touchLocation {
+	if ((touchLocation.x >= 355 && touchLocation.x <= 383) && (touchLocation.y >= 154 && touchLocation.y <= 170)) {
+		return YES;
+	}
+	return NO;
 }
 
 - (bool)pauseIsTouched:(CGPoint)touchLocation {
