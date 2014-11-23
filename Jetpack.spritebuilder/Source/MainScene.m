@@ -489,6 +489,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	bullet.zOrder = DrawingOrderBullet;
 	[_physicsNode addChild:bullet];
 	[bullets addObject:bullet];
+
+	[audio playEffect:@"MissileLaunch.mp3" volume:0.5 pitch:1 pan:1 loop:NO];
 }
 
 - (void)createLaser {
@@ -543,6 +545,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[mainCharacter addChild:defeatedSprite];
 	defeatedSprite.position = ccp(0, 0);
 	defeatedSprite.visible = YES;
+
+	[audio playEffect:@"Hurt.mp3" loop:NO];
 }
 
 // >>> Collisions

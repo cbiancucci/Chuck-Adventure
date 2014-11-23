@@ -112,6 +112,8 @@
 	[self addChild:blood];
 	blood.position = ccp(0, 0);
 	blood.zOrder = self.zOrder + 1;
+
+	[[OALSimpleAudio sharedInstance] playEffect:@"Hurt.mp3" loop:NO];
 }
 
 - (void)setVisibleState:(NSString *)name {
