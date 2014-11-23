@@ -14,4 +14,6 @@
 - (void)turnOn;
 - (void)turnOff;
 
+- (CGSize)size;
+
 @end

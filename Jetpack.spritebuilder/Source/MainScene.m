@@ -325,7 +325,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	CGPoint touchLocation = [touch locationInView:[touch view]];
 	if (![mainCharacter isDead]) {
 		// Pause Dialog
-		if ([self pauseDialogIsTouched:touchLocation]) {
+		if (pauseDialog.visible && [self pauseDialogIsTouched:touchLocation]) {
 			//Music button
 			if ([self musicIsTouched:touchLocation]) {
 				[pauseDialog touchMusic];
@@ -376,20 +376,36 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (bool)pauseDialogIsTouched:(CGPoint)touchLocation {
-	if ((touchLocation.x > 164 && touchLocation.x < 405) && (touchLocation.y > 84 && touchLocation.y < 242)) {
+	float left = pauseDialog.position.x - ([pauseDialog size].width / 2);
+	float right = pauseDialog.position.x + ([pauseDialog size].width / 2);
+
+	float up = pauseDialog.position.y - ([pauseDialog size].height / 2);
+	float down = pauseDialog.position.y + ([pauseDialog size].height / 2);
+
+	if ((touchLocation.x >= left && touchLocation.x <= right) && (touchLocation.y >= up && touchLocation.y <= down)) {
 		return YES;
 	}
 	return NO;
 }
 
 - (bool)musicIsTouched:(CGPoint)touchLocation {
-	if ((touchLocation.x >= 355 && touchLocation.x <= 383) && (touchLocation.y >= 128 && touchLocation.y <= 144)) {
+	CGPoint musicPosition  = [pauseDialog convertToWorldSpace:[pauseDialog musicButton].position];
+
+	float left = musicPosition.x - ([[pauseDialog musicButton] size].width / 2);
+	float right = musicPosition.x + ([[pauseDialog musicButton] size].width / 2);
+
+	float fixedYposition = musicPosition.y - 40;
+	float up = fixedYposition - ([[pauseDialog musicButton] size].height / 2);
+	float down = fixedYposition + ([[pauseDialog musicButton] size].height / 2);
+
+	if ((touchLocation.x >= left && touchLocation.x <= right) && (touchLocation.y >= up && touchLocation.y <= down)) {
 		return YES;
 	}
 	return NO;
 }
 
 - (bool)soundEffectIsTouched:(CGPoint)touchLocation {
+	NSLog(@"x: %f, y:%f", touchLocation.x, touchLocation.y);
 	if ((touchLocation.x >= 355 && touchLocation.x <= 383) && (touchLocation.y >= 154 && touchLocation.y <= 170)) {
 		return YES;
 	}

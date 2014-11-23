@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OnOffButton.h"
 
 @interface Pause : CCNode
 
@@ -18,5 +19,10 @@
 
 - (BOOL)isMusicOn;
 - (BOOL)isSoundEffectsOn;
+
+- (CGSize)size;
+
+- (OnOffButton *)musicButton;
+- (OnOffButton *)soundEffectsButton;
 
 @end

@@ -219,6 +219,17 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>normalMapSpriteFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string></string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>color</string>
 						<key>type</key>
 						<string>Color3</string>
@@ -229,6 +240,14 @@
 							<real>1</real>
 							<real>1</real>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>effects</string>
+						<key>type</key>
+						<string>EffectControl</string>
+						<key>value</key>
+						<array/>
 					</dict>
 				</array>
 			</dict>
@@ -312,8 +331,8 @@
 							<real>0.0</real>
 						</array>
 						<array>
-							<real>-0.8828125</real>
-							<real>18.886749267578125</real>
+							<real>-0.2265777587890625</real>
+							<real>19.15625</real>
 						</array>
 						<array>
 							<real>1032.12890625</real>
@@ -336,8 +355,8 @@
 								<real>18.738311767578125</real>
 							</array>
 							<array>
-								<real>-0.8828125</real>
-								<real>18.886749267578125</real>
+								<real>-0.2265777587890625</real>
+								<real>19.15625</real>
 							</array>
 							<array>
 								<real>0.0</real>
@@ -412,6 +431,17 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>normalMapSpriteFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string></string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>color</string>
 						<key>type</key>
 						<string>Color3</string>
@@ -422,6 +452,14 @@
 							<real>1</real>
 							<real>1</real>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>effects</string>
+						<key>type</key>
+						<string>EffectControl</string>
+						<key>value</key>
+						<array/>
 					</dict>
 				</array>
 				<key>selected</key>

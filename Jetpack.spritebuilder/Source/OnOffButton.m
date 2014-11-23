@@ -32,4 +32,11 @@
 	return on.visible;
 }
 
+- (CGSize)size {
+	if (on.visible) {
+		return on.contentSize;
+	}
+	return off.contentSize;
+}
+
 @end

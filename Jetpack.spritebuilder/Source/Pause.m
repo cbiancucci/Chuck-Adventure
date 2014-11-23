@@ -111,4 +111,16 @@
 	[soundEffectsButton turnOff];
 }
 
+- (CGSize)size {
+	return [self getChildByName:@"PauseBackground" recursively:YES].contentSize;
+}
+
+- (OnOffButton *)musicButton {
+	return musicButton;
+}
+
+- (OnOffButton *)soundEffectsButton {
+	return soundEffectsButton;
+}
+
 @end
