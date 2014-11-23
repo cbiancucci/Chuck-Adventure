@@ -42,7 +42,11 @@
 		BB24494119F0729400975486 /* CharacterWalkingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494019F0729400975486 /* CharacterWalkingState.m */; };
 		BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494319F072DD00975486 /* CharacterJumpingState.m */; };
 		BB24494719F0730D00975486 /* CharacterRunningState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24494619F0730D00975486 /* CharacterRunningState.m */; };
-		BB28B7421A0FE4C200247126 /* Level.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB28B7411A0FE4C200247126 /* Level.mp3 */; };
+		BB3C5C6F1A22952800F2BAAB /* CreateLaser.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB3C5C6A1A22952800F2BAAB /* CreateLaser.mp3 */; };
+		BB3C5C701A22952800F2BAAB /* Level.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB3C5C6B1A22952800F2BAAB /* Level.mp3 */; };
+		BB3C5C711A22952800F2BAAB /* Menu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB3C5C6C1A22952800F2BAAB /* Menu.mp3 */; };
+		BB3C5C721A22952800F2BAAB /* RocketExplosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB3C5C6D1A22952800F2BAAB /* RocketExplosion.mp3 */; };
+		BB3C5C731A22952800F2BAAB /* Step.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB3C5C6E1A22952800F2BAAB /* Step.mp3 */; };
 		BB53AB081A0FFC3600A03765 /* Rocket.m in Sources */ = {isa = PBXBuildFile; fileRef = BB53AB071A0FFC3600A03765 /* Rocket.m */; };
 		BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */; };
 		BB6F11A31A2129F10045CE97 /* Pause.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6F11A21A2129F10045CE97 /* Pause.m */; };
@@ -53,6 +57,7 @@
 		BBCBE2CB1A1E16A60013C4EB /* Enemy.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCBE2CA1A1E16A60013C4EB /* Enemy.m */; };
 		BBCBE2D21A1E19780013C4EB /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCBE2D11A1E19780013C4EB /* Character.m */; };
 		BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD1C8F51A119934002AAE33 /* Bullet.m */; };
+		BBDD19A21A228B3300F34003 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDD19A11A228B3300F34003 /* Menu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,7 +145,11 @@
 		BB24494319F072DD00975486 /* CharacterJumpingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterJumpingState.m; path = Source/CharacterJumpingState.m; sourceTree = "<group>"; };
 		BB24494519F0730D00975486 /* CharacterRunningState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterRunningState.h; path = Source/CharacterRunningState.h; sourceTree = "<group>"; };
 		BB24494619F0730D00975486 /* CharacterRunningState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CharacterRunningState.m; path = Source/CharacterRunningState.m; sourceTree = "<group>"; };
-		BB28B7411A0FE4C200247126 /* Level.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level.mp3; sourceTree = "<group>"; };
+		BB3C5C6A1A22952800F2BAAB /* CreateLaser.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CreateLaser.mp3; sourceTree = "<group>"; };
+		BB3C5C6B1A22952800F2BAAB /* Level.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level.mp3; sourceTree = "<group>"; };
+		BB3C5C6C1A22952800F2BAAB /* Menu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Menu.mp3; sourceTree = "<group>"; };
+		BB3C5C6D1A22952800F2BAAB /* RocketExplosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = RocketExplosion.mp3; sourceTree = "<group>"; };
+		BB3C5C6E1A22952800F2BAAB /* Step.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Step.mp3; sourceTree = "<group>"; };
 		BB53AB061A0FFC3600A03765 /* Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rocket.h; path = Source/Rocket.h; sourceTree = "<group>"; };
 		BB53AB071A0FFC3600A03765 /* Rocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rocket.m; path = Source/Rocket.m; sourceTree = "<group>"; };
 		BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CharacterShootingState.h; path = Source/CharacterShootingState.h; sourceTree = "<group>"; };
@@ -160,6 +169,8 @@
 		BBCBE2D11A1E19780013C4EB /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Character.m; path = Source/Character.m; sourceTree = "<group>"; };
 		BBD1C8F41A119934002AAE33 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bullet.h; path = Source/Bullet.h; sourceTree = "<group>"; };
 		BBD1C8F51A119934002AAE33 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
+		BBDD19A01A228B3300F34003 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Menu.h; path = Source/Menu.h; sourceTree = "<group>"; };
+		BBDD19A11A228B3300F34003 /* Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Menu.m; path = Source/Menu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,7 +292,7 @@
 		B77F1B4617B978D7009739AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BB28B7401A0FE1F800247126 /* Audio */,
+				BB3C5C691A22950E00F2BAAB /* Audio */,
 				BBD843951A0FC7FD00EC61B1 /* Fonts */,
 				B73789911807667A0076A88C /* Icons */,
 				B737893A180761570076A88C /* Published-iOS */,
@@ -330,10 +341,14 @@
 			name = State;
 			sourceTree = "<group>";
 		};
-		BB28B7401A0FE1F800247126 /* Audio */ = {
+		BB3C5C691A22950E00F2BAAB /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				BB28B7411A0FE4C200247126 /* Level.mp3 */,
+				BB3C5C6A1A22952800F2BAAB /* CreateLaser.mp3 */,
+				BB3C5C6B1A22952800F2BAAB /* Level.mp3 */,
+				BB3C5C6C1A22952800F2BAAB /* Menu.mp3 */,
+				BB3C5C6D1A22952800F2BAAB /* RocketExplosion.mp3 */,
+				BB3C5C6E1A22952800F2BAAB /* Step.mp3 */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -342,6 +357,8 @@
 			isa = PBXGroup;
 			children = (
 				BB6F11A11A2129F10045CE97 /* Pause.h */,
+				BBDD19A01A228B3300F34003 /* Menu.h */,
+				BBDD19A11A228B3300F34003 /* Menu.m */,
 				BB6F11A21A2129F10045CE97 /* Pause.m */,
 				BB6F11A91A212FF40045CE97 /* OnOffButton.h */,
 				BB6F11AA1A212FF40045CE97 /* OnOffButton.m */,
@@ -477,16 +494,20 @@
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
 				B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */,
 				B71F5916188484E7003F4D28 /* iPhone-old@2x.png in Resources */,
+				BB3C5C731A22952800F2BAAB /* Step.mp3 in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,
-				BB28B7421A0FE4C200247126 /* Level.mp3 in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
+				BB3C5C701A22952800F2BAAB /* Level.mp3 in Resources */,
+				BB3C5C721A22952800F2BAAB /* RocketExplosion.mp3 in Resources */,
 				BB9CFF831A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf in Resources */,
 				B71F5915188484E7003F4D28 /* iPhone-old.png in Resources */,
 				B71F5917188484E7003F4D28 /* iPhone.png in Resources */,
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B71F5918188484E7003F4D28 /* iPhone@2x.png in Resources */,
+				BB3C5C711A22952800F2BAAB /* Menu.mp3 in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
+				BB3C5C6F1A22952800F2BAAB /* CreateLaser.mp3 in Resources */,
 				B71F5911188484E7003F4D28 /* iPad-old.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +521,7 @@
 			files = (
 				BB6F11AB1A212FF40045CE97 /* OnOffButton.m in Sources */,
 				BB6F11A31A2129F10045CE97 /* Pause.m in Sources */,
+				BBDD19A21A228B3300F34003 /* Menu.m in Sources */,
 				BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */,
 				BB1131BC19E7360000D8603B /* Rock.m in Sources */,
 				BB24493919F06F6A00975486 /* MainCharacter.m in Sources */,

@@ -76,6 +76,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSTimeInterval _sinceShoot;
 	NSTimeInterval _sinceBullet;
 	NSTimeInterval _sinceLaser;
+	NSTimeInterval _sincePlayStep;
 
 	// Rocks
 	NSMutableArray *_rocks;
@@ -196,7 +197,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)loadMusicSettings {
 	audio = [OALSimpleAudio sharedInstance];
-	[audio playEffect:@"Level.mp3"];
+	[audio playBg:@"Level.mp3" loop:YES];
+	_sincePlayStep = 0;
 }
 
 - (void)loadPauseDialog {
@@ -260,9 +262,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			mainCharacter.position = ccp(mainCharacter.position.x + delta * cameraScrollSpeed, mainCharacter.position.y);
 			_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
 
+			_sincePlayStep += delta;
+			if (_sincePlayStep > 0.3f) {
+				[audio playEffect:@"Step.mp3" loop:NO];
+				_sincePlayStep = 0;
+			}
 			distance += 0.1f;
 		}
-
 		// Update character state.
 		_sinceBullet += delta;
 		if ([mainCharacter isShooting] && _sinceBullet > 0.4f) {
@@ -330,7 +336,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			if ([self musicIsTouched:touchLocation]) {
 				[pauseDialog touchMusic];
 				if (![pauseDialog isMusicOn]) {
-					[audio stopAllEffects];
+					[audio stopBg];
 				}
 				else {
 					[audio playEffect:@"Level.mp3"];
@@ -497,6 +503,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	laser.physicsBody.velocity = CGPointMake(-200, 0);
 
 	[lasers addObject:laser];
+	[audio playEffect:@"CreateLaser.mp3" loop:NO];
 }
 
 - (void)createEnemy {
@@ -527,6 +534,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[_physicsNode addChild:explosion];
 	explosion.position = rocket.position;
 	[rocket removeFromParentAndCleanup:YES];
+	[audio playEffect:@"RocketExplosion.mp3" loop:NO];
 }
 
 - (void)defeat {
