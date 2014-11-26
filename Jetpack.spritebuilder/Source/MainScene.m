@@ -34,6 +34,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 };
 
 @implementation MainScene {
+	int level;
 	double distance;
 
 	CGSize size;
@@ -223,7 +224,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		if (enemy) {
-			enemy.physicsBody.velocity = CGPointMake(-50, 0);
+			if (![enemy isDead]) {
+				enemy.physicsBody.velocity = CGPointMake(-50, 0);
+			}
+			else {
+				enemy.physicsBody.velocity = CGPointMake(0, 0);
+			}
 
 			CGPoint enemyWorldPosition = [_physicsNode convertToWorldSpace:enemy.position];
 
@@ -269,11 +275,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			}
 			distance += 0.1f;
 		}
+
+		level = distance / 100;
+
 		// Update character state.
 		_sinceBullet += delta;
 		if ([mainCharacter isShooting] && _sinceBullet > 0.4f) {
 			_sinceBullet = 0;
-			[self createBullet];
+			//[self createBullet];
 		}
 
 		_sinceUranium += delta;
@@ -286,7 +295,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		_sinceShoot  += delta;
-		if ([mainCharacter isShooting] && _sinceShoot > 1.0f) {
+		if ([mainCharacter isShooting] && _sinceShoot > 0.2f) {
 			[mainCharacter stopShooting];
 		}
 
@@ -296,9 +305,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		[self loopBackground];
 	}
 	else {
-		if ([enemy isDead]) {
-			enemy.physicsBody.velocity = CGPointMake(0, 0);
-		}
 		gameOverText.visible = YES;
 		retryText.visible = YES;
 	}
@@ -522,6 +528,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	defeatedEnemy.position = ccp(0, 0);
 	defeatedEnemy.visible = YES;
 	defeatedEnemy.zOrder = DrawingOrderEnemy;
+	enemy.physicsBody.velocity = CGPointMake(50, 0);
 }
 
 - (void)createRocket {
@@ -586,6 +593,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSLog(@"Character and rocket collision");
 	if (![characterCollision isDead]) {
 		[self defeat];
+		[_lifeBar setScaleX:0];
 		[self explodeRocket];
 	}
 	return YES;
@@ -617,6 +625,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision enemy:(Enemy *)enemyCollision {
 	NSLog(@"Main character and enemy collision");
 	if (![enemyCollision isDead] && ![characterCollision isDead]) {
+		[_lifeBar setScaleX:0];
 		[self defeat];
 	}
 	return YES;
