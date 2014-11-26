@@ -635,7 +635,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSLog(@"Main character and laser collision");
 	if (![characterCollision isDead]) {
 		[characterCollision bleed];
-		lifeScale -= 0.05f;
+		lifeScale -= 0.05f * level;
 		[_lifeBar setScaleX:lifeScale];
 
 		if (lifeScale <= 0) {
