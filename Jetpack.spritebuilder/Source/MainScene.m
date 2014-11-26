@@ -527,8 +527,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[enemy addChild:defeatedEnemy];
 	defeatedEnemy.position = ccp(0, 0);
 	defeatedEnemy.visible = YES;
-	defeatedEnemy.zOrder = DrawingOrderEnemy;
-	enemy.physicsBody.velocity = CGPointMake(50, 0);
 }
 
 - (void)createRocket {
@@ -541,6 +539,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)explodeRocket {
 	Explosion *explosion = (Explosion *)[CCBReader load:@"Explosion"];
 	[_physicsNode addChild:explosion];
+	explosion.zOrder = DrawingOrderParticles;
 	explosion.position = rocket.position;
 	[rocket removeFromParentAndCleanup:YES];
 	[audio playEffect:@"RocketExplosion.mp3" loop:NO];
