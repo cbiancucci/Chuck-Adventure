@@ -15,6 +15,7 @@
 - (void)die;
 - (void)stop;
 - (void)startShooting;
+- (void)stopShooting;
 - (BOOL)isShooting;
 
 @end

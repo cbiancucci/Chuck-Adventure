@@ -30,6 +30,10 @@
 	[self setVisibleState:@"ShootWalking"];
 }
 
+- (void)stopShooting {
+	[self setVisibleState:@"Walk"];
+}
+
 - (BOOL)isShooting {
 	return [self getChildByName:@"ShootWalking" recursively:YES].visible;
 }
