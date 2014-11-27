@@ -65,6 +65,52 @@
 	[soundEffectsButton setPosition:ccp(85, -1)];
 }
 
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+	NSLog(@"Llegue aca");
+	CGPoint p = [touch locationInView:[touch view]];
+
+	// TODO
+	if ([self musicIsTouched:p]) {
+		NSLog(@"Music button was touched");
+	}
+
+	if ([self soundEffectIsTouched:p]) {
+	}
+	/*
+	   //Music button
+	   if ([self musicIsTouched:initialTouchLocation]) {
+	   [pauseDialog touchMusic];
+	   if (![pauseDialog isMusicOn]) {
+	   [audio stopBg];
+	   }
+	   else {
+	   [audio playEffect:@"Level.mp3"];
+	   }
+	   }
+
+	   // Sound effects button
+	   else if ([self soundEffectIsTouched:initialTouchLocation]) {
+	   [pauseDialog touchSoundEffect];
+	   }
+	 */
+}
+
+- (bool)musicIsTouched:(CGPoint)touchLocation {
+	CGPoint r = [self convertToWorldSpace:musicButton.position];
+
+	CGRect musicButtonArea = CGRectMake(r.x - [musicButton size].width / 2, r.y - [musicButton size].height / 2, [musicButton size].width, [musicButton size].height);
+
+	return CGRectContainsPoint(musicButtonArea, [self convertToNodeSpace:touchLocation]);
+}
+
+- (bool)soundEffectIsTouched:(CGPoint)touchLocation {
+	NSLog(@"x: %f, y:%f", touchLocation.x, touchLocation.y);
+	if ((touchLocation.x >= 355 && touchLocation.x <= 383) && (touchLocation.y >= 154 && touchLocation.y <= 170)) {
+		return YES;
+	}
+	return NO;
+}
+
 - (void)touchMusic {
 	if ([self isMusicOn]) {
 		[self turnOffMusic];
@@ -113,14 +159,6 @@
 
 - (CGSize)size {
 	return [self getChildByName:@"PauseBackground" recursively:YES].contentSize;
-}
-
-- (OnOffButton *)musicButton {
-	return musicButton;
-}
-
-- (OnOffButton *)soundEffectsButton {
-	return soundEffectsButton;
 }
 
 @end

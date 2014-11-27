@@ -350,50 +350,26 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	if (![mainCharacter isDead]) {
 		// Pause Dialog
 		if (pauseDialog.visible && [self pauseDialogIsTouched:initialTouchLocation]) {
-			//Music button
-			if ([self musicIsTouched:initialTouchLocation]) {
-				[pauseDialog touchMusic];
-				if (![pauseDialog isMusicOn]) {
-					[audio stopBg];
-				}
-				else {
-					[audio playEffect:@"Level.mp3"];
-				}
-			}
-
-			// Sound effects button
-			else if ([self soundEffectIsTouched:initialTouchLocation]) {
-				[pauseDialog touchSoundEffect];
-			}
+			[pauseDialog touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event];
 		}
+		// Pause (up-right corner) is pressed.
 		else if ([self pauseIsTouched:initialTouchLocation]) {
-			if ([CCDirector sharedDirector].isPaused) {
-				//gamePausedText.visible = NO;
-				pauseDialog.visible = NO;
-				[[CCDirector sharedDirector] resume];
-			}
-			else {
-				[[CCDirector sharedDirector] pause];
-				//gamePausedText.visible = YES;
-				pauseDialog.visible = YES;
-			}
+			[self pause];
 		}
+		// Main character shoot
 		else {
 			if (![CCDirector sharedDirector].isPaused) {
-				if (![mainCharacter isDead]) {
-					// Si toco la mitad derecha de la pantalla.
-					if ((initialTouchLocation.x > 300)) {
-						[mainCharacter startShooting];
-						_sinceShoot = 0.f;
-						_sinceBullet = 0.f;
-						[self createBullet];
-					}
+				// Si toco la mitad derecha de la pantalla.
+				if ((initialTouchLocation.x > 300)) {
+					[mainCharacter startShooting];
+					_sinceShoot = 0.f;
+					_sinceBullet = 0.f;
+					[self createBullet];
 				}
 			}
 		}
 	}
-
-	else { // Retry
+	else { // Retry after main character is dead.
 		[audio stopAllEffects];
 		[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 	}
@@ -419,6 +395,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 }
 
+- (void)pause {
+	if ([CCDirector sharedDirector].isPaused) {
+		pauseDialog.visible = NO;
+		[[CCDirector sharedDirector] resume];
+	}
+	else {
+		[[CCDirector sharedDirector] pause];
+		pauseDialog.visible = YES;
+	}
+}
+
 - (bool)pauseDialogIsTouched:(CGPoint)touchLocation {
 	float left = pauseDialog.position.x - ([pauseDialog size].width / 2);
 	float right = pauseDialog.position.x + ([pauseDialog size].width / 2);
@@ -427,30 +414,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	float down = pauseDialog.position.y + ([pauseDialog size].height / 2);
 
 	if ((touchLocation.x >= left && touchLocation.x <= right) && (touchLocation.y >= up && touchLocation.y <= down)) {
-		return YES;
-	}
-	return NO;
-}
-
-- (bool)musicIsTouched:(CGPoint)touchLocation {
-	CGPoint musicPosition  = [pauseDialog convertToWorldSpace:[pauseDialog musicButton].position];
-
-	float left = musicPosition.x - ([[pauseDialog musicButton] size].width / 2);
-	float right = musicPosition.x + ([[pauseDialog musicButton] size].width / 2);
-
-	float fixedYposition = musicPosition.y - 40;
-	float up = fixedYposition - ([[pauseDialog musicButton] size].height / 2);
-	float down = fixedYposition + ([[pauseDialog musicButton] size].height / 2);
-
-	if ((touchLocation.x >= left && touchLocation.x <= right) && (touchLocation.y >= up && touchLocation.y <= down)) {
-		return YES;
-	}
-	return NO;
-}
-
-- (bool)soundEffectIsTouched:(CGPoint)touchLocation {
-	NSLog(@"x: %f, y:%f", touchLocation.x, touchLocation.y);
-	if ((touchLocation.x >= 355 && touchLocation.x <= 383) && (touchLocation.y >= 154 && touchLocation.y <= 170)) {
 		return YES;
 	}
 	return NO;

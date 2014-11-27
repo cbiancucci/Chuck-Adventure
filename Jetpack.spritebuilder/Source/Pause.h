@@ -22,7 +22,4 @@
 
 - (CGSize)size;
 
-- (OnOffButton *)musicButton;
-- (OnOffButton *)soundEffectsButton;
-
 @end
