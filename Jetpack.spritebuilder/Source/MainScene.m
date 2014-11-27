@@ -36,6 +36,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 @implementation MainScene {
 	int level;
 	double distance;
+	BOOL levelOneFlag;
 
 	CGSize size;
 
@@ -97,6 +98,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)didLoadFromCCB {
 	size  = [[CCDirector sharedDirector] viewSize];
+	levelOneFlag = false;
 
 	// set this class as delegate
 	_physicsNode.collisionDelegate = self;
@@ -193,7 +195,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)loadDifficultiesSettings {
 	[self createRocket];
-	[self createEnemy];
 }
 
 - (void)loadMusicSettings {
@@ -211,6 +212,27 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 - (void)update:(CCTime)delta {
 	if (![mainCharacter isDead]) {
+		// Update character position.
+		if ([mainCharacter hasAdrenaline]) {
+			mainCharacter.position = ccp(mainCharacter.position.x + delta * characterScrollSpeed, mainCharacter.position.y);
+			_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
+
+			distance += 0.5f;
+		}
+		else {
+			mainCharacter.position = ccp(mainCharacter.position.x + delta * cameraScrollSpeed, mainCharacter.position.y);
+			_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
+
+			_sincePlayStep += delta;
+			if (_sincePlayStep > 0.3f) {
+				[audio playEffect:@"Step.mp3" loop:NO];
+				_sincePlayStep = 0;
+			}
+			distance += 0.1f;
+		}
+
+		level = distance / 100;
+
 		// Update rocket position.
 		if (rocket) {
 			rocket.physicsBody.velocity = CGPointMake(-200, 0);
@@ -223,7 +245,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			}
 		}
 
-		if (enemy) {
+		if (level == 1 && !levelOneFlag) {
+			[self createEnemy];
+			levelOneFlag = true;
+		}
+
+		if (enemy && level >= 1) {
 			if (![enemy isDead]) {
 				enemy.physicsBody.velocity = CGPointMake(-50, 0);
 			}
@@ -257,27 +284,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			[self createLaser];
 		}
 
-		// Update character position.
-		if ([mainCharacter hasAdrenaline]) {
-			mainCharacter.position = ccp(mainCharacter.position.x + delta * characterScrollSpeed, mainCharacter.position.y);
-			_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
-
-			distance += 0.5f;
-		}
-		else {
-			mainCharacter.position = ccp(mainCharacter.position.x + delta * cameraScrollSpeed, mainCharacter.position.y);
-			_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
-
-			_sincePlayStep += delta;
-			if (_sincePlayStep > 0.3f) {
-				[audio playEffect:@"Step.mp3" loop:NO];
-				_sincePlayStep = 0;
-			}
-			distance += 0.1f;
-		}
-
-		level = distance / 100;
-
 		// Update character state.
 		_sinceBullet += delta;
 		if ([mainCharacter isShooting] && _sinceBullet > 0.4f) {
@@ -305,6 +311,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		[self loopBackground];
 	}
 	else {
+		if (![enemy isDead]) {
+			[enemy stopShooting];
+		}
 		gameOverText.visible = YES;
 		retryText.visible = YES;
 	}
