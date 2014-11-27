@@ -40,6 +40,9 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	CGSize size;
 
+	CGPoint initialTouchLocation;
+	CGPoint finalTouchLocation;
+
 	//PhysicsNode
 	CCPhysicsNode *_physicsNode;
 
@@ -343,12 +346,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-	CGPoint touchLocation = [touch locationInView:[touch view]];
+	initialTouchLocation = [touch locationInView:[touch view]];
 	if (![mainCharacter isDead]) {
 		// Pause Dialog
-		if (pauseDialog.visible && [self pauseDialogIsTouched:touchLocation]) {
+		if (pauseDialog.visible && [self pauseDialogIsTouched:initialTouchLocation]) {
 			//Music button
-			if ([self musicIsTouched:touchLocation]) {
+			if ([self musicIsTouched:initialTouchLocation]) {
 				[pauseDialog touchMusic];
 				if (![pauseDialog isMusicOn]) {
 					[audio stopBg];
@@ -359,11 +362,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			}
 
 			// Sound effects button
-			else if ([self soundEffectIsTouched:touchLocation]) {
+			else if ([self soundEffectIsTouched:initialTouchLocation]) {
 				[pauseDialog touchSoundEffect];
 			}
 		}
-		else if ([self pauseIsTouched:touchLocation]) {
+		else if ([self pauseIsTouched:initialTouchLocation]) {
 			if ([CCDirector sharedDirector].isPaused) {
 				//gamePausedText.visible = NO;
 				pauseDialog.visible = NO;
@@ -375,17 +378,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 				pauseDialog.visible = YES;
 			}
 		}
-		else if (![CCDirector sharedDirector].isPaused) {
-			if (touchLocation.x < 300) {
-				if (![mainCharacter isJumping]) {
-					[mainCharacter startJumping];
+		else {
+			if (![CCDirector sharedDirector].isPaused) {
+				if (![mainCharacter isDead]) {
+					// Si toco la mitad derecha de la pantalla.
+					if ((initialTouchLocation.x > 300)) {
+						[mainCharacter startShooting];
+						_sinceShoot = 0.f;
+						_sinceBullet = 0.f;
+						[self createBullet];
+					}
 				}
-			}
-			else {
-				[mainCharacter startShooting];
-				_sinceShoot = 0.f;
-				_sinceBullet = 0.f;
-				[self createBullet];
 			}
 		}
 	}
@@ -393,6 +396,26 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	else { // Retry
 		[audio stopAllEffects];
 		[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+	}
+}
+
+// Swipe movement to make Main Character jump.
+- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
+	finalTouchLocation = [touch locationInView:[touch view]];
+
+	if (![CCDirector sharedDirector].isPaused) {
+		if (![mainCharacter isDead]) {
+			// Si toco la mitad izquierda de la pantalla.
+			if ((initialTouchLocation.x < 300)) {
+				// Si hago swipe hacia arriba.
+				if (initialTouchLocation.y - finalTouchLocation.y > 50) {
+					initialTouchLocation = finalTouchLocation;
+					if (![mainCharacter isJumping]) {
+						[mainCharacter startJumping];
+					}
+				}
+			}
+		}
 	}
 }
 
