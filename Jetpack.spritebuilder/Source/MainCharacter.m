@@ -55,7 +55,7 @@
 	else {
 		[self setVisibleState:@"ShootJumping"];
 	}
-	[self.physicsBody applyImpulse:ccp(0.f, 2500.f)];
+	[self.physicsBody applyImpulse:ccp(0.f, 3000.f)];
 }
 
 - (void)startRunning {
