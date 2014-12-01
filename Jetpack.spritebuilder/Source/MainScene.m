@@ -16,7 +16,7 @@
 #import "Laser.h"
 #import "Pause.h"
 
-static const CGFloat cameraScrollSpeed = 80.f;
+//static const CGFloat cameraScrollSpeed = 80.f;
 static const CGFloat characterScrollSpeed = 280.f;
 static const CGFloat firstRockXPosition = 280.f;
 static const CGFloat firstRockYPosition = 100.f;
@@ -37,6 +37,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	int level;
 	double distance;
 	BOOL levelOneFlag;
+
+	CGFloat cameraScrollSpeed;
 
 	CGSize size;
 
@@ -173,6 +175,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)loadContextInitialSettings {
+	cameraScrollSpeed = 80.f;
 	distance = 0;
 	_backgrounds = @[_background1, _background2];
 	_roofs = @[_roof1, _roof2];
@@ -214,10 +217,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 }
 
 - (void)update:(CCTime)delta {
+	cameraScrollSpeed += distance * 0.001f;
 	if (![mainCharacter isDead]) {
 		// Update character position.
 		if ([mainCharacter hasAdrenaline]) {
-			mainCharacter.position = ccp(mainCharacter.position.x + delta * characterScrollSpeed, mainCharacter.position.y);
+			mainCharacter.position = ccp(mainCharacter.position.x + delta * (characterScrollSpeed + distance), mainCharacter.position.y);
 			_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
 
 			distance += 0.5f;
