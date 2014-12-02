@@ -16,7 +16,6 @@
 #import "Laser.h"
 #import "Pause.h"
 
-//static const CGFloat cameraScrollSpeed = 80.f;
 static const CGFloat characterScrollSpeed = 280.f;
 static const CGFloat firstRockXPosition = 280.f;
 static const CGFloat firstRockYPosition = 100.f;
@@ -61,8 +60,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// Background
 	CCNode *_background1;
 	CCNode *_background2;
+	CCNode *_backgroundlvl2_1;
+	CCNode *_backgroundlvl2_2;
 	CCNode *_spike;
-	NSArray *_backgrounds;
+	NSMutableArray *_backgrounds;
 
 	// UI
 	CCNode *_lifeBar;
@@ -124,7 +125,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	[self loadMusicSettings];
+	//[self loadMusicSettings];
 
 	// UI
 	[self loadPauseDialog];
@@ -177,7 +178,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)loadContextInitialSettings {
 	cameraScrollSpeed = 80.f;
 	distance = 0;
-	_backgrounds = @[_background1, _background2];
+	_backgrounds = [[NSMutableArray alloc] init];
+	[_backgrounds addObject:_background1];
+	[_backgrounds addObject:_background2];
+
+	_backgroundlvl2_1.visible = NO;
+	_backgroundlvl2_2.visible = NO;
+
 	_roofs = @[_roof1, _roof2];
 	_spike.physicsBody.sensor = YES;
 
@@ -254,6 +261,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		if (level == 1 && !levelOneFlag) {
 			[self createEnemy];
+			[self updateLevelBackground];
 			levelOneFlag = true;
 		}
 
@@ -459,10 +467,24 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		CGPoint groundWorldPosition = [_physicsNode convertToWorldSpace:roof.position];
 		CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
 		if (groundScreenPosition.x <= (-1 * roof.contentSize.width)) {
-			roof.position = ccp(roof.position.x + 2 * roof.contentSize.width, roof.position.y);
+			roof.position = ccp(roof.position.x + 2 * (roof.contentSize.width - 2), roof.position.y);
 			roof.zOrder = DrawingOrderBackground;
 		}
 	}
+}
+
+- (void)updateLevelBackground {
+	_backgroundlvl2_1.position = _background1.position;
+	_backgroundlvl2_2.position = _background2.position;
+
+	_backgrounds[0] = _backgroundlvl2_1;
+	_backgrounds[1] = _backgroundlvl2_2;
+
+	_backgroundlvl2_1.visible = YES;
+	_backgroundlvl2_2.visible = YES;
+
+	_background1.visible = NO;
+	_background2.visible = NO;
 }
 
 - (void)spawnNewRock {
