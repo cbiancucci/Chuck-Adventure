@@ -210,7 +210,7 @@
 			<key>collisionType</key>
 			<string>spike</string>
 			<key>cornerRadius</key>
-			<real>69.03515625</real>
+			<real>48.33203125</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
