@@ -136,7 +136,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	self.userInteractionEnabled = YES;
 
-	_physicsNode.debugDraw = YES;
+	//_physicsNode.debugDraw = YES;
 }
 
 - (void)loadTextSettings {
