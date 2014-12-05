@@ -713,7 +713,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSLog(@"Character and spike collision");
 	if (![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
 		[mainCharacter bleed];
-		lifeScale -= 0.02f;
+		lifeScale -= 0.01f;
 		[_lifeBar setScaleX:lifeScale];
 
 		if (lifeScale <= 0) {
@@ -789,7 +789,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSLog(@"Main character and laser collision");
 	if (![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
 		[characterCollision bleed];
-		lifeScale -= 0.05f * level;
+		lifeScale -= 0.04f * level;
 		[_lifeBar setScaleX:lifeScale];
 
 		if (lifeScale <= 0) {
@@ -822,7 +822,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSLog(@"Main Character and cannonball collision");
 	if (![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
 		[characterCollision bleed];
-		lifeScale -= 0.05f * level;
+		lifeScale -= 0.02f * level;
 		[_lifeBar setScaleX:lifeScale];
 
 		if (lifeScale <= 0) {
