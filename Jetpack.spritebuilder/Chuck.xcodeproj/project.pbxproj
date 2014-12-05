@@ -63,6 +63,7 @@
 		BBCBE2D21A1E19780013C4EB /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCBE2D11A1E19780013C4EB /* Character.m */; };
 		BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD1C8F51A119934002AAE33 /* Bullet.m */; };
 		BBDD19A21A228B3300F34003 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDD19A11A228B3300F34003 /* Menu.m */; };
+		BBF3CA051A3145F9003D0841 /* Spike.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF3CA041A3145F9003D0841 /* Spike.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +182,8 @@
 		BBD1C8F51A119934002AAE33 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bullet.m; path = Source/Bullet.m; sourceTree = "<group>"; };
 		BBDD19A01A228B3300F34003 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Menu.h; path = Source/Menu.h; sourceTree = "<group>"; };
 		BBDD19A11A228B3300F34003 /* Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Menu.m; path = Source/Menu.m; sourceTree = "<group>"; };
+		BBF3CA031A3145F9003D0841 /* Spike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Spike.h; path = Source/Spike.h; sourceTree = "<group>"; };
+		BBF3CA041A3145F9003D0841 /* Spike.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Spike.m; path = Source/Spike.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,6 +395,8 @@
 				BB53AB071A0FFC3600A03765 /* Rocket.m */,
 				BBA98AF91A1E9DD700DD373A /* Laser.h */,
 				BBA98AFA1A1E9DD700DD373A /* Laser.m */,
+				BBF3CA031A3145F9003D0841 /* Spike.h */,
+				BBF3CA041A3145F9003D0841 /* Spike.m */,
 			);
 			name = Weapons;
 			sourceTree = "<group>";
@@ -557,6 +562,7 @@
 				BBCBE2D21A1E19780013C4EB /* Character.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
+				BBF3CA051A3145F9003D0841 /* Spike.m in Sources */,
 				BBD1C8F61A119934002AAE33 /* Bullet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

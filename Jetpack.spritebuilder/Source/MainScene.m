@@ -15,6 +15,7 @@
 #import "Enemy.h"
 #import "Laser.h"
 #import "Pause.h"
+#import "Spike.h"
 
 static const CGFloat characterScrollSpeed = 280.f;
 static const CGFloat firstRockXPosition = 280.f;
@@ -36,6 +37,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	int level;
 	double distance;
 	BOOL levelOneFlag;
+	BOOL levelTwoFlag;
 
 	CGFloat cameraScrollSpeed;
 
@@ -95,6 +97,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	// Difficulties
 	Rocket *rocket;
 	Enemy *enemy;
+	Spike *spike;
 	NSMutableArray *lasers;
 	Laser *laser;
 
@@ -105,6 +108,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)didLoadFromCCB {
 	size  = [[CCDirector sharedDirector] viewSize];
 	levelOneFlag = false;
+	levelTwoFlag = false;
 
 	// set this class as delegate
 	_physicsNode.collisionDelegate = self;
@@ -125,14 +129,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[self loadDifficultiesSettings];
 
 	// Music
-	//[self loadMusicSettings];
+	[self loadMusicSettings];
 
 	// UI
 	[self loadPauseDialog];
 
 	self.userInteractionEnabled = YES;
 
-	//_physicsNode.debugDraw = YES;
+	_physicsNode.debugDraw = YES;
 }
 
 - (void)loadTextSettings {
@@ -260,12 +264,26 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		if (level == 1 && !levelOneFlag) {
-			[self createEnemy];
+			[self createSpike];
 			[self updateLevelBackground];
 			levelOneFlag = true;
 		}
 
-		if (enemy && level >= 1) {
+		if (level == 2 && !levelTwoFlag) {
+			[self createEnemy];
+			levelTwoFlag = true;
+		}
+
+		if (spike && level >= 1) {
+			CGPoint spikeWorldPosition = [_physicsNode convertToWorldSpace:spike.position];
+
+			if (spikeWorldPosition.x < -200) {
+				[spike removeFromParentAndCleanup:YES];
+				[self createSpike];
+			}
+		}
+
+		if (enemy && level >= 2) {
 			if (![enemy isDead]) {
 				enemy.physicsBody.velocity = CGPointMake(-50, 0);
 			}
@@ -303,7 +321,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		_sinceBullet += delta;
 		if ([mainCharacter isShooting] && _sinceBullet > 0.4f) {
 			_sinceBullet = 0;
-			//[self createBullet];
 		}
 
 		_sinceUranium += delta;
@@ -337,7 +354,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)updateBullets {
 	NSMutableArray *removeBullets = [[NSMutableArray alloc] init];
 	for (Bullet *bullet in bullets) {
-		bullet.physicsBody.velocity = CGPointMake(800, 0);
+		bullet.physicsBody.velocity = CGPointMake(cameraScrollSpeed + 800, 0);
 
 		CGPoint bulletWorldPosition = [_physicsNode convertToWorldSpace:bullet.position];
 		if (bulletWorldPosition.x > size.width) {
@@ -566,6 +583,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[audio playEffect:@"RocketExplosion.mp3" loop:NO];
 }
 
+- (void)createSpike {
+	spike = (Spike *)[CCBReader load:@"Spike"];
+	spike.zOrder = DrawingOrderDifficulties;
+	[spike setPosition:ccp(mainCharacter.position.x + 700.f, 50.f)];
+	[_physicsNode addChild:spike];
+}
+
 - (void)defeat {
 	[mainCharacter die];
 	CCSprite *defeatedSprite = (CCSprite *)[CCBReader load:@"MainCharacterDefeated"];
@@ -595,6 +619,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision spike:(CCNode *)spike {
 	NSLog(@"Character and spike collision");
 	[mainCharacter bleed];
+	lifeScale -= 0.05f * level;
+	[_lifeBar setScaleX:lifeScale];
+
+	if (lifeScale <= 0) {
+		[self defeat];
+	}
 
 	return YES;
 }

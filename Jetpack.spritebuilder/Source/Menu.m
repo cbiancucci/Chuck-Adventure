@@ -60,8 +60,8 @@
 	float left = startGameText.position.x - startGameText.contentSize.width / 2;
 	float right = startGameText.position.x + startGameText.contentSize.width / 2;
 
-	float down = (startGameText.position.y - startGameText.contentSize.height / 2) - 20;
-	float up = (startGameText.position.y + startGameText.contentSize.height / 2) - 20;
+	float down = (startGameText.position.y - startGameText.contentSize.height / 2) - 40;
+	float up = (startGameText.position.y + startGameText.contentSize.height / 2) + 70;
 
 	if (touch.x >= left && touch.x <= right && touch.y >= down && touch.y <= up) {
 		return YES;
