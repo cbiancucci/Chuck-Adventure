@@ -418,22 +418,22 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		retryText.visible = YES;
 
 		if (distance < 150) {
-			[recordText setString:[NSString stringWithFormat:@"Buu! You need more practice, %03d%@ !!", (int)distance, @"M"]];
+			[recordText setString:[NSString stringWithFormat:@"You need more practice."]];
 		}
 		else if (distance >= 150 && distance < 250) {
-			[recordText setString:[NSString stringWithFormat:@"Keep practicing, %03d%@ !!", (int)distance, @"M"]];
+			[recordText setString:[NSString stringWithFormat:@"Keep practicing."]];
 		}
 		else if (distance >= 250 && distance < 350) {
-			[recordText setString:[NSString stringWithFormat:@"Well done, %03d%@ !!", (int)distance, @"M"]];
+			[recordText setString:[NSString stringWithFormat:@"Well done!"]];
 		}
 		else if (distance >= 250 && distance < 450) {
-			[recordText setString:[NSString stringWithFormat:@"Nice, %03d%@ !!", (int)distance, @"M"]];
+			[recordText setString:[NSString stringWithFormat:@"Nice one!"]];
 		}
 		else if (distance >= 250 && distance < 650) {
-			[recordText setString:[NSString stringWithFormat:@"Great, %03d%@ !!", (int)distance, @"M"]];
+			[recordText setString:[NSString stringWithFormat:@"Great work!"]];
 		}
 		else if (distance >= 650) {
-			[recordText setString:[NSString stringWithFormat:@"Amazing, %03d%@ !!", (int)distance, @"M"]];
+			[recordText setString:[NSString stringWithFormat:@"You are amazing!"]];
 		}
 		recordText.visible = YES;
 	}
