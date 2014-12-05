@@ -600,6 +600,8 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	cannonball.physicsBody.velocity = CGPointMake(-200, 0);
 
 	[cannonballs addObject:cannonball];
+
+	[audio playEffect:@"Cannonball.mp3" volume:0.5 pitch:1 pan:1 loop:NO];
 }
 
 - (void)createEnemy {

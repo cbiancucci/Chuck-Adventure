@@ -66,6 +66,7 @@
 		BBF3CA051A3145F9003D0841 /* Spike.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF3CA041A3145F9003D0841 /* Spike.m */; };
 		BBF3CA2A1A315487003D0841 /* Gun.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF3CA291A315487003D0841 /* Gun.m */; };
 		BBF3CA311A31666F003D0841 /* Cannonball.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF3CA301A31666F003D0841 /* Cannonball.m */; };
+		BBF3CA331A31F5B4003D0841 /* Cannonball.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF3CA321A31F5B4003D0841 /* Cannonball.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,7 @@
 		BBF3CA291A315487003D0841 /* Gun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gun.m; path = Source/Gun.m; sourceTree = "<group>"; };
 		BBF3CA2F1A31666F003D0841 /* Cannonball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cannonball.h; path = Source/Cannonball.h; sourceTree = "<group>"; };
 		BBF3CA301A31666F003D0841 /* Cannonball.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Cannonball.m; path = Source/Cannonball.m; sourceTree = "<group>"; };
+		BBF3CA321A31F5B4003D0841 /* Cannonball.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Cannonball.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -363,6 +365,7 @@
 		BB3C5C691A22950E00F2BAAB /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				BBF3CA321A31F5B4003D0841 /* Cannonball.mp3 */,
 				BB3C5C7C1A229D7E00F2BAAB /* MissileLaunch.mp3 */,
 				BB3C5C7A1A229D5D00F2BAAB /* Menu2.mp3 */,
 				BB3C5C781A229D4F00F2BAAB /* Resurrect.mp3 */,
@@ -524,6 +527,7 @@
 				BB3C5C791A229D4F00F2BAAB /* Resurrect.mp3 in Resources */,
 				B71F5914188484E7003F4D28 /* iPad@2x.png in Resources */,
 				BB3C5C751A229D0900F2BAAB /* Hurt.mp3 in Resources */,
+				BBF3CA331A31F5B4003D0841 /* Cannonball.mp3 in Resources */,
 				B71F5913188484E7003F4D28 /* iPad.png in Resources */,
 				B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */,
 				B71F5916188484E7003F4D28 /* iPhone-old@2x.png in Resources */,
