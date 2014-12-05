@@ -64,7 +64,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	CCNode *_background2;
 	CCNode *_backgroundlvl2_1;
 	CCNode *_backgroundlvl2_2;
-	CCNode *_spike;
 	NSMutableArray *_backgrounds;
 
 	// UI
@@ -190,7 +189,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	_backgroundlvl2_2.visible = NO;
 
 	_roofs = @[_roof1, _roof2];
-	_spike.physicsBody.sensor = YES;
 
 	lifeScale = 1.f;
 }
