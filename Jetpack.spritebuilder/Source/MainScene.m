@@ -830,18 +830,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	return YES;
 }
 
-// Bullets destroy cannonballs.
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision cannonball:(Cannonball *)cannonballCollision {
-	NSLog(@"Bullet and cannonball collision");
-	[cannonballs removeObject:cannonballCollision];
-	[cannonballCollision removeFromParentAndCleanup:YES];
-
-	[bullets removeObject:bulletCollision];
-	[bulletCollision removeFromParentAndCleanup:YES];
-
-	return YES;
-}
-
 // Restore life from life supply.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision life:(CCNode *)lifeCollision {
 	NSLog(@"Main Character and life supply collision");
