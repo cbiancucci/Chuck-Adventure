@@ -19,8 +19,6 @@
 #import "Gun.h"
 #import "Cannonball.h"
 
-static const CGFloat characterScrollSpeed = 280.f;
-
 typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderBackground,
 	DrawingOrderUraniumRock,
@@ -92,6 +90,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSTimeInterval _sinceCannonball;
 	NSTimeInterval _sincePlayStep;
 	NSTimeInterval _sinceUraniumWasPicked;
+	NSTimeInterval _sinceAdrenaline;
 
 	// Weapons
 	NSMutableArray *bullets;
@@ -243,23 +242,22 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	}
 	if (![mainCharacter isDead]) {
 		// Update character position.
-		if ([mainCharacter hasAdrenaline]) {
-			mainCharacter.position = ccp(mainCharacter.position.x + delta * (characterScrollSpeed + distance), mainCharacter.position.y);
-			_physicsNode.position = ccp(_physicsNode.position.x - (characterScrollSpeed * delta), _physicsNode.position.y);
+		mainCharacter.position = ccp(mainCharacter.position.x + delta * cameraScrollSpeed, mainCharacter.position.y);
+		_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
+		_sinceAdrenaline += delta;
 
-			distance += 0.5f;
+		if ([mainCharacter hasAdrenaline] && _sinceAdrenaline > 50.f) {
+			[mainCharacter stopAdrenaline];
+			cameraScrollSpeed = 200.f;
 		}
-		else {
-			mainCharacter.position = ccp(mainCharacter.position.x + delta * cameraScrollSpeed, mainCharacter.position.y);
-			_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
 
-			_sincePlayStep += delta;
-			if (_sincePlayStep > 0.3f) {
-				[audio playEffect:@"Step.mp3" loop:NO];
-				_sincePlayStep = 0;
-			}
-			distance += 0.1f;
+		_sincePlayStep += delta;
+		if (_sincePlayStep > 0.3f) {
+			[audio playEffect:@"Step.mp3" loop:NO];
+			_sincePlayStep = 0;
 		}
+
+		distance += 0.1f;
 
 		level = distance / 100;
 
@@ -652,7 +650,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)createGun {
 	gun = (Gun *)[CCBReader load:@"Gun"];
 	gun.zOrder = DrawingOrderDifficulties;
-	[gun setPosition:ccp(mainCharacter.position.x + 1300.f, 50.f)];
+	[gun setPosition:ccp(mainCharacter.position.x + 1500.f, 50.f)];
 	[_physicsNode addChild:gun];
 }
 
@@ -687,8 +685,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		_sinceUraniumWasPicked = 0.f;
 
-		if (uraniumCount % 5 == 0) {
-//			characterCollision setState :
+		if (uraniumCount % 5 == 0 && ![characterCollision hasAdrenaline]) {
+			[characterCollision startAdrenaline];
+			cameraScrollSpeed = 500.f;
+			_sinceAdrenaline = 0;
 		}
 	}
 
@@ -698,15 +698,16 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Play blood particle.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision spike:(CCNode *)spike {
 	NSLog(@"Character and spike collision");
-	[mainCharacter bleed];
-	lifeScale -= 0.02f;
-	[_lifeBar setScaleX:lifeScale];
+	if (![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
+		[mainCharacter bleed];
+		lifeScale -= 0.02f;
+		[_lifeBar setScaleX:lifeScale];
 
-	if (lifeScale <= 0) {
-		lifeScale = 0.f;
-		[self defeat];
+		if (lifeScale <= 0) {
+			lifeScale = 0.f;
+			[self defeat];
+		}
 	}
-
 	return YES;
 }
 
@@ -722,9 +723,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Explode and die.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision rocket:(Rocket *)rocketCollision {
 	NSLog(@"Character and rocket collision");
-	if (![characterCollision isDead]) {
+	if (![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
 		[self defeat];
 		[_lifeBar setScaleX:0];
+		[self explodeRocket];
+	}
+
+	if (![characterCollision isDead] && [characterCollision hasAdrenaline]) {
 		[self explodeRocket];
 	}
 	return YES;
@@ -755,17 +760,21 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Kill enemy and disable collision with body.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision enemy:(Enemy *)enemyCollision {
 	NSLog(@"Main character and enemy collision");
-	if (![enemyCollision isDead] && ![characterCollision isDead]) {
+	if (![enemyCollision isDead] && ![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
 		[_lifeBar setScaleX:0];
 		[self defeat];
+	}
+
+	if (![enemyCollision isDead] && ![characterCollision isDead] && [characterCollision hasAdrenaline]) {
+		[self killEnemy];
 	}
 	return YES;
 }
 
-// Kill enemy and disable collision with body.
+// Harm Main Character and destroy laser.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision laser:(Laser *)laserCollision {
 	NSLog(@"Main character and laser collision");
-	if (![characterCollision isDead]) {
+	if (![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
 		[characterCollision bleed];
 		lifeScale -= 0.05f * level;
 		[_lifeBar setScaleX:lifeScale];
@@ -774,6 +783,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			lifeScale = 0.f;
 			[self defeat];
 		}
+		[lasers removeObject:laserCollision];
+		[laserCollision removeFromParentAndCleanup:YES];
+	}
+
+	if (![characterCollision isDead] && [characterCollision hasAdrenaline]) {
 		[lasers removeObject:laserCollision];
 		[laserCollision removeFromParentAndCleanup:YES];
 	}
@@ -793,7 +807,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // Cannonballs harm main character.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision cannonball:(Cannonball *)cannonballCollision {
 	NSLog(@"Main Character and cannonball collision");
-	if (![characterCollision isDead]) {
+	if (![characterCollision isDead] && ![characterCollision hasAdrenaline]) {
 		[characterCollision bleed];
 		lifeScale -= 0.05f * level;
 		[_lifeBar setScaleX:lifeScale];
@@ -802,6 +816,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			lifeScale = 0.f;
 			[self defeat];
 		}
+		[cannonballs removeObject:cannonballCollision];
+		[cannonballCollision removeFromParentAndCleanup:YES];
+	}
+
+	if (![characterCollision isDead] && [characterCollision hasAdrenaline]) {
 		[cannonballs removeObject:cannonballCollision];
 		[cannonballCollision removeFromParentAndCleanup:YES];
 	}
@@ -820,11 +839,20 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	return YES;
 }
 
+// Restore life from life supply.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision life:(CCNode *)lifeCollision {
 	NSLog(@"Main Character and life supply collision");
 	if (![characterCollision isDead]) {
 		[_lifeBar setScaleX:1.03];
 		[audio playEffect:@"Resurrect.mp3" loop:NO];
+	}
+
+	return YES;
+}
+
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision gun:(Gun *)gunCollision {
+	if (![characterCollision isDead] && [characterCollision hasAdrenaline]) {
+		[gunCollision destroy];
 	}
 
 	return YES;

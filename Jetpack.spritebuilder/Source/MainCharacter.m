@@ -90,9 +90,17 @@
 }
 
 - (void)startAdrenaline {
+	[self getChildByName:@"Uranium" recursively:YES].visible = YES;
+	[[OALSimpleAudio sharedInstance] stopBg];
+	[[OALSimpleAudio sharedInstance] playBg:@"Dubstep.mp3" loop:YES];
+	self.hasAdrenaline = YES;
 }
 
 - (void)stopAdrenaline {
+	[self getChildByName:@"Uranium" recursively:YES].visible = NO;
+	[[OALSimpleAudio sharedInstance] stopBg];
+	[[OALSimpleAudio sharedInstance] playBg:@"Level.mp3" loop:YES];
+	self.hasAdrenaline = NO;
 }
 
 - (BOOL)isDead {
@@ -127,11 +135,19 @@
 
 	for (CCSprite *sprite in[self children]) {
 		if (![sprite.name isEqualToString:name]) {
-			sprite.visible = NO;
+			if ([sprite.name isEqualToString:@"Uranium"] && [self hasAdrenaline]) {
+				sprite.visible = YES;
+			}
+			else {
+				sprite.visible = NO;
+			}
 		}
 		else {
 			sprite.visible = YES;
 		}
+	}
+	if ([self hasAdrenaline]) {
+		[self getChildByName:@"Uranium" recursively:YES].visible = YES;
 	}
 }
 

@@ -2293,7 +2293,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCParticleSystem</string>
+				<string>Uranium</string>
+				<key>hidden</key>
+				<true/>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -2306,7 +2308,7 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string></string>
+						<string>Uranium</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -2315,7 +2317,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>-6</real>
+							<real>0.0</real>
 							<real>-20</real>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -2340,8 +2342,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.30000001192092896</real>
+							<real>0.30000001192092896</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -2463,10 +2465,10 @@
 						<key>value</key>
 						<array>
 							<array>
-								<real>0.10377611964941025</real>
-								<real>0.21382439136505127</real>
-								<real>0.89935219287872314</real>
-								<real>0.10000000149011612</real>
+								<real>0.20761719346046448</real>
+								<real>0.57480472326278687</real>
+								<real>0.037317082285881042</real>
+								<real>0.69999998807907104</real>
 							</array>
 							<array>
 								<real>0.20427179336547852</real>
@@ -2484,16 +2486,16 @@
 						<key>value</key>
 						<array>
 							<array>
-								<real>1</real>
-								<real>0.14913082122802734</real>
-								<real>0.0</real>
-								<real>0.0</real>
+								<real>0.57138466835021973</real>
+								<real>0.57480472326278687</real>
+								<real>0.57250028848648071</real>
+								<real>0.69999998807907104</real>
 							</array>
 							<array>
-								<real>0.0</real>
-								<real>0.99143940210342407</real>
+								<real>0.22196665406227112</real>
 								<real>1</real>
-								<real>0.0</real>
+								<real>0.10798616707324982</real>
+								<real>1</real>
 							</array>
 						</array>
 					</dict>
@@ -2545,7 +2547,7 @@
 						<string>FloatVar</string>
 						<key>value</key>
 						<array>
-							<real>-350</real>
+							<real>90</real>
 							<real>500</real>
 						</array>
 					</dict>
