@@ -67,6 +67,7 @@
 		BBF3CA2A1A315487003D0841 /* Gun.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF3CA291A315487003D0841 /* Gun.m */; };
 		BBF3CA311A31666F003D0841 /* Cannonball.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF3CA301A31666F003D0841 /* Cannonball.m */; };
 		BBF3CA331A31F5B4003D0841 /* Cannonball.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBF3CA321A31F5B4003D0841 /* Cannonball.mp3 */; };
+		BBF3CA361A31F7A6003D0841 /* LifeSupply.m in Sources */ = {isa = PBXBuildFile; fileRef = BBF3CA351A31F7A6003D0841 /* LifeSupply.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +193,8 @@
 		BBF3CA2F1A31666F003D0841 /* Cannonball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cannonball.h; path = Source/Cannonball.h; sourceTree = "<group>"; };
 		BBF3CA301A31666F003D0841 /* Cannonball.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Cannonball.m; path = Source/Cannonball.m; sourceTree = "<group>"; };
 		BBF3CA321A31F5B4003D0841 /* Cannonball.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Cannonball.mp3; sourceTree = "<group>"; };
+		BBF3CA341A31F7A6003D0841 /* LifeSupply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LifeSupply.h; path = Source/LifeSupply.h; sourceTree = "<group>"; };
+		BBF3CA351A31F7A6003D0841 /* LifeSupply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LifeSupply.m; path = Source/LifeSupply.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,7 +238,7 @@
 				B7378993180767190076A88C /* MainScene.m */,
 				BB1131BA19E7360000D8603B /* Rock.h */,
 				BB1131BB19E7360000D8603B /* Rock.m */,
-				BBA98AF41A1E9D6B00DD373A /* Weapons */,
+				BBA98AF41A1E9D6B00DD373A /* Items */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -393,7 +396,7 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		BBA98AF41A1E9D6B00DD373A /* Weapons */ = {
+		BBA98AF41A1E9D6B00DD373A /* Items */ = {
 			isa = PBXGroup;
 			children = (
 				BBD1C8F41A119934002AAE33 /* Bullet.h */,
@@ -410,8 +413,10 @@
 				BBF3CA291A315487003D0841 /* Gun.m */,
 				BBF3CA2F1A31666F003D0841 /* Cannonball.h */,
 				BBF3CA301A31666F003D0841 /* Cannonball.m */,
+				BBF3CA341A31F7A6003D0841 /* LifeSupply.h */,
+				BBF3CA351A31F7A6003D0841 /* LifeSupply.m */,
 			);
-			name = Weapons;
+			name = Items;
 			sourceTree = "<group>";
 		};
 		BBD843951A0FC7FD00EC61B1 /* Fonts */ = {
@@ -559,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB6F11AB1A212FF40045CE97 /* OnOffButton.m in Sources */,
+				BBF3CA361A31F7A6003D0841 /* LifeSupply.m in Sources */,
 				BB6F11A31A2129F10045CE97 /* Pause.m in Sources */,
 				BBDD19A21A228B3300F34003 /* Menu.m in Sources */,
 				BBF3CA311A31666F003D0841 /* Cannonball.m in Sources */,

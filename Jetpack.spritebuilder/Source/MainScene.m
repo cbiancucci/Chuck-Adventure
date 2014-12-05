@@ -41,6 +41,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	BOOL levelOneFlag;
 	BOOL levelTwoFlag;
 	BOOL levelThreeFlag;
+	BOOL lifeSupplyDelivered;
 
 	CGFloat cameraScrollSpeed;
 
@@ -261,18 +262,18 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		if (level == 1 && !levelOneFlag) {
 			[self createRocket];
-			levelOneFlag = true;
+			levelOneFlag = YES;
 		}
 
 		if (level == 2 && !levelTwoFlag) {
 			[self updateLevelBackground];
 			[self createGun];
-			levelTwoFlag = true;
+			levelTwoFlag = YES;
 		}
 
 		if (level == 3 && !levelThreeFlag) {
 			[self createEnemy];
-			levelThreeFlag = true;
+			levelThreeFlag = YES;
 		}
 
 		// Update spike.
@@ -286,7 +287,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update rocket.
-		if (rocket && level >= 1) {
+		if (rocket && level >= 10) {
 			rocket.physicsBody.velocity = CGPointMake(-200, 0);
 
 			CGPoint rocketWorldPosition = [_physicsNode convertToWorldSpace:rocket.position];
@@ -298,7 +299,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update gun.
-		if (gun && level >= 2) {
+		if (gun && level >= 20) {
 			CGPoint gunWorldPosition = [_physicsNode convertToWorldSpace:gun.position];
 
 			if (gunWorldPosition.x < -200) {
@@ -313,7 +314,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update enemies.
-		if (enemy && level >= 3) {
+		if (enemy && level >= 30) {
 			if (![enemy isDead]) {
 				enemy.physicsBody.velocity = CGPointMake(-50, 0);
 			}
@@ -333,6 +334,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 				[self createLaser];
 				[enemy startShooting];
 			}
+		}
+
+		// Create life supply once.
+		if ((int)distance == 100 && !lifeSupplyDelivered) {
+			[self createLifeSupply];
+			lifeSupplyDelivered = YES;
 		}
 
 		// Update and destroy off screen bullets.
@@ -645,9 +652,15 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)createGun {
 	gun = (Gun *)[CCBReader load:@"Gun"];
 	gun.zOrder = DrawingOrderDifficulties;
-//	[gun setPosition:ccp(spike.position.x + 1500.f, 45.f)];
 	[gun setPosition:ccp(mainCharacter.position.x + 700.f, 50.f)];
 	[_physicsNode addChild:gun];
+}
+
+- (void)createLifeSupply {
+	CCNode *lifePack = (CCNode *)[CCBReader load:@"LifeSupply"];
+	lifePack.zOrder = DrawingOrderDifficulties;
+	[lifePack setPosition:ccp(mainCharacter.position.x + 500.f, 45.f)];
+	[_physicsNode addChild:lifePack];
 }
 
 - (void)defeat {
@@ -679,7 +692,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision spike:(CCNode *)spike {
 	NSLog(@"Character and spike collision");
 	[mainCharacter bleed];
-	lifeScale -= 0.01f * level;
+	lifeScale -= 0.02f;
 	[_lifeBar setScaleX:lifeScale];
 
 	if (lifeScale <= 0) {
@@ -772,6 +785,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 // Cannonballs harm main character.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision cannonball:(Cannonball *)cannonballCollision {
+	NSLog(@"Main Character and cannonball collision");
 	if (![characterCollision isDead]) {
 		[characterCollision bleed];
 		lifeScale -= 0.05f * level;
@@ -789,11 +803,22 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 // Bullets destroy cannonballs.
 - (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair bullet:(Bullet *)bulletCollision cannonball:(Cannonball *)cannonballCollision {
+	NSLog(@"Bullet and cannonball collision");
 	[cannonballs removeObject:cannonballCollision];
 	[cannonballCollision removeFromParentAndCleanup:YES];
 
 	[bullets removeObject:bulletCollision];
 	[bulletCollision removeFromParentAndCleanup:YES];
+
+	return YES;
+}
+
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision life:(CCNode *)lifeCollision {
+	NSLog(@"Main Character and life supply collision");
+	if (![characterCollision isDead]) {
+		[_lifeBar setScaleX:1.03];
+		[audio playEffect:@"Resurrect.mp3" loop:NO];
+	}
 
 	return YES;
 }
