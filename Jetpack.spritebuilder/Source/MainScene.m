@@ -344,7 +344,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Create life supply.
-		if ((int)distance % 200 == 0 && !lifeSupplyDelivered) {
+		if ((int)distance % 250 == 0 && !lifeSupplyDelivered) {
 			[self createLifeSupply];
 			lifeSupplyDelivered = YES;
 		}
