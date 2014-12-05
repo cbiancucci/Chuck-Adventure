@@ -685,7 +685,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		_sinceUraniumWasPicked = 0.f;
 
-		if (uraniumCount % 5 == 0 && ![characterCollision hasAdrenaline]) {
+		if (uraniumCount % 10 == 0 && ![characterCollision hasAdrenaline]) {
 			[characterCollision startAdrenaline];
 			cameraScrollSpeed = 500.f;
 			_sinceAdrenaline = 0;
