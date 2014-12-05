@@ -179,9 +179,17 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	gameOverText.outlineColor = [CCColor blackColor];
 	gameOverText.outlineWidth = 2.0f;
 	gameOverText.zOrder = DrawingOrderText;
-	[gameOverText setPosition:ccp(size.width / 2, size.height / 2)];
+	[gameOverText setPosition:ccp(size.width / 2, size.height / 2) + 30];
 	[self addChild:gameOverText];
 	gameOverText.visible = NO;
+
+	recordText = [CCLabelTTF labelWithString:@"" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
+	recordText.outlineColor = [CCColor blackColor];
+	recordText.outlineWidth = 2.0f;
+	recordText.zOrder = DrawingOrderText;
+	[recordText setPosition:ccp(size.width / 2, (size.height / 2) - 15)];
+	[self addChild:recordText];
+	recordText.visible = NO;
 
 	retryText = [CCLabelTTF labelWithString:@"Tap the screen to play again" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
 	retryText.outlineColor = [CCColor blackColor];
@@ -408,6 +416,26 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 		gameOverText.visible = YES;
 		retryText.visible = YES;
+
+		if (distance < 150) {
+			[recordText setString:[NSString stringWithFormat:@"Buu! You need more practice, %03d%@ !!", (int)distance, @"M"]];
+		}
+		else if (distance >= 150 && distance < 250) {
+			[recordText setString:[NSString stringWithFormat:@"Keep practicing, %03d%@ !!", (int)distance, @"M"]];
+		}
+		else if (distance >= 250 && distance < 350) {
+			[recordText setString:[NSString stringWithFormat:@"Well done, %03d%@ !!", (int)distance, @"M"]];
+		}
+		else if (distance >= 250 && distance < 450) {
+			[recordText setString:[NSString stringWithFormat:@"Nice, %03d%@ !!", (int)distance, @"M"]];
+		}
+		else if (distance >= 250 && distance < 650) {
+			[recordText setString:[NSString stringWithFormat:@"Great, %03d%@ !!", (int)distance, @"M"]];
+		}
+		else if (distance >= 650) {
+			[recordText setString:[NSString stringWithFormat:@"Amazing, %03d%@ !!", (int)distance, @"M"]];
+		}
+		recordText.visible = YES;
 	}
 }
 
