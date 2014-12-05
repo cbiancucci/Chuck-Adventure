@@ -652,14 +652,14 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)createGun {
 	gun = (Gun *)[CCBReader load:@"Gun"];
 	gun.zOrder = DrawingOrderDifficulties;
-	[gun setPosition:ccp(mainCharacter.position.x + 700.f, 50.f)];
+	[gun setPosition:ccp(mainCharacter.position.x + 1300.f, 50.f)];
 	[_physicsNode addChild:gun];
 }
 
 - (void)createLifeSupply {
 	CCNode *lifePack = (CCNode *)[CCBReader load:@"LifeSupply"];
 	lifePack.zOrder = DrawingOrderDifficulties;
-	[lifePack setPosition:ccp(mainCharacter.position.x + 500.f, 45.f)];
+	[lifePack setPosition:ccp(mainCharacter.position.x + 700.f, 45.f)];
 	[_physicsNode addChild:lifePack];
 }
 
