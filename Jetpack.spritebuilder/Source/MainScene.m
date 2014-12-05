@@ -287,7 +287,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update rocket.
-		if (rocket && level >= 10) {
+		if (rocket && level >= 1) {
 			rocket.physicsBody.velocity = CGPointMake(-200, 0);
 
 			CGPoint rocketWorldPosition = [_physicsNode convertToWorldSpace:rocket.position];
@@ -299,7 +299,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update gun.
-		if (gun && level >= 20) {
+		if (gun && level >= 2) {
 			CGPoint gunWorldPosition = [_physicsNode convertToWorldSpace:gun.position];
 
 			if (gunWorldPosition.x < -200) {
@@ -314,7 +314,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Update enemies.
-		if (enemy && level >= 30) {
+		if (enemy && level >= 3) {
 			if (![enemy isDead]) {
 				enemy.physicsBody.velocity = CGPointMake(-50, 0);
 			}
@@ -337,7 +337,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Create life supply once.
-		if ((int)distance == 100 && !lifeSupplyDelivered) {
+		if ((int)distance == 300 && !lifeSupplyDelivered) {
 			[self createLifeSupply];
 			lifeSupplyDelivered = YES;
 		}
