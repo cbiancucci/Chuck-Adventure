@@ -373,9 +373,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 		// Update and destroy uranium rocks.
 		_sinceUraniumWasPicked += delta;
-		if (uraniumRock.position.x < -200) {
-			[uraniumRock removeFromParentAndCleanup:YES];
-			uraniumRockWasCreated = NO;
+		if (uraniumRock) {
+			CGPoint uraniumRockWorldPosition = [_physicsNode convertToWorldSpace:uraniumRock.position];
+
+			if (uraniumRockWorldPosition.x < -100) {
+				[uraniumRock removeFromParentAndCleanup:YES];
+				uraniumRockWasCreated = NO;
+			}
 		}
 
 		// Update character state.
