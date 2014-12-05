@@ -246,7 +246,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		_physicsNode.position = ccp(_physicsNode.position.x - (cameraScrollSpeed * delta), _physicsNode.position.y);
 		_sinceAdrenaline += delta;
 
-		if ([mainCharacter hasAdrenaline] && _sinceAdrenaline > 50.f) {
+		if ([mainCharacter hasAdrenaline] && _sinceAdrenaline > 25.f) {
 			[mainCharacter stopAdrenaline];
 			cameraScrollSpeed = 200.f;
 		}
@@ -338,13 +338,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Create uranium rocks
-		if ((int)distance % 50 == 0 && !uraniumRockWasCreated) {
+		if ((int)distance % 50 == 0 && !uraniumRockWasCreated && ![mainCharacter hasAdrenaline]) {
 			[self createUraniumRock];
 			uraniumRockWasCreated = YES;
 		}
 
 		// Create life supply once.
-		if ((int)distance == 300 && !lifeSupplyDelivered) {
+		if ((int)distance == 400 && !lifeSupplyDelivered) {
 			[self createLifeSupply];
 			lifeSupplyDelivered = YES;
 		}
