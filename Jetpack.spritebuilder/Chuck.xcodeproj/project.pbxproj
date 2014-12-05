@@ -35,7 +35,7 @@
 		B77F1B3E17B978D7009739AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
-		BB1131BC19E7360000D8603B /* Rock.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1131BB19E7360000D8603B /* Rock.m */; };
+		BB1131BC19E7360000D8603B /* UraniumRock.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1131BB19E7360000D8603B /* UraniumRock.m */; };
 		BB24493419F050C200975486 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB24493319F050C200975486 /* GLKit.framework */; };
 		BB24493919F06F6A00975486 /* MainCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493819F06F6A00975486 /* MainCharacter.m */; };
 		BB24493C19F0705C00975486 /* CharacterState.m in Sources */ = {isa = PBXBuildFile; fileRef = BB24493B19F0705C00975486 /* CharacterState.m */; };
@@ -142,8 +142,8 @@
 		B77F1B3F17B978D7009739AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B77F1B4117B978D7009739AE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B7B3713D180358F1007369CC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = "../libs/cocos2d-iphone/external/Chipmunk/xcode/build/Debug-iphoneos/libObjectiveChipmunk.a"; sourceTree = "<group>"; };
-		BB1131BA19E7360000D8603B /* Rock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rock.h; path = Source/Rock.h; sourceTree = "<group>"; };
-		BB1131BB19E7360000D8603B /* Rock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Rock.m; path = Source/Rock.m; sourceTree = "<group>"; };
+		BB1131BA19E7360000D8603B /* UraniumRock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UraniumRock.h; path = Source/UraniumRock.h; sourceTree = "<group>"; };
+		BB1131BB19E7360000D8603B /* UraniumRock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UraniumRock.m; path = Source/UraniumRock.m; sourceTree = "<group>"; };
 		BB24493319F050C200975486 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		BB24493719F06F6A00975486 /* MainCharacter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainCharacter.h; path = Source/MainCharacter.h; sourceTree = "<group>"; };
 		BB24493819F06F6A00975486 /* MainCharacter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainCharacter.m; path = Source/MainCharacter.m; sourceTree = "<group>"; };
@@ -230,15 +230,14 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BB6F11A81A212FC70045CE97 /* UI */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
-				BB24493D19F0716100975486 /* Character */,
+				BB24493D19F0716100975486 /* Characters */,
+				BBA98AF41A1E9D6B00DD373A /* Difficulties */,
+				BBF3CA471A32048F003D0841 /* Items */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
-				BB1131BA19E7360000D8603B /* Rock.h */,
-				BB1131BB19E7360000D8603B /* Rock.m */,
-				BBA98AF41A1E9D6B00DD373A /* Items */,
+				BB6F11A81A212FC70045CE97 /* UI */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -334,7 +333,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BB24493D19F0716100975486 /* Character */ = {
+		BB24493D19F0716100975486 /* Characters */ = {
 			isa = PBXGroup;
 			children = (
 				BBCBE2D01A1E19780013C4EB /* Character.h */,
@@ -345,22 +344,22 @@
 				BB24493819F06F6A00975486 /* MainCharacter.m */,
 				BB24493E19F0716D00975486 /* State */,
 			);
-			name = Character;
+			name = Characters;
 			sourceTree = "<group>";
 		};
 		BB24493E19F0716D00975486 /* State */ = {
 			isa = PBXGroup;
 			children = (
-				BB24493A19F0705C00975486 /* CharacterState.h */,
-				BB24493B19F0705C00975486 /* CharacterState.m */,
-				BB24493F19F0729400975486 /* CharacterWalkingState.h */,
-				BB24494019F0729400975486 /* CharacterWalkingState.m */,
 				BB24494219F072DD00975486 /* CharacterJumpingState.h */,
 				BB24494319F072DD00975486 /* CharacterJumpingState.m */,
 				BB24494519F0730D00975486 /* CharacterRunningState.h */,
 				BB24494619F0730D00975486 /* CharacterRunningState.m */,
 				BB606AAD1A02C75C008640A3 /* CharacterShootingState.h */,
 				BB606AAE1A02C75C008640A3 /* CharacterShootingState.m */,
+				BB24493A19F0705C00975486 /* CharacterState.h */,
+				BB24493B19F0705C00975486 /* CharacterState.m */,
+				BB24493F19F0729400975486 /* CharacterWalkingState.h */,
+				BB24494019F0729400975486 /* CharacterWalkingState.m */,
 			);
 			name = State;
 			sourceTree = "<group>";
@@ -386,37 +385,35 @@
 		BB6F11A81A212FC70045CE97 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				BB6F11A11A2129F10045CE97 /* Pause.h */,
 				BBDD19A01A228B3300F34003 /* Menu.h */,
 				BBDD19A11A228B3300F34003 /* Menu.m */,
-				BB6F11A21A2129F10045CE97 /* Pause.m */,
 				BB6F11A91A212FF40045CE97 /* OnOffButton.h */,
 				BB6F11AA1A212FF40045CE97 /* OnOffButton.m */,
+				BB6F11A11A2129F10045CE97 /* Pause.h */,
+				BB6F11A21A2129F10045CE97 /* Pause.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
 		};
-		BBA98AF41A1E9D6B00DD373A /* Items */ = {
+		BBA98AF41A1E9D6B00DD373A /* Difficulties */ = {
 			isa = PBXGroup;
 			children = (
 				BBD1C8F41A119934002AAE33 /* Bullet.h */,
 				BBD1C8F51A119934002AAE33 /* Bullet.m */,
-				BB9CFF871A1574E500A0E3B8 /* Explosion.h */,
-				BB9CFF881A1574E500A0E3B8 /* Explosion.m */,
-				BB53AB061A0FFC3600A03765 /* Rocket.h */,
-				BB53AB071A0FFC3600A03765 /* Rocket.m */,
-				BBA98AF91A1E9DD700DD373A /* Laser.h */,
-				BBA98AFA1A1E9DD700DD373A /* Laser.m */,
-				BBF3CA031A3145F9003D0841 /* Spike.h */,
-				BBF3CA041A3145F9003D0841 /* Spike.m */,
-				BBF3CA281A315487003D0841 /* Gun.h */,
-				BBF3CA291A315487003D0841 /* Gun.m */,
 				BBF3CA2F1A31666F003D0841 /* Cannonball.h */,
 				BBF3CA301A31666F003D0841 /* Cannonball.m */,
-				BBF3CA341A31F7A6003D0841 /* LifeSupply.h */,
-				BBF3CA351A31F7A6003D0841 /* LifeSupply.m */,
+				BB9CFF871A1574E500A0E3B8 /* Explosion.h */,
+				BB9CFF881A1574E500A0E3B8 /* Explosion.m */,
+				BBF3CA281A315487003D0841 /* Gun.h */,
+				BBF3CA291A315487003D0841 /* Gun.m */,
+				BBA98AF91A1E9DD700DD373A /* Laser.h */,
+				BBA98AFA1A1E9DD700DD373A /* Laser.m */,
+				BB53AB061A0FFC3600A03765 /* Rocket.h */,
+				BB53AB071A0FFC3600A03765 /* Rocket.m */,
+				BBF3CA031A3145F9003D0841 /* Spike.h */,
+				BBF3CA041A3145F9003D0841 /* Spike.m */,
 			);
-			name = Items;
+			name = Difficulties;
 			sourceTree = "<group>";
 		};
 		BBD843951A0FC7FD00EC61B1 /* Fonts */ = {
@@ -425,6 +422,17 @@
 				BB9CFF821A15673600A0E3B8 /* heiTOLENOVOLEPhone.ttf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		BBF3CA471A32048F003D0841 /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				BBF3CA341A31F7A6003D0841 /* LifeSupply.h */,
+				BBF3CA351A31F7A6003D0841 /* LifeSupply.m */,
+				BB1131BA19E7360000D8603B /* UraniumRock.h */,
+				BB1131BB19E7360000D8603B /* UraniumRock.m */,
+			);
+			name = Items;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -569,7 +577,7 @@
 				BBDD19A21A228B3300F34003 /* Menu.m in Sources */,
 				BBF3CA311A31666F003D0841 /* Cannonball.m in Sources */,
 				BB606AAF1A02C75C008640A3 /* CharacterShootingState.m in Sources */,
-				BB1131BC19E7360000D8603B /* Rock.m in Sources */,
+				BB1131BC19E7360000D8603B /* UraniumRock.m in Sources */,
 				BB24493919F06F6A00975486 /* MainCharacter.m in Sources */,
 				BB24494419F072DD00975486 /* CharacterJumpingState.m in Sources */,
 				BBCBE2CB1A1E16A60013C4EB /* Enemy.m in Sources */,

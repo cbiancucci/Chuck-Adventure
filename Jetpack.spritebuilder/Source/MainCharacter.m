@@ -89,6 +89,12 @@
 	}
 }
 
+- (void)startAdrenaline {
+}
+
+- (void)stopAdrenaline {
+}
+
 - (BOOL)isDead {
 	return defeated;
 }

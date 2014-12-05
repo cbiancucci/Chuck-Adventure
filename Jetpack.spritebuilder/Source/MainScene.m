@@ -8,7 +8,7 @@
 
 #import "MainScene.h"
 #import "MainCharacter.h"
-#import "Rock.h"
+#import "UraniumRock.h"
 #import "Rocket.h"
 #import "Bullet.h"
 #import "Explosion.h"
@@ -20,13 +20,10 @@
 #import "Cannonball.h"
 
 static const CGFloat characterScrollSpeed = 280.f;
-static const CGFloat firstRockXPosition = 280.f;
-static const CGFloat firstRockYPosition = 100.f;
-static const CGFloat distanceBetweenRocks = 50.f;
 
 typedef NS_ENUM (NSInteger, DrawingOrder) {
 	DrawingOrderBackground,
-	DrawingOrderRock,
+	DrawingOrderUraniumRock,
 	DrawingOrderEnemy,
 	DrawingOrderCharacter,
 	DrawingOrderBullet,
@@ -38,10 +35,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 @implementation MainScene {
 	int level;
 	double distance;
+	int uraniumCount;
 	BOOL levelOneFlag;
 	BOOL levelTwoFlag;
 	BOOL levelThreeFlag;
 	BOOL lifeSupplyDelivered;
+	BOOL uraniumRockWasCreated;
 
 	CGFloat cameraScrollSpeed;
 
@@ -58,10 +57,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	// Texts
 	CCLabelTTF *distanceText;
+	CCLabelTTF *uraniumCountText;
 	CCLabelTTF *pauseText;
 	CCLabelTTF *gamePausedText;
 	CCLabelTTF *gameOverText;
 	CCLabelTTF *retryText;
+	CCLabelTTF *recordText;
 
 	// Background
 	CCNode *_background1;
@@ -85,15 +86,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSArray *_roofs;
 
 	NSTimeInterval _sinceTouch;
-	NSTimeInterval _sinceUranium;
 	NSTimeInterval _sinceShoot;
 	NSTimeInterval _sinceBullet;
 	NSTimeInterval _sinceLaser;
 	NSTimeInterval _sinceCannonball;
 	NSTimeInterval _sincePlayStep;
-
-	// Rocks
-	NSMutableArray *_rocks;
+	NSTimeInterval _sinceUraniumWasPicked;
 
 	// Weapons
 	NSMutableArray *bullets;
@@ -108,15 +106,19 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	NSMutableArray *lasers;
 	Laser *laser;
 
+	UraniumRock *uraniumRock;
+
 	// Audio
 	OALSimpleAudio *audio;
 }
 
 - (void)didLoadFromCCB {
 	size  = [[CCDirector sharedDirector] viewSize];
-	levelOneFlag = false;
-	levelTwoFlag = false;
-	levelThreeFlag = false;
+	levelOneFlag = NO;
+	levelTwoFlag = NO;
+	levelThreeFlag = NO;
+	lifeSupplyDelivered = NO;
+	uraniumRockWasCreated = NO;
 
 	// set this class as delegate
 	_physicsNode.collisionDelegate = self;
@@ -126,9 +128,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 
 	// Context
 	[self loadContextInitialSettings];
-
-	// Uranium Rocks
-//	[self loadRocksInitialSettings];
 
 	// Character
 	[self loadCharacterInitialSettings];
@@ -154,6 +153,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	distanceText.zOrder = DrawingOrderText;
 	[distanceText setPosition:ccp(40.f, 300.f)];
 	[self addChild:distanceText];
+
+	uraniumCountText = [CCLabelTTF labelWithString:@"000" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
+	uraniumCountText.outlineColor = [CCColor blackColor];
+	uraniumCountText.outlineWidth = 2.0f;
+	uraniumCountText.zOrder = DrawingOrderText;
+	[uraniumCountText setPosition:ccp(47.f, 275.f)];
+	[self addChild:uraniumCountText];
 
 	pauseText = [CCLabelTTF labelWithString:@"I I" fontName:@"heiTOLENOVOLEPhone.ttf" fontSize:20];
 	pauseText.outlineColor = [CCColor blackColor];
@@ -190,6 +196,10 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 - (void)loadContextInitialSettings {
 	cameraScrollSpeed = 100.f;
 	distance = 0;
+
+	uraniumCount = 0;
+	_sinceUraniumWasPicked = 0.f;
+
 	_backgrounds = [[NSMutableArray alloc] init];
 	[_backgrounds addObject:_background1];
 	[_backgrounds addObject:_background2];
@@ -208,13 +218,6 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	mainCharacter.hasAdrenaline = NO;
 	[mainCharacter stop];
 	[mainCharacter startWalking];
-}
-
-- (void)loadRocksInitialSettings {
-	_rocks = [NSMutableArray array];
-	[self spawnNewRock];
-	[self spawnNewRock];
-	[self spawnNewRock];
 }
 
 - (void)loadDifficultiesSettings {
@@ -336,6 +339,12 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			}
 		}
 
+		// Create uranium rocks
+		if ((int)distance % 50 == 0 && !uraniumRockWasCreated) {
+			[self createUraniumRock];
+			uraniumRockWasCreated = YES;
+		}
+
 		// Create life supply once.
 		if ((int)distance == 300 && !lifeSupplyDelivered) {
 			[self createLifeSupply];
@@ -354,21 +363,24 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			[self createLaser];
 		}
 
+		// Update and destroy off screen cannonballs.
 		_sinceCannonball += delta;
 		if (![gun isBroken] && [cannonballs count] > 0 && _sinceCannonball > 2.f) {
 			_sinceCannonball = 0.f;
 			[self createCannonball];
 		}
 
+		// Update and destroy uranium rocks.
+		_sinceUraniumWasPicked += delta;
+		if (uraniumRock.position.x < -200) {
+			[uraniumRock removeFromParentAndCleanup:YES];
+			uraniumRockWasCreated = NO;
+		}
+
 		// Update character state.
 		_sinceBullet += delta;
 		if ([mainCharacter isShooting] && _sinceBullet > 0.4f) {
 			_sinceBullet = 0;
-		}
-
-		_sinceUranium += delta;
-		if (_sinceUranium > 2.0f) {
-			mainCharacter.hasAdrenaline = NO;
 		}
 
 		if ([mainCharacter isRunning] && ![mainCharacter hasAdrenaline]) {
@@ -547,23 +559,11 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	_background2.visible = NO;
 }
 
-- (void)spawnNewRock {
-	CCNode *previousRock = [_rocks lastObject];
-	CGFloat previousRockXPosition = previousRock.position.x;
-	CGFloat previousRockYPosition = previousRock.position.y;
-
-	if (!previousRock) {
-		// this is the first obstacle
-		previousRockXPosition = firstRockXPosition;
-		previousRockYPosition = firstRockYPosition;
-	}
-
-	Rock *rock = (Rock *)[CCBReader load:@"Uranium"];
-	rock.position = ccp(previousRockXPosition + distanceBetweenRocks, previousRockYPosition);
-	rock.zOrder = DrawingOrderCharacter;
-
-	[_physicsNode addChild:rock];
-	[_rocks addObject:rock];
+- (void)createUraniumRock {
+	uraniumRock = (UraniumRock *)[CCBReader load:@"Uranium"];
+	uraniumRock.zOrder = DrawingOrderEnemy;
+	[uraniumRock setPosition:ccp(mainCharacter.position.x + 500.f, 65.f)];
+	[_physicsNode addChild:uraniumRock];
 }
 
 - (void)createBullet {
@@ -676,15 +676,22 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 // >>> Collisions
 
 // Uranium rocks
-- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision rock:(Rock *)rock {
-	NSLog(@"Character and rock collision");
-	rock.visible = NO;
-	[rock removeFromParentAndCleanup:YES];
-	[_rocks removeObject:rock];
+- (BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(MainCharacter *)characterCollision uraniumRock:(UraniumRock *)uraniumRockCollision {
+	NSLog(@"Character and uranium rock collision");
+	if (_sinceUraniumWasPicked > 1.f) {
+		uraniumCount++;
+		uraniumRockWasCreated = NO;
+		[uraniumCountText setString:[NSString stringWithFormat:@"%03d", uraniumCount]];
+		[uraniumRockCollision removeFromParentAndCleanup:YES];
+		[audio playEffect:@"GemPickup.mp3" loop:NO];
 
-	_sinceUranium = 0.f;
-	mainCharacter.hasAdrenaline = YES;
-	[mainCharacter startRunning];
+		_sinceUraniumWasPicked = 0.f;
+
+		if (uraniumCount % 5 == 0) {
+//			characterCollision setState :
+		}
+	}
+
 	return YES;
 }
 

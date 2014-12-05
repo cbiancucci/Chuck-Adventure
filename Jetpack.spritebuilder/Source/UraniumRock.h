@@ -1,5 +1,5 @@
 //
-//  Rock.h
+//  UraniumRock.h
 //  Jetpack
 //
 //  Created by Christian Perez Biancucci on 10/9/14.
@@ -8,6 +8,6 @@
 
 #import "CCNode.h"
 
-@interface Rock : CCNode
-- (void)setupPositionX:(CGFloat *)positionX positionY:(CGFloat *)positionY;
+@interface UraniumRock : CCNode
+
 @end

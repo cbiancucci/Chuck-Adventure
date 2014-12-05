@@ -502,7 +502,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>Rock</string>
+		<string>UraniumRock</string>
 		<key>displayName</key>
 		<string>CCNode</string>
 		<key>memberVarAssignmentName</key>
@@ -522,9 +522,9 @@
 			<key>collisionMask</key>
 			<array/>
 			<key>collisionType</key>
-			<string>rock</string>
+			<string>uraniumRock</string>
 			<key>cornerRadius</key>
-			<real>16</real>
+			<real>10.15234375</real>
 			<key>density</key>
 			<real>1</real>
 			<key>dynamic</key>
@@ -605,6 +605,8 @@
 				</array>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

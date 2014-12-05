@@ -25,10 +25,10 @@
 - (void)startRunning;
 - (void)startShooting;
 - (void)stopShooting;
+- (void)startAdrenaline;
+- (void)stopAdrenaline;
 - (void)die;
 - (void)bleed;
 - (void)stop;
-
-- (BOOL)hasAdrenaline;
 
 @end
