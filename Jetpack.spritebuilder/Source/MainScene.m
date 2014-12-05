@@ -344,7 +344,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 		}
 
 		// Create life supply.
-		if ((int)distance % 250 == 0 && !lifeSupplyDelivered) {
+		if ((int)distance != 0 && (int)distance % 250 == 0 && !lifeSupplyDelivered) {
 			[self createLifeSupply];
 			lifeSupplyDelivered = YES;
 		}
@@ -606,7 +606,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	[_physicsNode addChild:cannonball];
 	cannonball.position = ccp(gun.position.x - 25, gun.position.y + 10);
 	cannonball.physicsBody.velocity = CGPointMake(-200, 0);
-
+	cannonball.physicsBody.sensor = YES;
 	[cannonballs addObject:cannonball];
 
 	[audio playEffect:@"Cannonball.mp3" volume:0.5 pitch:1 pan:1 loop:NO];
@@ -641,6 +641,16 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	explosion.position = rocket.position;
 	[rocket removeFromParentAndCleanup:YES];
 	[audio playEffect:@"RocketExplosion.mp3" loop:NO];
+}
+
+- (void)explodeCannonball {
+	CCParticleSystem *ringExplosion = (CCParticleSystem *)[CCBReader load:@"RingExplosion"];
+	ringExplosion.autoRemoveOnFinish = YES;
+	ringExplosion.scaleX = 0.1f;
+	ringExplosion.scaleY = 0.1f;
+	ringExplosion.position = cannonball.position;
+	[_physicsNode addChild:ringExplosion];
+	ringExplosion.zOrder = DrawingOrderParticles;
 }
 
 - (void)createSpike {
@@ -819,6 +829,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			lifeScale = 0.f;
 			[self defeat];
 		}
+		[self explodeCannonball];
 		[cannonballs removeObject:cannonballCollision];
 		[cannonballCollision removeFromParentAndCleanup:YES];
 	}
