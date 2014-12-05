@@ -596,7 +596,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	cannonball = (Cannonball *)[CCBReader load:@"Cannonball"];
 	cannonball.zOrder = DrawingOrderDifficulties;
 	[_physicsNode addChild:cannonball];
-	cannonball.position = ccp(gun.position.x - 25, enemy.position.y + 60);
+	cannonball.position = ccp(gun.position.x - 25, gun.position.y + 10);
 	cannonball.physicsBody.velocity = CGPointMake(-200, 0);
 
 	[cannonballs addObject:cannonball];
