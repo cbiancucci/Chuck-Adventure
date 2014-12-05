@@ -179,7 +179,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	gameOverText.outlineColor = [CCColor blackColor];
 	gameOverText.outlineWidth = 2.0f;
 	gameOverText.zOrder = DrawingOrderText;
-	[gameOverText setPosition:ccp(size.width / 2, size.height / 2) + 30];
+	[gameOverText setPosition:ccp(size.width / 2, (size.height / 2) + 30)];
 	[self addChild:gameOverText];
 	gameOverText.visible = NO;
 
