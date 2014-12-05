@@ -343,10 +343,13 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 			uraniumRockWasCreated = YES;
 		}
 
-		// Create life supply once.
-		if ((int)distance == 400 && !lifeSupplyDelivered) {
+		// Create life supply.
+		if ((int)distance % 200 == 0 && !lifeSupplyDelivered) {
 			[self createLifeSupply];
 			lifeSupplyDelivered = YES;
+		}
+		else if ((int)distance % 300 == 0) {
+			lifeSupplyDelivered = NO;
 		}
 
 		// Update and destroy off screen bullets.
