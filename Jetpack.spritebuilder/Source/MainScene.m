@@ -836,6 +836,7 @@ typedef NS_ENUM (NSInteger, DrawingOrder) {
 	if (![characterCollision isDead]) {
 		[_lifeBar setScaleX:1.03];
 		[audio playEffect:@"Resurrect.mp3" loop:NO];
+		[lifeCollision removeFromParentAndCleanup:YES];
 	}
 
 	return YES;
