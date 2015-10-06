@@ -1,4 +1,4 @@
 Chuck Adventure
 =======
 
-iOS game for Videogames Development subject at ITBA.
+Cocos2D iOS game for Videogames course at ITBA.
